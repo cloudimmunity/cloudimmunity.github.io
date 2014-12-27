@@ -1,6 +1,39 @@
-<html>
-<body>
-<center>Devs "heart" Security!</center>
-</body>
-</html>
+<head><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Devs ♥ Security</title><meta name="description" content="Code, Security, and Everything in Between."><meta name="HandheldFriendly" content="True"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" type="text/css" href="assets/css/screen.css?v=ecdd4451b0"><link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700%7CInconsolata:400"><!-- Extra for DC --><link rel="stylesheet" type="text/css" href="assets/css/dc.css?v=ecdd4451b0"><!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end --><script type="text/javascript" src="assets/js/libs/ht.utils.js?v=ecdd4451b0"></script><link rel="canonical" href="index.html"><meta name="generator" content="Ghost 0.5"><link rel="alternate" type="application/rss+xml" title="Devs ♥ Security" href="rss/index.html"></head><body class="home-template">
+	
+	<section id="wrapper"><div id="ajax-container">
+			
+<header id="main-header"><nav id="main-nav"><a class="js-ajax-link js-show-index" id="blog-logo" href="index.html"><img src="content/images/2014/12/CI_LOGO_no_shadow_smaller-2.png" alt="Blog Logo"></a>
+	</nav><div class="inner">
+		<h1 class="page-title"><a class="js-ajax-link js-show-index" id="page-title" href="index.html">Devs ♥ Security</a></h1>
+	</div>
+</header><div id="post-index" class="container">
 
+	<main class="content post-index-animations" role="main"><article class="post tag-passwords tag-security tag-arc tag-lisp animated-post"><div class="inner">
+				<header class="post-header"><span class="post-meta"><a href="author/kyle/">Kyle Quest</a>  | <a href="tag/passwords/">passwords</a>, <a href="tag/security/">security</a>, <a href="tag/arc/">Arc</a>, <a href="tag/lisp/">Lisp</a> </span>
+					<div class="clear"></div>
+					<h2 class="post-title"><a class="js-ajax-link js-show-post" href="hacking-old-hacker-news-fun-with-weak-passwords-and-arc/">Hacking (old) Hacker News: fun with weak passwords and Arc</a></h2>
+				</header><section class="post-excerpt"><p></p><p>When I was conducting my cloud password security research I also looked at <a href="https://news.ycombinator.com/">Hacker News</a>. It's not a cloud application, but it does have pretty common password security qualities. It's also interesting because it's written in Arc (a Lisp dialect) and the code is available (the old version from 2009).<br><br>
+		When you create a Hacker News account you can create passwords 4 characters long without any restrictions on the password complexity. This mean that you can have a password that looks like 0000 or 1111. Sure, not everybody will use passwords like that, but there's a good chance that quite a few users will have pretty simple passwords. Even technical people are still people and people choose the easiest possible passwords (when they can) making it easy to conduct online password attacks.<br><br>
+		What's interesting is that when you change your password you are required to have, at least, 8 characters (still without any complexity requirements). The Arc source code shows that it used to be 4 characters as well. Time to look at the code to see what else might be there...</p>
+		
+		<p>Here's the login code from app.arc:</p>
+		
+		<pre><code>(def good-login (user pw ip)
+		  (let record (list (seconds) ip user)</code></pre><a class="js-ajax-link js-show-post" href="hacking-old-hacker-news-fun-with-weak-passwords-and-arc/">…</a>
+				</section></div>
+		</article><article class="post tag-passwords tag-security tag-cloud animated-post"><div class="inner">
+				<header class="post-header"><span class="post-meta"><a href="author/kyle/">Kyle Quest</a>  | <a href="tag/passwords/">passwords</a>, <a href="tag/security/">security</a>, <a href="tag/cloud/">cloud</a> </span>
+					<div class="clear"></div>
+					<h2 class="post-title"><a class="js-ajax-link js-show-post" href="the-sad-state-of-password-security-in-the-cloud/">The Sad State of Password Security in the Cloud</a></h2>
+				</header><section class="post-excerpt"><p></p><p>When it comes to information security, the harsh reality is that end users are often the weakest link in the chain. It's no surprise then that end users are often first to be exploited by attackers. The cloud and SaaS applications are great targets for these attacks because those applications have to deal with password-based user identities and because they are accessible from anywhere in the world.<br><br>
+		A lot has been written about passwords in general and about the weaknesses in many high profile Internet and cloud applications. The security compromises of Evernote, LinkedIn, Sony, Yahoo, Linode, eHarmony, Last.fm, Zappos, Nvidia, Gawker, Billabong, Android Forums, and Ubuntu Forums in the recent years bring new light to a very old problem: People choose weak passwords. They do it because it's easy and because they can. Discussions in the technical community tend to focus on the easy problems: using more appropriate hashing algorithms, using salts for password hashing, etc. Of course, keeping the password hashes safe and using slow hashing algorithms (with random salt values) is important. It would protect a lot of relatively strong passwords that can't be cracked using online brute-forcing attacks from being cracked by using offline brute-forcing</p><a class="js-ajax-link js-show-post" href="the-sad-state-of-password-security-in-the-cloud/">…</a>
+				</section></div>
+		</article><nav class="pagination" role="pagination"><div class="inner">
+			    <div class="clear"></div>
+			</div>
+		</nav></main></div>
+		</div>
+	</section><footer id="site-footer"><div class="inner">
+				<span class="blog-description">Code, Security, and Everything in Between.</span>
+			<section class="poweredby">Create secure cloud apps with <a href="https://www.cloudimmunity.com/">Cloud Immunity</a>.</section></div>
+	</footer><script src="public/jquery.js?v=ecdd4451b0"></script><script type="text/javascript" src="assets/js/libs/jquery.fitvids.js?v=ecdd4451b0"></script><script type="text/javascript" src="assets/js/libs/jquery.history.js?v=ecdd4451b0"></script><script type="text/javascript" src="assets/js/libs/highlight.pack.js?v=ecdd4451b0"></script><script type="text/javascript" src="assets/js/libs/nprogress.js?v=ecdd4451b0"></script><script type="text/javascript" src="assets/js/index.js?v=ecdd4451b0"></script><!-- Extra for DC --><script type="text/javascript" src="assets/js/libs/d3.js?v=ecdd4451b0"></script><script type="text/javascript" src="assets/js/libs/crossfilter.js?v=ecdd4451b0"></script><script type="text/javascript" src="assets/js/libs/dc.js?v=ecdd4451b0"></script></body>
