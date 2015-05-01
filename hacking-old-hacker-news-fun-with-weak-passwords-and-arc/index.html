@@ -1,4 +1,4 @@
-<head><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Hacking (old) Hacker News: fun with weak passwords and Arc</title><meta name="description" content=""><meta name="HandheldFriendly" content="True"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=ecdd4451b0"><link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700%7CInconsolata:400"><!-- Extra for DC --><link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=ecdd4451b0"><!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end --><script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=ecdd4451b0"></script><link rel="canonical" href="index.html"><meta property="og:site_name" content="Devs ♥ Security"><meta property="og:type" content="article"><meta property="og:title" content="Hacking (old) Hacker News: fun with weak passwords and Arc"><meta property="og:description" content="When I was conducting my cloud password security research I also looked at Hacker News. It's not a cloud application, but it does have pretty common password security qualities. It's also interesting because it's written in Arc (a Lisp dialect)..."><meta property="og:url" content="http://localhost:2368/hacking-old-hacker-news-fun-with-weak-passwords-and-arc/"><meta property="article:published_time" content="2014-12-27T17:34:13.959Z"><meta property="article:modified_time" content="2014-12-27T17:41:34.252Z"><meta property="article:tag" content="passwords"><meta property="article:tag" content="security"><meta property="article:tag" content="Arc"><meta property="article:tag" content="Lisp"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Hacking (old) Hacker News: fun with weak passwords and Arc"><meta name="twitter:description" content="When I was conducting my cloud password security research I also looked at Hacker News. It's not a cloud application, but it does have pretty common password security qualities. It's also interesting because it's written in Arc (a Lisp dialect)..."><meta name="twitter:url" content="http://localhost:2368/hacking-old-hacker-news-fun-with-weak-passwords-and-arc/"><script type="application/ld+json">
+<head><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Hacking (old) Hacker News: fun with weak passwords and Arc</title><meta name="description" content=""><meta name="HandheldFriendly" content="True"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=cbce5da5aa"><link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700%7CInconsolata:400"><!-- Extra for DC --><link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=cbce5da5aa"><!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end --><script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=cbce5da5aa"></script><link rel="canonical" href="index.html"><meta property="og:site_name" content="Devs ♥ Security"><meta property="og:type" content="article"><meta property="og:title" content="Hacking (old) Hacker News: fun with weak passwords and Arc"><meta property="og:description" content="When I was conducting my cloud password security research I also looked at Hacker News. It's not a cloud application, but it does have pretty common password security qualities. It's also interesting because it's written in Arc (a Lisp dialect)..."><meta property="og:url" content="http://localhost:2368/hacking-old-hacker-news-fun-with-weak-passwords-and-arc/"><meta property="article:published_time" content="2014-12-27T17:34:13.959Z"><meta property="article:modified_time" content="2015-04-12T19:29:32.551Z"><meta property="article:tag" content="passwords"><meta property="article:tag" content="security"><meta property="article:tag" content="Arc"><meta property="article:tag" content="Lisp"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Hacking (old) Hacker News: fun with weak passwords and Arc"><meta name="twitter:description" content="When I was conducting my cloud password security research I also looked at Hacker News. It's not a cloud application, but it does have pretty common password security qualities. It's also interesting because it's written in Arc (a Lisp dialect)..."><meta name="twitter:url" content="http://localhost:2368/hacking-old-hacker-news-fun-with-weak-passwords-and-arc/"><script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "Article",
@@ -13,7 +13,7 @@
     "headline": "Hacking (old) Hacker News: fun with weak passwords and Arc",
     "url": "http://localhost:2368/hacking-old-hacker-news-fun-with-weak-passwords-and-arc/",
     "datePublished": "2014-12-27T17:34:13.959Z",
-    "dateModified": "2014-12-27T17:41:34.252Z",
+    "dateModified": "2015-04-12T19:29:32.551Z",
     "keywords": "passwords, security, Arc, Lisp",
     "description": "When I was conducting my cloud password security research I also looked at Hacker News. It&#x27;s not a cloud application, but it does have pretty common password security qualities. It&#x27;s also interesting because it&#x27;s written in Arc (a Lisp dialect)..."
 }
@@ -46,9 +46,7 @@ What's interesting is that when you change your password you are required to hav
 </code></pre>
 
 <p>The interesting part is <code>(aand (shash pw) (is it (hpasswords* user)))</code> where <br>
-the password parameter is hashed and then compared to the expected hash for the user. <br>
-What makes it interesting is the <code>is</code> operator that determines if two values in Arc are equal. <br>
-Let's find out what <code>is</code> really means...</p>
+the password parameter is hashed and then compared to the expected hash for the user. What makes it interesting is the <code>is</code> operator that determines if two values in Arc are equal. Let's find out what <code>is</code> really means...</p>
 
 <p><code>is</code> is defined in ac.scm as:</p>
 
@@ -102,10 +100,9 @@ static int mz_char_strcmp(const char *who, const mzchar *str1, int l1, const mzc
 }
 </code></pre>
 
-<p>This is a standard string compare implementation that returns as soon as the current characters don't match. <br>
-This means that the password checking code is vulnerable to timing attacks (in theory). It's harder to exploit because the code doesn't compare raw/cleartext passwords. Instead, the code compares password hashes.</p>
+<p>This is a standard string compare implementation that returns as soon as the current characters don't match. This means that the password checking code is vulnerable to timing attacks (in theory). It's harder to exploit because the code doesn't compare raw/cleartext passwords. Instead, the code compares password hashes, so there's an extra step where you have to generate hash collisions. Depending on the hash algorithm generating hash collisions could be time consuming.</p>
 
-<p>What are those hashes? The answer is in the <code>shash</code> function in app.arc:</p>
+<p>What are those hashes and what algorithm is used to generate them? The answer is in the <code>shash</code> function in app.arc:</p>
 
 <pre><code>(def shash (str)
   (let fname (+ "/tmp/shash" (rand-string 10))
@@ -115,10 +112,9 @@ This means that the password checking code is vulnerable to timing attacks (in t
            (rmfile fname)))))
 </code></pre>
 
-<p><code>shash</code> creates a SHA1 hash (without a "salt") and that hash is used to verify the user identity.</p>
+<p><code>shash</code> creates a SHA1 hash (without a "salt") and that hash is used to verify the user identity. Compared to MD5 generating SHA1 hash collisions is much more difficult (and not very practical at this point in time).</p>
 
-<p>The publicly available code is from 2009 and the current password management and processing code has been improved since then. It sounds like the current unreleased version might be using a pure Scheme implementation of bcrypt. <br>
-It would be nice to see it given that there aren't a lot of pure Scheme bcrypt implementations out there :-) In the meantime you can explore an inner hacker inside you and deploy the old code yourself.</p>
+<p>The publicly available code is from 2009 and the current password management and processing code has been improved since then (Paul Graham was nice enough to confirm it :-)). It sounds like the current unreleased version might be using a pure Scheme implementation of bcrypt. It would be great to see it given that there aren't a lot of pure Scheme bcrypt implementations out there. In the meantime you can explore an inner hacker inside you and deploy the old code yourself.</p>
 
 <p>To run Arc 3.0:</p>
 
@@ -129,8 +125,7 @@ It would be nice to see it given that there aren't a lot of pure Scheme bcrypt i
 
 <ul><li>Install Racket.</li>
 <li>Get <a href="http://ycombinator.com/arc/arc3.1.tar">Arc3.1</a>.</li>
-</ul><p><a href="https://news.ycombinator.com/">Hacker News</a> is not alone when it comes to no password complexity requirements. 
-Quite a few companies have the same password qualities (see <a href="../the-sad-state-of-password-security-in-the-cloud.1">"The Sad State of Password Security in the Cloud"</a> to learn more about it). Unlike Hacker News, where you don't gain much by compromising users (unless they reuse the password in other more valuable internet sites or cloud apps), other companies do have valuable information that should be protected a little better.</p>
+</ul><p><a href="https://news.ycombinator.com/">Hacker News</a> is not alone when it comes to no password complexity requirements. Quite a few companies have the same password qualities (see <a href="../the-sad-state-of-password-security-in-the-cloud.1">"The Sad State of Password Security in the Cloud"</a> to learn more about it). Unlike Hacker News, where you don't gain much by compromising users (unless they reuse the password in other more valuable internet sites or cloud apps), other companies do have valuable information that should be protected a little better.</p>
 			</section><footer class="post-footer"><div class="post-meta">
 					<a href="../tag/passwords/">passwords</a>, <a href="../tag/security/">security</a>, <a href="../tag/arc/">Arc</a>, <a href="../tag/lisp/">Lisp</a>
 				</div>
@@ -147,7 +142,9 @@ Quite a few companies have the same password qualities (see <a href="../the-sad-
 						<span class="hidden">Twitter</span>
 					</a>
                     
-                    
+                    <a class="fa fa-rss" href="../rss/index.rss" target="_blank">
+						<span class="hidden">RSS</span>
+					</a>
 				</div>
 				<div class="clear"></div>
 			</footer><aside class="post-author"><figure class="post-author-avatar"><img src="../content/images/2014/12/kcq_gh_pix.png" alt="Kyle Quest"></figure><div class="post-author-bio">
@@ -162,4 +159,4 @@ Quite a few companies have the same password qualities (see <a href="../the-sad-
 	</section><footer id="site-footer"><div class="inner">
 				<span class="blog-description">Code, Security, and Everything in Between.</span>
 			<section class="poweredby">Create secure cloud apps with <a href="https://www.cloudimmunity.com/">Cloud Immunity</a>.</section></div>
-	</footer><script src="../public/jquery.js?v=ecdd4451b0"></script><script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=ecdd4451b0"></script><script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=ecdd4451b0"></script><script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=ecdd4451b0"></script><script type="text/javascript" src="../assets/js/libs/nprogress.js?v=ecdd4451b0"></script><script type="text/javascript" src="../assets/js/index.js?v=ecdd4451b0"></script><!-- Extra for DC --><script type="text/javascript" src="../assets/js/libs/d3.js?v=ecdd4451b0"></script><script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=ecdd4451b0"></script><script type="text/javascript" src="../assets/js/libs/dc.js?v=ecdd4451b0"></script></body>
+	</footer><script src="../public/jquery.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/nprogress.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/index.js?v=cbce5da5aa"></script><!-- Extra for DC --><script type="text/javascript" src="../assets/js/libs/d3.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/dc.js?v=cbce5da5aa"></script></body>

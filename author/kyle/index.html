@@ -1,4 +1,4 @@
-<head><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Kyle Quest - Devs ♥ Security</title><meta name="description" content="Builder, breaker, and defender. Cloud, security, and Big Data."><meta name="HandheldFriendly" content="True"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" type="text/css" href="../../assets/css/screen.css?v=ecdd4451b0"><link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700%7CInconsolata:400"><!-- Extra for DC --><link rel="stylesheet" type="text/css" href="../../assets/css/dc.css?v=ecdd4451b0"><!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end --><script type="text/javascript" src="../../assets/js/libs/ht.utils.js?v=ecdd4451b0"></script><link rel="canonical" href="index.html"><meta name="generator" content="Ghost 0.5"><link rel="alternate" type="application/rss+xml" title="Devs ♥ Security" href="../../rss/index.html"></head><body class="author-template author-kyle">
+<head><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Kyle Quest - Devs ♥ Security</title><meta name="description" content="Builder, breaker, and defender. Cloud, security, and Big Data."><meta name="HandheldFriendly" content="True"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" type="text/css" href="../../assets/css/screen.css?v=cbce5da5aa"><link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700%7CInconsolata:400"><!-- Extra for DC --><link rel="stylesheet" type="text/css" href="../../assets/css/dc.css?v=cbce5da5aa"><!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end --><script type="text/javascript" src="../../assets/js/libs/ht.utils.js?v=cbce5da5aa"></script><link rel="canonical" href="index.html"><meta name="generator" content="Ghost 0.5"><link rel="alternate" type="application/rss+xml" title="Devs ♥ Security" href="../../rss/index.html"></head><body class="author-template author-kyle">
 	
 	<section id="wrapper"><div id="ajax-container">
 			
@@ -10,7 +10,48 @@
 	</div>
 </header><div id="post-index" class="container">
 
-	<main class="content" role="main"><article class="post tag-passwords tag-security tag-arc tag-lisp animated-post"><div class="inner">
+	<main class="content" role="main"><article class="post tag-golang animated-post"><div class="inner">
+				<header class="post-header"><span class="post-meta"><a href="index.html">Kyle Quest</a>  | <a href="../../tag/golang/">golang</a> </span>
+					<div class="clear"></div>
+					<h2 class="post-title"><a class="js-ajax-link js-show-post" href="../../gotchas-and-common-mistakes-in-go-golang/">Traps, Gotchas and Common Mistakes in Go (golang)</a></h2>
+				</header><section class="post-excerpt"><p></p><p>Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are due to faulty assumptions and missing details.</p>
+		
+		<p>A lot of these gotchas may seem obvious if you took the time to learn the language reading the official spec, wiki, mailing list discussions, many great posts and presentations by Rob Pike, and the source code. Not everybody starts the same way though and that's ok.</p>
+		
+		<p>The dependency management, immature library echosystem, garbage collection, and performance related gotchas are not included. They deserve their own posts :-)</p>
+		
+		<h6 id="openingbracecantbeplacedonaseparateline">Opening Brace Can't Be Placed on a Separate Line</h6>
+		
+		<ul><li>level: beginner</li>
+		</ul><p>In most other languages that use braces you get to choose where you place them. Go is different. You can thank automatic semicolon injection (without lookahead) for this behavior. Yes, Go does have semicolons :-)</p>
+		
+		<p>Fails:  </p>
+		
+		<pre><code>package main
+		
+		import "fmt"
+		
+		func main()  
+		{ //error, can't have the opening brace on a separate line
+		    fmt.Println("hello there!")
+		}
+		</code></pre>
+		
+		<p>Compile Error:  </p>
+		
+		<blockquote>
+		  <p><span style="color:#900; font-family: Menlo, Courier New, monospace; font-size: 11pt;">
+		  /tmp/sandbox826898458/main.go:6: syntax error: unexpected semicolon or newline before {
+		  </span></p>
+		</blockquote>
+		
+		<p>Works:  </p>
+		
+		<pre><code>package main
+		
+		import</code></pre><a class="js-ajax-link js-show-post" href="../../gotchas-and-common-mistakes-in-go-golang/">…</a>
+				</section></div>
+		</article><article class="post tag-passwords tag-security tag-arc tag-lisp animated-post"><div class="inner">
 				<header class="post-header"><span class="post-meta"><a href="index.html">Kyle Quest</a>  | <a href="../../tag/passwords/">passwords</a>, <a href="../../tag/security/">security</a>, <a href="../../tag/arc/">Arc</a>, <a href="../../tag/lisp/">Lisp</a> </span>
 					<div class="clear"></div>
 					<h2 class="post-title"><a class="js-ajax-link js-show-post" href="../../hacking-old-hacker-news-fun-with-weak-passwords-and-arc/">Hacking (old) Hacker News: fun with weak passwords and Arc</a></h2>
@@ -38,4 +79,4 @@
 	</section><footer id="site-footer"><div class="inner">
 				<span class="blog-description">Code, Security, and Everything in Between.</span>
 			<section class="poweredby">Create secure cloud apps with <a href="https://www.cloudimmunity.com/">Cloud Immunity</a>.</section></div>
-	</footer><script src="../../public/jquery.js?v=ecdd4451b0"></script><script type="text/javascript" src="../../assets/js/libs/jquery.fitvids.js?v=ecdd4451b0"></script><script type="text/javascript" src="../../assets/js/libs/jquery.history.js?v=ecdd4451b0"></script><script type="text/javascript" src="../../assets/js/libs/highlight.pack.js?v=ecdd4451b0"></script><script type="text/javascript" src="../../assets/js/libs/nprogress.js?v=ecdd4451b0"></script><script type="text/javascript" src="../../assets/js/index.js?v=ecdd4451b0"></script><!-- Extra for DC --><script type="text/javascript" src="../../assets/js/libs/d3.js?v=ecdd4451b0"></script><script type="text/javascript" src="../../assets/js/libs/crossfilter.js?v=ecdd4451b0"></script><script type="text/javascript" src="../../assets/js/libs/dc.js?v=ecdd4451b0"></script></body>
+	</footer><script src="../../public/jquery.js?v=cbce5da5aa"></script><script type="text/javascript" src="../../assets/js/libs/jquery.fitvids.js?v=cbce5da5aa"></script><script type="text/javascript" src="../../assets/js/libs/jquery.history.js?v=cbce5da5aa"></script><script type="text/javascript" src="../../assets/js/libs/highlight.pack.js?v=cbce5da5aa"></script><script type="text/javascript" src="../../assets/js/libs/nprogress.js?v=cbce5da5aa"></script><script type="text/javascript" src="../../assets/js/index.js?v=cbce5da5aa"></script><!-- Extra for DC --><script type="text/javascript" src="../../assets/js/libs/d3.js?v=cbce5da5aa"></script><script type="text/javascript" src="../../assets/js/libs/crossfilter.js?v=cbce5da5aa"></script><script type="text/javascript" src="../../assets/js/libs/dc.js?v=cbce5da5aa"></script></body>
