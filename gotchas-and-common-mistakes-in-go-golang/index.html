@@ -1,4 +1,4 @@
-<head><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Traps, Gotchas and Common Mistakes in Go (golang)</title><meta name="description" content=""><meta name="HandheldFriendly" content="True"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=cbce5da5aa"><link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700%7CInconsolata:400"><!-- Extra for DC --><link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=cbce5da5aa"><!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end --><script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=cbce5da5aa"></script><link rel="canonical" href="index.html"><meta property="og:site_name" content="Devs ♥ Security"><meta property="og:type" content="article"><meta property="og:title" content="Traps, Gotchas and Common Mistakes in Go (golang)"><meta property="og:description" content="Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are..."><meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/"><meta property="article:published_time" content="2015-04-10T15:42:39.805Z"><meta property="article:modified_time" content="2015-05-04T00:11:26.836Z"><meta property="article:tag" content="golang"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Traps, Gotchas and Common Mistakes in Go (golang)"><meta name="twitter:description" content="Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are..."><meta name="twitter:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/"><script type="application/ld+json">
+<head><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Traps, Gotchas and Common Mistakes in Go (golang)</title><meta name="description" content=""><meta name="HandheldFriendly" content="True"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=cbce5da5aa"><link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700%7CInconsolata:400"><!-- Extra for DC --><link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=cbce5da5aa"><!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end --><script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=cbce5da5aa"></script><link rel="canonical" href="index.html"><meta property="og:site_name" content="Devs ♥ Security"><meta property="og:type" content="article"><meta property="og:title" content="Traps, Gotchas and Common Mistakes in Go (golang)"><meta property="og:description" content="Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are..."><meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/"><meta property="article:published_time" content="2015-04-10T15:42:39.805Z"><meta property="article:modified_time" content="2015-05-04T00:33:07.536Z"><meta property="article:tag" content="golang"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Traps, Gotchas and Common Mistakes in Go (golang)"><meta name="twitter:description" content="Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are..."><meta name="twitter:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/"><script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "Article",
@@ -13,7 +13,7 @@
     "headline": "Traps, Gotchas and Common Mistakes in Go (golang)",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-04T00:11:26.836Z",
+    "dateModified": "2015-05-04T00:33:07.536Z",
     "keywords": "golang",
     "description": "Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language. Others are..."
 }
@@ -1359,7 +1359,44 @@ func main() {
 
 <p>Not every variable is addressable though. Map elements are not addressable. Variables referenced through interfaces are also not addressable.</p>
 
-<p>TODO: add samples</p>
+<pre><code>package main
+
+import "fmt"
+
+type data struct {  
+    name string
+}
+
+func (p *data) print() {  
+    fmt.Println("name:",p.name)
+}
+
+type printer interface {  
+    print()
+}
+
+func main() {  
+    d1 := data{"one"}
+    d1.print() //ok
+
+    var in printer = data{"two"} //error
+    in.print()
+
+    m := map[string]data {"x":data{"three"}}
+    m["x"].print() //error
+}
+</code></pre>
+
+<p>Compile Errors:  </p>
+
+<blockquote>
+  <p><span style="color:#900; font-family: Menlo, Courier New, monospace; font-size: 11pt;">
+  /tmp/sandbox017696142/main.go:21: cannot use data literal (type data) as type printer in assignment:
+      data does not implement printer (print method has pointer receiver)<br>
+  /tmp/sandbox017696142/main.go:25: cannot call pointer method on m["x"]
+  /tmp/sandbox017696142/main.go:25: cannot take the address of m["x"]
+  </span></p>
+</blockquote>
 
 <h6 id="nilinterfacesandnilinterfacesvalues">"nil" Interfaces and "nil" Interfaces Values</h6>
 
