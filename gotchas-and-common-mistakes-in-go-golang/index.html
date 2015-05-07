@@ -1,4 +1,39 @@
-<head><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Traps, Gotchas and Common Mistakes in Go (golang)</title><meta name="description" content=""><meta name="HandheldFriendly" content="True"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=cbce5da5aa"><link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700%7CInconsolata:400"><!-- Extra for DC --><link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=cbce5da5aa"><!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end --><script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=cbce5da5aa"></script><link rel="canonical" href="index.html"><meta property="og:site_name" content="Devs ♥ Security"><meta property="og:type" content="article"><meta property="og:title" content="Traps, Gotchas and Common Mistakes in Go (golang)"><meta property="og:description" content="Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are..."><meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/"><meta property="article:published_time" content="2015-04-10T15:42:39.805Z"><meta property="article:modified_time" content="2015-05-05T06:47:37.360Z"><meta property="article:tag" content="golang"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Traps, Gotchas and Common Mistakes in Go (golang)"><meta name="twitter:description" content="Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are..."><meta name="twitter:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/"><script type="application/ld+json">
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>Traps, Gotchas and Common Mistakes in Go (golang)</title>
+	<meta name="description" content="" />
+
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=cbce5da5aa" />
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700|Inconsolata:400" />
+    <!-- Extra for DC -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=cbce5da5aa" />
+    <!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end -->
+    <script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=cbce5da5aa"></script>
+
+	<link rel="canonical" href="index.html" />
+    
+    <meta property="og:site_name" content="Devs ♥ Security" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Traps, Gotchas and Common Mistakes in Go (golang)" />
+    <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
+    <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
+    <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
+    <meta property="article:modified_time" content="2015-05-07T02:22:02.327Z" />
+    <meta property="article:tag" content="golang" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Traps, Gotchas and Common Mistakes in Go (golang)" />
+    <meta name="twitter:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
+    <meta name="twitter:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
+    
+    <script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "Article",
@@ -13,30 +48,112 @@
     "headline": "Traps, Gotchas and Common Mistakes in Go (golang)",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-05T06:47:37.360Z",
+    "dateModified": "2015-05-07T02:22:02.327Z",
     "keywords": "golang",
-    "description": "Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language. Others are..."
+    "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
-    </script><meta name="generator" content="Ghost 0.5"><link rel="alternate" type="application/rss+xml" title="Devs ♥ Security" href="../rss/index.html"></head><body class="post-template tag-golang">
+    </script>
+
+    <meta name="generator" content="Ghost 0.5" />
+    <link rel="alternate" type="application/rss+xml" title="Devs ♥ Security" href="../rss/index.html" />
+</head>
+
+<body class="post-template tag-golang">
 	
-	<section id="wrapper"><div id="ajax-container">
+	<section id="wrapper">
+		<div id="ajax-container">
 			
 
-<header id="main-header"><nav id="main-nav"><a class="js-ajax-link js-show-index" id="home-link" href="../"><i class="fa fa-angle-left"></i></a>
-			<a class="js-ajax-link js-show-index" id="blog-logo" href="../"><img src="../content/images/2014/12/CI_LOGO_no_shadow_smaller-2.png" alt="Blog Logo"></a>
-	</nav></header><main class="content" role="main"><article class="post tag-golang"><div class="inner">
+<header id="main-header">
+	<nav id="main-nav">
+		<a class="js-ajax-link js-show-index" id="home-link" href="../index.html"><i class="fa fa-angle-left"></i></a>
+			<a class="js-ajax-link js-show-index" id="blog-logo" href="../index.html"><img src="../content/images/2014/12/CI_LOGO_no_shadow_smaller-2.png" alt="Blog Logo" /></a>
+	</nav>
+</header>
 
-			<header class="post-header"><span class="post-meta"><a href="../author/kyle/">Kyle Quest</a>  | <a href="../tag/golang/">golang</a> </span>
+<main class="content" role="main">
+	<article class="post tag-golang">
+		<div class="inner">
+
+			<header class="post-header">
+				<span class="post-meta"><a href="../author/kyle/index.html">Kyle Quest</a>  | <a href="../tag/golang/index.html">golang</a> </span>
 				<div class="clear"></div>
 				<h1 class="post-title">Traps, Gotchas and Common Mistakes in Go (golang)</h1>
-			</header><section class="post-content"><p>Go is a simple language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are due to faulty assumptions and missing details.</p>
+			</header>
+		
+			<section class="post-content">
+				<p>Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are due to faulty assumptions and missing details.</p>
 
-<p>A lot of these gotchas may seem obvious if you took the time to learn the language reading the official spec, wiki, mailing list discussions, many great posts and presentations by Rob Pike, and the source code. Not everybody starts the same way though and that's ok. If you are new to Go this information will save you hours debugging your code.</p>
+<p>A lot of these gotchas may seem obvious if you took the time to learn the language reading the official spec, wiki, mailing list discussions, many great posts and presentations by Rob Pike, and the source code. Not everybody starts the same way though and that's ok. If you are new to Go the information here will save you hours debugging your code.</p>
 
-<h6 id="openingbracecantbeplacedonaseparateline">Opening Brace Can't Be Placed on a Separate Line</h6>
+<p><a href="index.html#total_beginner">Total Beginner</a>:</p>
 
-<ul><li>level: beginner</li>
-</ul><p>In most other languages that use braces you get to choose where you place them. Go is different. You can thank automatic semicolon injection (without lookahead) for this behavior. Yes, Go does have semicolons :-)</p>
+<ul>
+<li><a href="index.html#opening_braces">Opening Brace Can't Be Placed on a Separate Line</a></li>
+<li><a href="index.html#unused_vars">Unused Variables</a></li>
+<li><a href="index.html#unused_imports">Unused Imports</a></li>
+<li><a href="index.html#short_vars">Short Variable Declarations Can Be Used Only Inside Functions</a></li>
+<li><a href="index.html#vars_redeclare">Redeclaring Variables Using Short Variable Declarations</a></li>
+<li><a href="index.html#vars_shadow">Accidental Variable Shadowing</a></li>
+<li><a href="index.html#nil_init">Can't Use "nil" to Initialize a Variable Without An Explicit Type</a></li>
+<li><a href="index.html#nil_slices_maps">Using "nil" Slices and Maps</a></li>
+<li><a href="index.html#map_cap">Map Capacity</a></li>
+<li><a href="index.html#nil_strings">Strings Can't Be "nil"</a></li>
+<li><a href="index.html#arrays_pass_by_val">Arrays Are Passed By Value</a></li>
+<li><a href="index.html#unexpected_slice_arr_vals">Unexpected Values in Slice and Array "range" Clauses</a></li>
+<li><a href="index.html#one_dim_slice_arr">Slices And Arrays Are One-Dimensional</a></li>
+<li><a href="index.html#map_key_ne">Accessing Non-Existing Map Keys</a></li>
+<li><a href="index.html#imm_strings">Strings Are Immutable</a></li>
+<li><a href="index.html#string_byte_slice_conv">Conversions Between Strings and Byte Slices</a></li>
+<li><a href="index.html#string_idx">Strings And Index Operator</a></li>
+<li><a href="index.html#strings_na_utf">Strings Are Not Always UTF8 Text</a></li>
+<li><a href="index.html#mline_lit_comma">Missing Comma In Multi-Line Slice/Array/Map Literals</a></li>
+<li><a href="index.html#log_fatal_exit">log.Fatal and log.Panic Do More Than Log</a></li>
+<li><a href="index.html#coll_no_sync">Built-in Data Structure Operations Are Not Synchronized</a></li>
+<li><a href="index.html#string_range_vals">Iteration Values For Strings in "range" Clauses</a></li>
+<li><a href="index.html#map_range">Iterating Through a Map Using a "for range" Clause</a></li>
+<li><a href="index.html#switch_fall">Fallthrough Behavior in "switch" Statements</a></li>
+<li><a href="index.html#inc_dec">Increments and Decrements</a></li>
+<li><a href="index.html#bit_not">Bitwise NOT Operator</a></li>
+<li><a href="index.html#unexp_struct_field_enc">Unexported Structure Fields Are Not Encoded</a></li>
+<li><a href="index.html#gor_app_exit">App Exits With Active Goroutines</a></li>
+<li><a href="index.html#unbuf_ch_send_done">Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</a></li>
+<li><a href="index.html#method_val_receiver">Methods with Value Receivers Can't Change the Original Value</a></li>
+</ul>
+
+<p><a href="index.html#intermediate_beginner">Intermediate Beginner</a>:</p>
+
+<ul>
+<li><a href="index.html#compare_struct_arr_slice_map">Comparing Structs, Arrays, Slices, and Maps</a></li>
+<li><a href="index.html#panic_recover">Recovering From a Panic</a></li>
+<li><a href="index.html#range_val_update">Updating and Referencing Item Values in Slice, Array, and Map "for range" Clauses</a></li>
+<li><a href="index.html#slice_hidden_data">"Hidden" Data in Slices</a></li>
+<li><a href="index.html#stale_slices">"Stale" Slices</a></li>
+<li><a href="index.html#type_decl_methods">Type Declarations and Methods</a></li>
+<li><a href="index.html#deep_for_breakout">Breaking Out of "for switch" and "for select" Code Blocks</a></li>
+<li><a href="index.html#closure_for_it_vars">Iteration Variables and Closures in "for" Statements</a></li>
+<li><a href="index.html#deferred_calls">Deferred Function Call Argument Evaluation</a></li>
+<li><a href="index.html#failed_type_assert">Failed Type Assertions</a></li>
+</ul>
+
+<p><a href="index.html#advanced_beginner">Advanced Beginner</a>:</p>
+
+<ul>
+<li><a href="index.html#ptr_receiver_val_inst">Using Pointer Receiver Methods On Value Instances</a></li>
+<li><a href="index.html#nil_in_nil_in_vals">"nil" Interfaces and "nil" Interfaces Values</a></li>
+<li><a href="index.html#stack_heap_vars">Stack and Heap Variables</a></li>
+<li><a href="index.html#gomaxprocs">GOMAXPROCS, Concurrency, and Parallelism</a></li>
+</ul>
+
+<p><a name="total_beginner"></a></p>
+
+<h6 id="anameopening_bracesaopeningbracecantbeplacedonaseparateline"><a name="opening_braces"></a>Opening Brace Can't Be Placed on a Separate Line</h6>
+
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>In most other languages that use braces you get to choose where you place them. Go is different. You can thank automatic semicolon injection (without lookahead) for this behavior. Yes, Go does have semicolons :-)</p>
 
 <p>Fails:  </p>
 
@@ -69,10 +186,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="unusedvariables">Unused Variables</h6>
+<h6 id="anameunused_varsaunusedvariables"><a name="unused_vars"></a>Unused Variables</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>If you have an unused variable your code will fail to compile. There are a couple of gotchas to this gotcha though :-) </p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>If you have an unused variable your code will fail to compile. There are a couple of gotchas to this gotcha though :-) </p>
 
 <p>This rule applies only to the variable declared inside a function. This means it's ok if you have an unused global variable.</p>
 
@@ -123,10 +243,13 @@ func main() {
 
 <p>Another option is to comment out or remove the unused variables :-)</p>
 
-<h6 id="unusedimports">Unused Imports</h6>
+<h6 id="anameunused_importsaunusedimports"><a name="unused_imports"></a>Unused Imports</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>Your code will fail to compile if you import a package without using any of its exported functions, interfaces, structures or variables.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Your code will fail to compile if you import a package without using any of its exported functions, interfaces, structures or variables.</p>
 
 <p>If you really need the imported package you can use the blank identifier (underscore character) as its package name to avoid this compilation failure. The blank identifier is used to import packages for their side effects.</p>
 
@@ -173,10 +296,13 @@ func main() {
 
 <p>Another option is to remove or comment out the unused imports :-)</p>
 
-<h6 id="shortvariabledeclarationscanbeusedonlyinsidefunctions">Short Variable Declarations Can Be Used Only Inside Functions</h6>
+<h6 id="anameshort_varsashortvariabledeclarationscanbeusedonlyinsidefunctions"><a name="short_vars"></a>Short Variable Declarations Can Be Used Only Inside Functions</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>Fails:  </p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Fails:  </p>
 
 <pre><code>package main
 
@@ -204,10 +330,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="redeclaringvariablesusingshortvariabledeclarations">Redeclaring Variables Using Short Variable Declarations</h6>
+<h6 id="anamevars_redeclarearedeclaringvariablesusingshortvariabledeclarations"><a name="vars_redeclare"></a>Redeclaring Variables Using Short Variable Declarations</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>You can't redeclare a variable on its own. It's possible only in a multi-variable short declaration where one or more new variables are declared.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>You can't redeclare a variable on its own. It's possible only in a multi-variable short declaration where one or more new variables are declared.</p>
 
 <p>The redeclared variable also has to be in the same block or you'll end up with a shadowed variable.</p>
 
@@ -241,10 +370,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="accidentalvariableshadowing">Accidental Variable Shadowing</h6>
+<h6 id="anamevars_shadowaaccidentalvariableshadowing"><a name="vars_shadow"></a>Accidental Variable Shadowing</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>The short variable declaration syntax is so convinient (especially for those coming from a dynamic language) that it's easy to treat it like a regular assignment operation. The ability to redeclare variables also makes this mistake more likely.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>The short variable declaration syntax is so convinient (especially for those coming from a dynamic language) that it's easy to treat it like a regular assignment operation. The ability to redeclare variables also makes this mistake more likely.</p>
 
 <pre><code>package main
 
@@ -262,10 +394,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="cantuseniltoinitializeavariablewithoutanexplicittype">Can't Use "nil" to Initialize a Variable Without An Explicit Type</h6>
+<h6 id="anamenil_initacantuseniltoinitializeavariablewithoutanexplicittype"><a name="nil_init"></a>Can't Use "nil" to Initialize a Variable Without An Explicit Type</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>"nil" can be used as the "zero value" for interfaces, functions, pointers, maps, slices, and channels. If you don't specify the variable type the compiler will fail to compile your code because it can't guess the type.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>"nil" can be used as the "zero value" for interfaces, functions, pointers, maps, slices, and channels. If you don't specify the variable type the compiler will fail to compile your code because it can't guess the type.</p>
 
 <p>Fails:  </p>
 
@@ -297,10 +432,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="usingnilslicesandmaps">Using "nil" Slices and Maps</h6>
+<h6 id="anamenil_slices_mapsausingnilslicesandmaps"><a name="nil_slices_maps"></a>Using "nil" Slices and Maps</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>It's ok to add items to a "nil" slice, but doing the same with a map will produce a runtime panic.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>It's ok to add items to a "nil" slice, but doing the same with a map will produce a runtime panic.</p>
 
 <p>Works:  </p>
 
@@ -323,10 +461,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="mapcapacity">Map Capacity</h6>
+<h6 id="anamemap_capamapcapacity"><a name="map_cap"></a>Map Capacity</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>You can specify the map capacity when it's created, but you can't use the "cap" function on maps.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>You can specify the map capacity when it's created, but you can't use the "cap" function on maps.</p>
 
 <p>Fails:  </p>
 
@@ -346,10 +487,13 @@ func main() {
   </span></p>
 </blockquote>
 
-<h6 id="stringscantbenil">Strings Can't Be "nil"</h6>
+<h6 id="anamenil_stringsastringscantbenil"><a name="nil_strings"></a>Strings Can't Be "nil"</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>This is a gotcha for developers who are used to assigning "nil" to string variables.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>This is a gotcha for developers who are used to assigning "nil" to string variables.</p>
 
 <p>Fails:  </p>
 
@@ -386,10 +530,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="arraysarepassedbyvalue">Arrays Are Passed By Value</h6>
+<h6 id="anamearrays_pass_by_valaarraysarepassedbyvalue"><a name="arrays_pass_by_val"></a>Arrays Are Passed By Value</h6>
 
-<ul><li>level: beginner</li>
-</ul><pre><code>package main
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<pre><code>package main
 
 import "fmt"
 
@@ -405,10 +552,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="unexpectedvaluesinsliceandarrayrangeclauses">Unexpected Values in Slice and Array "range" Clauses</h6>
+<h6 id="anameunexpected_slice_arr_valsaunexpectedvaluesinsliceandarrayrangeclauses"><a name="unexpected_slice_arr_vals"></a>Unexpected Values in Slice and Array "range" Clauses</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>This can happen if you are used to the "for-in" or "foreach" statements in other languages. The "range" clause in Go is different. It generates two values: the first value is the item index while the second value is the item data.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>This can happen if you are used to the "for-in" or "foreach" statements in other languages. The "range" clause in Go is different. It generates two values: the first value is the item index while the second value is the item data.</p>
 
 <p>Bad:  </p>
 
@@ -440,15 +590,21 @@ func main() {
 }
 </code></pre>
 
-<h6 id="slicesandarraysareonedimensional">Slices And Arrays Are One-Dimensional</h6>
+<h6 id="anameone_dim_slice_arraslicesandarraysareonedimensional"><a name="one_dim_slice_arr"></a>Slices And Arrays Are One-Dimensional</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>It may seem like Go supports multi-dimensional arrays and slices, but it doesn't. Creating arrays of arrays or slices of slices is possible. Each inner-array/slice has to be initialized separately.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
 
-<h6 id="accessingnonexistingmapkeys">Accessing Non-Existing Map Keys</h6>
+<p>It may seem like Go supports multi-dimensional arrays and slices, but it doesn't. Creating arrays of arrays or slices of slices is possible. Each inner-array/slice has to be initialized separately.</p>
 
-<ul><li>level: beginner</li>
-</ul><p>This is a gotcha for developers who expect to get "nil" values (like it's done in other languages). The returned value will be "nil" if the "zero value" for the corresponding data type is "nil", but it'll be different for other data types. Checking for the appropriate "zero value" can be used to determine if the map record exist, but it's not always reliable (e.g., what do you do if you have a map of booleans where the "zero value" is false). The most reliable way to know if the map record exist is to check the second value return by the map access operation.</p>
+<h6 id="anamemap_key_neaaccessingnonexistingmapkeys"><a name="map_key_ne"></a>Accessing Non-Existing Map Keys</h6>
+
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>This is a gotcha for developers who expect to get "nil" values (like it's done in other languages). The returned value will be "nil" if the "zero value" for the corresponding data type is "nil", but it'll be different for other data types. Checking for the appropriate "zero value" can be used to determine if the map record exist, but it's not always reliable (e.g., what do you do if you have a map of booleans where the "zero value" is false). The most reliable way to know if the map record exist is to check the second value return by the map access operation.</p>
 
 <p>Bad:  </p>
 
@@ -480,10 +636,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="stringsareimmutable">Strings Are Immutable</h6>
+<h6 id="anameimm_stringsastringsareimmutable"><a name="imm_strings"></a>Strings Are Immutable</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>Trying to update an individual character in a string using the index operator will result in a failure. Strings are read-only byte slices (with a few extra properties). If you do need to update a string then use a byte slice instead converting it to a string type when necessary.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Trying to update an individual character in a string using the index operator will result in a failure. Strings are read-only byte slices (with a few extra properties). If you do need to update a string then use a byte slice instead converting it to a string type when necessary.</p>
 
 <p>Fails:  </p>
 
@@ -522,10 +681,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="conversionsbetweenstringsandbyteslices">Conversions Between Strings and Byte Slices</h6>
+<h6 id="anamestring_byte_slice_convaconversionsbetweenstringsandbyteslices"><a name="string_byte_slice_conv"></a>Conversions Between Strings and Byte Slices</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>When you convert a string to a byte slice (and vice versa) you get a complete copy of the orginal data. It's not like a cast in other languages and it's not like reslicing where the new slice variable points to the same underlying array used by the original byte slice.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>When you convert a string to a byte slice (and vice versa) you get a complete copy of the orginal data. It's not like a cast in other languages and it's not like reslicing where the new slice variable points to the same underlying array used by the original byte slice.</p>
 
 <p>Go does have a couple of optimizations for <code>[]byte</code> to string and <code>string</code> to <code>[]byte</code> conversions to avoid extra allocations (with more optimizations on the todo list).</p>
 
@@ -533,10 +695,13 @@ func main() {
 
 <p>The second optimization avoid extra allocations in <code>for range</code> clauses with strings converted to <code>[]byte</code>: <code>for i,v := range []byte(str) {...}</code>.</p>
 
-<h6 id="stringsandindexoperator">Strings And Index Operator</h6>
+<h6 id="anamestring_idxastringsandindexoperator"><a name="string_idx"></a>Strings And Index Operator</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>The index operator on a string returns a byte, not a character (like it's done in other languages).</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>The index operator on a string returns a byte, not a character (like it's done in other languages).</p>
 
 <pre><code>package main
 
@@ -551,15 +716,21 @@ func main() {
 
 <p>If you need to access specific string characters use the "for range" clause. The official "unicode/utf8" package and the experimental utf8string package (golang.org/x/exp/utf8string) are also useful. The utf8string package includes a convinient "At" method. Converting the string to a slice of runes is an option too.</p>
 
-<h6 id="stringsarenotalwaysutf8text">Strings Are Not Always UTF8 Text</h6>
+<h6 id="anamestrings_na_utfastringsarenotalwaysutf8text"><a name="strings_na_utf"></a>Strings Are Not Always UTF8 Text</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>String values are not required to be UTF8 text. They can contain arbitrary bytes. The only time strings are UTF8 is when string literals are used. Even then they can include other data using escape sequences.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
 
-<h6 id="missingcommainmultilineslicearraymapliterals">Missing Comma In Multi-Line Slice/Array/Map Literals</h6>
+<p>String values are not required to be UTF8 text. They can contain arbitrary bytes. The only time strings are UTF8 is when string literals are used. Even then they can include other data using escape sequences.</p>
 
-<ul><li>level: beginner</li>
-</ul><p>Fails:  </p>
+<h6 id="anamemline_lit_commaamissingcommainmultilineslicearraymapliterals"><a name="mline_lit_comma"></a>Missing Comma In Multi-Line Slice/Array/Map Literals</h6>
+
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Fails:  </p>
 
 <pre><code>package main
 
@@ -600,10 +771,13 @@ func main() {
 
 <p>You won't get a compile error if you leave the trailing comma when you collapse the declaration to be on a single line.</p>
 
-<h6 id="logfatalandlogpanicdomorethanlog">log.Fatal and log.Panic Do More Than Log</h6>
+<h6 id="anamelog_fatal_exitalogfatalandlogpanicdomorethanlog"><a name="log_fatal_exit"></a>log.Fatal and log.Panic Do More Than Log</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>Logging libraries often provide different log levels. Unlike those logging libraries the log package in Go does more then log if you call its Fatal and Panic functions. When your app call those functions Go will also terminate you app :-)</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Logging libraries often provide different log levels. Unlike those logging libraries the log package in Go does more then log if you call its Fatal and Panic functions. When your app call those functions Go will also terminate you app :-)</p>
 
 <pre><code>package main
 
@@ -615,22 +789,31 @@ func main() {
 }
 </code></pre>
 
-<h6 id="builtindatastructureoperationsarenotsynchronized">Built-in Data Structure Operations Are Not Synchronized</h6>
+<h6 id="anamecoll_no_syncabuiltindatastructureoperationsarenotsynchronized"><a name="coll_no_sync"></a>Built-in Data Structure Operations Are Not Synchronized</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>Even though Go has a number of features to support concurrenty natively concurrency safe data collections are not one them :-) It's your responsibility to ensure the data collection updates are atomic. Goroutines and channels are the recommended way to implement those atomic operations, but you can also leverage the "sync" package if it makes sense for your application.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
 
-<h6 id="iterationvaluesforstringsinrangeclauses">Iteration Values For Strings in "range" Clauses</h6>
+<p>Even though Go has a number of features to support concurrenty natively concurrency safe data collections are not one them :-) It's your responsibility to ensure the data collection updates are atomic. Goroutines and channels are the recommended way to implement those atomic operations, but you can also leverage the "sync" package if it makes sense for your application.</p>
 
-<ul><li>level: beginner</li>
-</ul><p>The index value (the first value returned by the "range" operation) is the index of the first byte for the current character (aka Unicode code point, "rune") returned in the second value. It's not the index for the current character like it's done in other languages.</p>
+<h6 id="anamestring_range_valsaiterationvaluesforstringsinrangeclauses"><a name="string_range_vals"></a>Iteration Values For Strings in "range" Clauses</h6>
+
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>The index value (the first value returned by the "range" operation) is the index of the first byte for the current character (aka Unicode code point, "rune") returned in the second value. It's not the index for the current character like it's done in other languages.</p>
 
 <p>Don't use "for range" clauses if you use strings as read only byte slices with arbitrary data because you'll get a lot of 0xfffd runes (aka Unicode replacement characters) and not the actual data in those strings.</p>
 
-<h6 id="iteratingthroughamapusingaforrangeclause">Iterating Through a Map Using a "for range" Clause</h6>
+<h6 id="anamemap_rangeaiteratingthroughamapusingaforrangeclause"><a name="map_range"></a>Iterating Through a Map Using a "for range" Clause</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>This is a gotcha if you expect the items to be in a certain order (e.g., ordered by the key value). Each map iteration will produce different results. The Go runtime tries to go an extra mile randomizing the iteration order, but it doesn't always succeed so you may get several identical map iterations. Don't be surprised to see 5 identical iterations in a row.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>This is a gotcha if you expect the items to be in a certain order (e.g., ordered by the key value). Each map iteration will produce different results. The Go runtime tries to go an extra mile randomizing the iteration order, but it doesn't always succeed so you may get several identical map iterations. Don't be surprised to see 5 identical iterations in a row.</p>
 
 <pre><code>package main
 
@@ -646,10 +829,13 @@ func main() {
 
 <p>And if you use the Go Playground (<a href="https://play.golang.org/">https://play.golang.org/</a>) you'll always get the same results because it doesn't recompile the code unless you make a change.</p>
 
-<h6 id="fallthroughbehaviorinswitchstatements">Fallthrough Behavior in "switch" Statements</h6>
+<h6 id="anameswitch_fallafallthroughbehaviorinswitchstatements"><a name="switch_fall"></a>Fallthrough Behavior in "switch" Statements</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>The "case" blocks in "switch" statements break by default. This is different from other languages.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>The "case" blocks in "switch" statements break by default. This is different from other languages.</p>
 
 <pre><code>package main
 
@@ -690,10 +876,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="incrementsanddecrements">Increments and Decrements</h6>
+<h6 id="anameinc_decaincrementsanddecrements"><a name="inc_dec"></a>Increments and Decrements</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>Many languages have increment and decrement operators. Unlike other languages Go doesn't support the prefix version of the operations. You also can't use the operators in expressions.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Many languages have increment and decrement operators. Unlike other languages Go doesn't support the prefix version of the operations. You also can't use the operators in expressions.</p>
 
 <p>Fails:  </p>
 
@@ -732,10 +921,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="bitwisenotoperator">Bitwise NOT Operator</h6>
+<h6 id="anamebit_notabitwisenotoperator"><a name="bit_not"></a>Bitwise NOT Operator</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>Many languages use <code>~</code> as the unary NOT operator (aka bitwise complement), but Go reuses the XOR operator (<code>^</code>) for that.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Many languages use <code>~</code> as the unary NOT operator (aka bitwise complement), but Go reuses the XOR operator (<code>^</code>) for that.</p>
 
 <p>Fails:  </p>
 
@@ -794,10 +986,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="unexportedstructurefieldsarenotencoded">Unexported Structure Fields Are Not Encoded</h6>
+<h6 id="anameunexp_struct_field_encaunexportedstructurefieldsarenotencoded"><a name="unexp_struct_field_enc"></a>Unexported Structure Fields Are Not Encoded</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>The fields starting with lowercase letters will not be encoded (json, xml, gob, etc), so when you decode the structure you'll end up with zero values in those unexported fields.</p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>The fields starting with lowercase letters will not be encoded (json, xml, gob, etc), so when you decode the structure you'll end up with zero values in those unexported fields.</p>
 
 <pre><code>package main
 
@@ -825,15 +1020,21 @@ func main() {
 }
 </code></pre>
 
-<h6 id="appexitswithactivegoroutines">App Exits With Active Goroutines</h6>
+<h6 id="anamegor_app_exitaappexitswithactivegoroutines"><a name="gor_app_exit"></a>App Exits With Active Goroutines</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>The app will not wait for all your goroutines to complete. This is a common mistake for beginners in general. Everybody starts somewhere, so there's no shame in making rookie mistakes :-)   </p>
+<ul>
+<li>level: beginner</li>
+</ul>
 
-<h6 id="sendingtoanunbufferedchannelreturnsassoonasthetargetreceiverisready">Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</h6>
+<p>The app will not wait for all your goroutines to complete. This is a common mistake for beginners in general. Everybody starts somewhere, so there's no shame in making rookie mistakes :-)   </p>
 
-<ul><li>level: beginner</li>
-</ul><p>The sender will not be blocked until your message is processed by the receiver. Depending on the machine where you are running the code the receiver goroutine may or may not have enough time to process the message.</p>
+<h6 id="anameunbuf_ch_send_doneasendingtoanunbufferedchannelreturnsassoonasthetargetreceiverisready"><a name="unbuf_ch_send_done"></a>Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</h6>
+
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>The sender will not be blocked until your message is processed by the receiver. Depending on the machine where you are running the code the receiver goroutine may or may not have enough time to process the message.</p>
 
 <pre><code>package main
 
@@ -853,10 +1054,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="methodswithvaluereceiverscantchangetheoriginalvalue">Methods with Value Receivers Can't Change the Original Value</h6>
+<h6 id="anamemethod_val_receiveramethodswithvaluereceiverscantchangetheoriginalvalue"><a name="method_val_receiver"></a>Methods with Value Receivers Can't Change the Original Value</h6>
 
-<ul><li>level: beginner</li>
-</ul><p>Method receivers are like regular function arguments. If it's declared to be a value then your function/method gets a copy of your receiver argument. This means making changes to the receiver will not affect the original value unless your receiver is a map or a slice and you are updating the items in the collection or the fields you are updating in the receiver are pointers. </p>
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Method receivers are like regular function arguments. If it's declared to be a value then your function/method gets a copy of your receiver argument. This means making changes to the receiver will not affect the original value unless your receiver is a map or a slice and you are updating the items in the collection or the fields you are updating in the receiver are pointers. </p>
 
 <pre><code>package main
 
@@ -895,10 +1099,15 @@ func main() {
 }
 </code></pre>
 
-<h6 id="comparingstructsarraysslicesandmaps">Comparing Structs, Arrays, Slices, and Maps</h6>
+<p><a name="intermediate_beginner"></a></p>
 
-<ul><li>level: intermediate</li>
-</ul><p>It's possible to compare structs using the equality operator ,<code>==</code>.</p>
+<h6 id="anamecompare_struct_arr_slice_mapacomparingstructsarraysslicesandmaps"><a name="compare_struct_arr_slice_map"></a>Comparing Structs, Arrays, Slices, and Maps</h6>
+
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>It's possible to compare structs using the equality operator ,<code>==</code>.</p>
 
 <pre><code>package main
 
@@ -1048,10 +1257,13 @@ func main() {
 
 <p>If your byte slices contain 'secrets' (e.g., cryptographic hashes, tokens, etc) that need to be validated against user provided data don't use <code>reflect.DeepEqual()</code>, <code>bytes.Equal()</code>, or <code>bytes.Compare()</code> because those functions will make your application vulnerable to <a href="http://en.wikipedia.org/wiki/Timing_attack"><strong>timing attacks</strong></a>. To avoid leaking the timing information use the functions from the 'crypto/subtle' package (e.g., <code>subtle.ConstantTimeCompare()</code>).</p>
 
-<h6 id="recoveringfromapanic">Recovering From a Panic</h6>
+<h6 id="anamepanic_recoverarecoveringfromapanic"><a name="panic_recover"></a>Recovering From a Panic</h6>
 
-<ul><li>level: intermediate</li>
-</ul><p>The 'recover' function can be used to catch/intercept a panic. Calling 'recover' will do the trick only when it's done in a deferred function.</p>
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>The 'recover' function can be used to catch/intercept a panic. Calling 'recover' will do the trick only when it's done in a deferred function.</p>
 
 <p>Incorrect:  </p>
 
@@ -1103,10 +1315,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="updatingandreferencingitemvaluesinslicearrayandmaprangeclauses">Updating and Referencing Item Values in Slice, Array, and Map "range" Clauses</h6>
+<h6 id="anamerange_val_updateaupdatingandreferencingitemvaluesinslicearrayandmapforrangeclauses"><a name="range_val_update"></a>Updating and Referencing Item Values in Slice, Array, and Map "for range" Clauses</h6>
 
-<ul><li>level: intermediate</li>
-</ul><p>The item data value generated in the "range" clause is a copy of the actual item. It's not a reference to the original item. This means that updating the value will not change the original data item. It also means that taking the address of the value will not give you a pointer to the original data item.</p>
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>The item data value generated in the "range" clause is a copy of the actual item. It's not a reference to the original item. This means that updating the value will not change the original data item. It also means that taking the address of the value will not give you a pointer to the original data item.</p>
 
 <pre><code>package main
 
@@ -1155,15 +1370,21 @@ func main() {
 }
 </code></pre>
 
-<h6 id="slicesreferencinglargedataarrays">Slices Referencing Large Data Arrays</h6>
+<h6 id="anameslice_hidden_dataahiddendatainslices"><a name="slice_hidden_data"></a>"Hidden" Data in Slices</h6>
 
-<ul><li>level: intermediate</li>
-</ul><p>When you reslice a slice the new slice will reference the array of the original slice. If you forget about this behavior it can lead to unexpected memory usage if your application allocates large temporary slices reslicing them to refer to small sections of the original data. To avoid this trap make sure to copy the data from the temporary slide (instead of reslicing it).</p>
+<ul>
+<li>level: intermediate</li>
+</ul>
 
-<h6 id="staleslices">"Stale" Slices</h6>
+<p>When you reslice a slice the new slice will reference the array of the original slice. If you forget about this behavior it can lead to unexpected memory usage if your application allocates large temporary slices reslicing them to refer to small sections of the original data. To avoid this trap make sure to copy the data from the temporary slide (instead of reslicing it).</p>
 
-<ul><li>level: intermediate</li>
-</ul><p>Multiple slices can reference the same data. This can happen when you reslice a slice, for example. If your application relies on this behavior to function properly then you'll need to worry about "stale" slices. </p>
+<h6 id="anamestale_slicesastaleslices"><a name="stale_slices"></a>"Stale" Slices</h6>
+
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>Multiple slices can reference the same data. This can happen when you reslice a slice, for example. If your application relies on this behavior to function properly then you'll need to worry about "stale" slices. </p>
 
 <p>When slices grow it's possible for some of these slices to become "stale". Go tries to do as much as it can to help you avoid "stale" slices (refactor this senstence). When an old slice points to the old array and the new slice points to a new reallocated array after new elements were added to it.</p>
 
@@ -1192,10 +1413,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="typedeclarationsandtypemethods">Type Declarations and Type Methods</h6>
+<h6 id="anametype_decl_methodsatypedeclarationsandmethods"><a name="type_decl_methods"></a>Type Declarations and Methods</h6>
 
-<ul><li>level: intermediate</li>
-</ul><p>When you create a type declaration by defining a new type from an existing (non-interface) type you don't inherit the methods defined for that existing type.</p>
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>When you create a type declaration by defining a new type from an existing (non-interface) type you don't inherit the methods defined for that existing type.</p>
 
 <p>Fails:  </p>
 
@@ -1257,10 +1481,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="breakingoutofforswitchandforselectcodeblocks">Breaking Out of "for switch" and "for select" Code Blocks</h6>
+<h6 id="anamedeep_for_breakoutabreakingoutofforswitchandforselectcodeblocks"><a name="deep_for_breakout"></a>Breaking Out of "for switch" and "for select" Code Blocks</h6>
 
-<ul><li>level: intermediate</li>
-</ul><p>A "break" statement without a label only gets you out of the inner switch/select block. If using a "return" statement is not an option then defining a label for the outer loop is the next best thing.</p>
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>A "break" statement without a label only gets you out of the inner switch/select block. If using a "return" statement is not an option then defining a label for the outer loop is the next best thing.</p>
 
 <pre><code>package main
 
@@ -1282,10 +1509,13 @@ func main() {
 
 <p>A "goto" statement will do the trick too...</p>
 
-<h6 id="iterationvariablesandclosuresinforstatements">Iteration Variables and Closures in "for" Statements</h6>
+<h6 id="anameclosure_for_it_varsaiterationvariablesandclosuresinforstatements"><a name="closure_for_it_vars"></a>Iteration Variables and Closures in "for" Statements</h6>
 
-<ul><li>level: intermediate</li>
-</ul><p>This is the most common gotcha in Go. The iteration variables in "for" statements are re-used in each iteration. This means that each closure (aka function literal) created in your "for" loop will reference the same variable (and they'll get that variable's value at the time those goroutines start executing).</p>
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>This is the most common gotcha in Go. The iteration variables in "for" statements are re-used in each iteration. This means that each closure (aka function literal) created in your "for" loop will reference the same variable (and they'll get that variable's value at the time those goroutines start executing).</p>
 
 <p>Incorrect:  </p>
 
@@ -1450,10 +1680,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="deferredfunctioncallargumentevaluation">Deferred Function Call Argument Evaluation</h6>
+<h6 id="anamedeferred_callsadeferredfunctioncallargumentevaluation"><a name="deferred_calls"></a>Deferred Function Call Argument Evaluation</h6>
 
-<ul><li>level: intermediate</li>
-</ul><p>Arguments for a deferred function call are evaluated when the defer statement is evaluated (not when the function is actually executing).</p>
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>Arguments for a deferred function call are evaluated when the defer statement is evaluated (not when the function is actually executing).</p>
 
 <pre><code>package main
 
@@ -1468,10 +1701,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="failedtypeassertions">Failed Type Assertions</h6>
+<h6 id="anamefailed_type_assertafailedtypeassertions"><a name="failed_type_assert"></a>Failed Type Assertions</h6>
 
-<ul><li>level: intermediate</li>
-</ul><p>Failed type assertions return the "zero value" for the target type used in the assertion statement. This can lead to unexpected behavior when it's mixed with variable shadowing.</p>
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>Failed type assertions return the "zero value" for the target type used in the assertion statement. This can lead to unexpected behavior when it's mixed with variable shadowing.</p>
 
 <p>Incorrect:  </p>
 
@@ -1509,10 +1745,15 @@ func main() {
 }
 </code></pre>
 
-<h6 id="usingpointerreceivermethodsonvalueinstances">Using Pointer Receiver Methods On Value Instances</h6>
+<p><a name="advanced_beginner"></a></p>
 
-<ul><li>level: advanced</li>
-</ul><p>It's ok to call a pointer receiver method on a value as long as the value is addressable. In other words, you don't need to have a value receiver version of the method in some cases.</p>
+<h6 id="anameptr_receiver_val_instausingpointerreceivermethodsonvalueinstances"><a name="ptr_receiver_val_inst"></a>Using Pointer Receiver Methods On Value Instances</h6>
+
+<ul>
+<li>level: advanced</li>
+</ul>
+
+<p>It's ok to call a pointer receiver method on a value as long as the value is addressable. In other words, you don't need to have a value receiver version of the method in some cases.</p>
 
 <p>Not every variable is addressable though. Map elements are not addressable. Variables referenced through interfaces are also not addressable.</p>
 
@@ -1549,16 +1790,19 @@ func main() {
 <blockquote>
   <p><span style="color:#900; font-family: Menlo, Courier New, monospace; font-size: 11pt;">
   /tmp/sandbox017696142/main.go:21: cannot use data literal (type data) as type printer in assignment:
-      data does not implement printer (print method has pointer receiver)<br>
+      data does not implement printer (print method has pointer receiver)<br/>
   /tmp/sandbox017696142/main.go:25: cannot call pointer method on m["x"]
   /tmp/sandbox017696142/main.go:25: cannot take the address of m["x"]
   </span></p>
 </blockquote>
 
-<h6 id="nilinterfacesandnilinterfacesvalues">"nil" Interfaces and "nil" Interfaces Values</h6>
+<h6 id="anamenil_in_nil_in_valsanilinterfacesandnilinterfacesvalues"><a name="nil_in_nil_in_vals"></a>"nil" Interfaces and "nil" Interfaces Values</h6>
 
-<ul><li>level: advanced</li>
-</ul><p>This is the second most common gotcha in Go because interfaces are not pointers even though they may look like pointers. Interface variables will be "nil" only when their type and value fields are "nil".</p>
+<ul>
+<li>level: advanced</li>
+</ul>
+
+<p>This is the second most common gotcha in Go because interfaces are not pointers even though they may look like pointers. Interface variables will be "nil" only when their type and value fields are "nil".</p>
 
 <p>The interface type and value fields are populated based on the type and value of the variable used to create the corresponding interface variable. This can lead to unexpected behavior when you are trying to check if an interface variable equals to "nil".</p>
 
@@ -1632,15 +1876,21 @@ func main() {
 }
 </code></pre>
 
-<h6 id="stackandheapvariables">Stack and Heap Variables</h6>
+<h6 id="anamestack_heap_varsastackandheapvariables"><a name="stack_heap_vars"></a>Stack and Heap Variables</h6>
 
-<ul><li>level: advanced</li>
-</ul><p>You don't always know if your variable is allocated on the stack or heap.</p>
+<ul>
+<li>level: advanced</li>
+</ul>
 
-<h6 id="gomaxprocsconcurrencyandparallelism">GOMAXPROCS, Concurrency, and Parallelism</h6>
+<p>You don't always know if your variable is allocated on the stack or heap.</p>
 
-<ul><li>level: advanced/intermediate</li>
-</ul><p>By default, Go uses only one execution context / OS thread (in the current version). This number can be increased by setting GOMAXPROCS.</p>
+<h6 id="anamegomaxprocsagomaxprocsconcurrencyandparallelism"><a name="gomaxprocs"></a>GOMAXPROCS, Concurrency, and Parallelism</h6>
+
+<ul>
+<li>level: advanced/intermediate</li>
+</ul>
+
+<p>By default, Go uses only one execution context / OS thread (in the current version). This number can be increased by setting GOMAXPROCS.</p>
 
 <p>There's a common misconception that GOMAXPROCS represents the number of CPUs Go will use to run goroutes. The runtime.GOMAXPROCS function documentation adds more to the confusion though the GOMAXPROCS variable description (<a href="https://golang.org/pkg/runtime/">https://golang.org/pkg/runtime/</a>) does a better job talking about OS threads instead.</p>
 
@@ -1662,37 +1912,69 @@ func main() {
     fmt.Println(runtime.GOMAXPROCS(-1)) //prints: 256
 }
 </code></pre>
-			</section><footer class="post-footer"><div class="post-meta">
-					<a href="../tag/golang/">golang</a>
+			</section>
+			
+			<footer class="post-footer">
+				<div class="post-meta">
+					<a href="../tag/golang/index.html">golang</a>
 				</div>
 				<div class="post-share">
                     <a class="fa fa-reddit" href="http://www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false;" target="_blank">
 						<span class="hidden">Reddit</span>
 					</a>
                     
-                    <a class="fa fa-hacker-news" href="javascript:window.location=%22http://news.ycombinator.com/submitlink?u=%22+encodeURIComponent(document.location)+%22&amp;t=%22+encodeURIComponent(document.title)" target="_blank">
+                    <a class="fa fa-hacker-news" href="javascript:window.location=%22http://news.ycombinator.com/submitlink?u=%22+encodeURIComponent(document.location)+%22&t=%22+encodeURIComponent(document.title)" target="_blank">
                         <span class="hidden">Hacker News</span>
                     </a>
                     
-					<a class="fa fa-twitter" href="https://twitter.com/share?text=Traps,%20Gotchas%20and%20Common%20Mistakes%20in%20Go%20(golang)&amp;url=http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" target="_blank">
+					<a class="fa fa-twitter" href="https://twitter.com/share?text=Traps, Gotchas and Common Mistakes in Go (golang)&url=http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" target="_blank">
 						<span class="hidden">Twitter</span>
 					</a>
                     
-                    <a class="fa fa-rss" href="../rss/index.rss" target="_blank">
+                    <a class="fa fa-rss" href="../rss/index.html" target="_blank">
 						<span class="hidden">RSS</span>
 					</a>
 				</div>
 				<div class="clear"></div>
-			</footer><aside class="post-author"><figure class="post-author-avatar"><img src="../content/images/2014/12/kcq_gh_pix.png" alt="Kyle Quest"></figure><div class="post-author-bio">
-					<h4><a class="js-author-index js-ajax-link" href="../author/kyle/">Kyle Quest</a></h4>
+			</footer>
+			
+			<aside class="post-author">
+					<figure class="post-author-avatar">
+						<img src="../content/images/2014/12/kcq_gh_pix.png" alt="Kyle Quest" />
+					</figure>
+				<div class="post-author-bio">
+					<h4><a class="js-author-index js-ajax-link" href="../author/kyle/index.html">Kyle Quest</a></h4>
 						<p>Builder, breaker, and defender. Cloud, security, and Big Data.</p>
 						<span><i class="fa fa-link"></i> <a href="https://twitter.com/kcqon">Twitter</a></span>
 						<span><i class="fa fa-link"></i> <a href="https://www.linkedin.com/in/kylequest">LinkedIn</a></span>
 				</div>
 				<div class="clear"></div>
-			</aside></div>
-	</article></main></div>
-	</section><footer id="site-footer"><div class="inner">
+			</aside>
+			
+		</div>
+	</article>
+</main>
+		</div>
+	</section>
+	
+	<footer id="site-footer">
+		<div class="inner">
 				<span class="blog-description">Code, Security, and Everything in Between.</span>
-			<section class="poweredby">Create secure cloud apps with <a href="https://www.cloudimmunity.com/">Cloud Immunity</a>.</section></div>
-	</footer><script src="../public/jquery.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/nprogress.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/index.js?v=cbce5da5aa"></script><!-- Extra for DC --><script type="text/javascript" src="../assets/js/libs/d3.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=cbce5da5aa"></script><script type="text/javascript" src="../assets/js/libs/dc.js?v=cbce5da5aa"></script></body>
+			<section class="poweredby">Create secure cloud apps with <a href="https://www.cloudimmunity.com/">Cloud Immunity</a>.</section>
+		</div>
+	</footer>
+
+	<script src="../public/jquery.js?v=cbce5da5aa"></script>
+	<script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=cbce5da5aa"></script>
+	<script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=cbce5da5aa"></script>
+	<script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=cbce5da5aa"></script>
+	<script type="text/javascript" src="../assets/js/libs/nprogress.js?v=cbce5da5aa"></script>
+	<script type="text/javascript" src="../assets/js/index.js?v=cbce5da5aa"></script>
+    <!-- Extra for DC -->
+    <script type="text/javascript" src="../assets/js/libs/d3.js?v=cbce5da5aa"></script>
+    <script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=cbce5da5aa"></script>
+    <script type="text/javascript" src="../assets/js/libs/dc.js?v=cbce5da5aa"></script>
+    
+
+</body>
+</html>
