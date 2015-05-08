@@ -25,7 +25,7 @@
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-07T16:54:16.267Z" />
+    <meta property="article:modified_time" content="2015-05-08T05:51:26.666Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
@@ -48,7 +48,7 @@
     "headline": "Traps, Gotchas and Common Mistakes in Go (golang)",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-07T16:54:16.267Z",
+    "dateModified": "2015-05-08T05:51:26.666Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -193,11 +193,9 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>If you have an unused variable your code will fail to compile. There are a couple of gotchas to this gotcha though :-) </p>
+<p>If you have an unused variable your code will fail to compile. There's an exception though. You must use variables you declare inside functions, but it's ok if you have unused global variables.</p>
 
-<p>This rule applies only to the variable declared inside a function. This means it's ok if you have an unused global variable.</p>
-
-<p>Assigning a new value to the unused variable (as a separate statement) doesn't satisfy the requirement, so your code will still fail to compile.</p>
+<p>If you assign a new value to the unused variable your code will still fail to compile. You need to use the variable value somehow to make the compiler happy.</p>
 
 <p>Fails:  </p>
 
@@ -239,6 +237,9 @@ func main() {
     var three int 
     three = 3
     one = three
+
+    var four int
+    four = four
 }
 </code></pre>
 
@@ -250,9 +251,9 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>Your code will fail to compile if you import a package without using any of its exported functions, interfaces, structures or variables.</p>
+<p>Your code will fail to compile if you import a package without using any of its exported functions, interfaces, structures, or variables.</p>
 
-<p>If you really need the imported package you can use the blank identifier (underscore character) as its package name to avoid this compilation failure. The blank identifier is used to import packages for their side effects.</p>
+<p>If you really need the imported package you can use the blank identifier, <code>_</code>, as its package name to avoid this compilation failure. The blank identifier is used to import packages for their side effects.</p>
 
 <p>Fails:  </p>
 
@@ -337,9 +338,9 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>You can't redeclare a variable on its own. It's possible only in a multi-variable short declaration where one or more new variables are declared.</p>
+<p>You can't redeclare a variable in a standalone statement, but it is allowed in multi-variable declarations where, at least, one new variable is also declared.</p>
 
-<p>The redeclared variable also has to be in the same block or you'll end up with a shadowed variable.</p>
+<p>The redeclared variable has to be in the same block or you'll end up with a shadowed variable.</p>
 
 <p>Fails:  </p>
 
@@ -377,7 +378,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>The short variable declaration syntax is so convinient (especially for those coming from a dynamic language) that it's easy to treat it like a regular assignment operation. The ability to redeclare variables also makes this mistake more likely.</p>
+<p>The short variable declaration syntax is so convinient (especially for those coming from a dynamic language) that it's easy to treat it like a regular assignment operation. If you make this mistake in a new code block there will be no compiler error, but your app will not do what you expect.</p>
 
 <pre><code>package main
 
@@ -401,7 +402,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>"nil" can be used as the "zero value" for interfaces, functions, pointers, maps, slices, and channels. If you don't specify the variable type the compiler will fail to compile your code because it can't guess the type.</p>
+<p>The "nil" identifier can be used as the "zero value" for interfaces, functions, pointers, maps, slices, and channels. If you don't specify the variable type the compiler will fail to compile your code because it can't guess the type.</p>
 
 <p>Fails:  </p>
 
@@ -468,7 +469,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>You can specify the map capacity when it's created, but you can't use the "cap" function on maps.</p>
+<p>You can specify the map capacity when it's created, but you can't use the <code>cap()</code> function on maps.</p>
 
 <p>Fails:  </p>
 
@@ -494,7 +495,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>This is a gotcha for developers who are used to assigning "nil" to string variables.</p>
+<p>This is a gotcha for developers who are used to assigning "nil" identifiers to string variables.</p>
 
 <p>Fails:  </p>
 
@@ -597,7 +598,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>It may seem like Go supports multi-dimensional arrays and slices, but it doesn't. Creating arrays of arrays or slices of slices is possible. Each inner-array/slice has to be initialized separately.</p>
+<p>It may seem like Go supports multi-dimensional arrays and slices, but it doesn't. Creating arrays of arrays or slices of slices is possible though. However, each inner-array/slice has to be initialized separately.</p>
 
 <h6 id="anamemap_key_neaaccessingnonexistingmapkeys"><a name="map_key_ne"></a>Accessing Non-Existing Map Keys</h6>
 
@@ -605,7 +606,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>This is a gotcha for developers who expect to get "nil" values (like it's done in other languages). The returned value will be "nil" if the "zero value" for the corresponding data type is "nil", but it'll be different for other data types. Checking for the appropriate "zero value" can be used to determine if the map record exist, but it's not always reliable (e.g., what do you do if you have a map of booleans where the "zero value" is false). The most reliable way to know if the map record exist is to check the second value return by the map access operation.</p>
+<p>This is a gotcha for developers who expect to get "nil" identifiers (like it's done in other languages). The returned value will be "nil" if the "zero value" for the corresponding data type is "nil", but it'll be different for other data types. Checking for the appropriate "zero value" can be used to determine if the map record exist, but it's not always reliable (e.g., what do you do if you have a map of booleans where the "zero value" is false). The most reliable way to know if a given map record exist is to check the second value returned by the map access operation.</p>
 
 <p>Bad:  </p>
 
@@ -643,7 +644,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>Trying to update an individual character in a string using the index operator will result in a failure. Strings are read-only byte slices (with a few extra properties). If you do need to update a string then use a byte slice instead converting it to a string type when necessary.</p>
+<p>Trying to update an individual character in a string variable using the index operator will result in a failure. Strings are read-only byte slices (with a few extra properties). If you do need to update a string then use a byte slice instead converting it to a string type when necessary.</p>
 
 <p>Fails:  </p>
 
@@ -688,13 +689,13 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>When you convert a string to a byte slice (and vice versa) you get a complete copy of the orginal data. It's not like a cast in other languages and it's not like reslicing where the new slice variable points to the same underlying array used by the original byte slice.</p>
+<p>When you convert a string to a byte slice (and vice versa) you get a complete copy of the orginal data. It's not like a cast operation in other languages and it's not like reslicing where the new slice variable points to the same underlying array used by the original byte slice.</p>
 
-<p>Go does have a couple of optimizations for <code>[]byte</code> to string and <code>string</code> to <code>[]byte</code> conversions to avoid extra allocations (with more optimizations on the todo list).</p>
+<p>Go does have a couple of optimizations for <code>[]byte</code> to <code>string</code> and <code>string</code> to <code>[]byte</code> conversions to avoid extra allocations (with more optimizations on the todo list).</p>
 
 <p>The first optimization avoids extra allocations when <code>[]byte</code> keys are used to lookup entries in <code>map[string]</code> collections: <code>m[string(key)]</code>.</p>
 
-<p>The second optimization avoid extra allocations in <code>for range</code> clauses with strings converted to <code>[]byte</code>: <code>for i,v := range []byte(str) {...}</code>.</p>
+<p>The second optimization avoid extra allocations in <code>for range</code> clauses where strings are converted to <code>[]byte</code>: <code>for i,v := range []byte(str) {...}</code>.</p>
 
 <h6 id="anamestring_idxastringsandindexoperator"><a name="string_idx"></a>Strings And Index Operator</h6>
 
@@ -702,7 +703,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>The index operator on a string returns a byte, not a character (like it's done in other languages).</p>
+<p>The index operator on a string returns a byte value, not a character (like it's done in other languages).</p>
 
 <pre><code>package main
 
@@ -715,7 +716,7 @@ func main() {
 }
 </code></pre>
 
-<p>If you need to access specific string characters use the "for range" clause. The official "unicode/utf8" package and the experimental utf8string package (golang.org/x/exp/utf8string) are also useful. The utf8string package includes a convinient "At" method. Converting the string to a slice of runes is an option too.</p>
+<p>If you need to access specific string characters use the <code>for range</code> clause. The official "unicode/utf8" package and the experimental utf8string package (golang.org/x/exp/utf8string) are also useful. The utf8string package includes a convinient <code>At()</code> method. Converting the string to a slice of runes is an option too.</p>
 
 <h6 id="anamestrings_na_utfastringsarenotalwaysutf8text"><a name="strings_na_utf"></a>Strings Are Not Always UTF8 Text</h6>
 
@@ -725,7 +726,7 @@ func main() {
 
 <p>String values are not required to be UTF8 text. They can contain arbitrary bytes. The only time strings are UTF8 is when string literals are used. Even then they can include other data using escape sequences.</p>
 
-<h6 id="anamemline_lit_commaamissingcommainmultilineslicearraymapliterals"><a name="mline_lit_comma"></a>Missing Comma In Multi-Line Slice/Array/Map Literals</h6>
+<h6 id="anamemline_lit_commaamissingcommainmultilineslicearrayandmapliterals"><a name="mline_lit_comma"></a>Missing Comma In Multi-Line Slice, Array, and Map Literals</h6>
 
 <ul>
 <li>level: beginner</li>
@@ -770,7 +771,7 @@ func main() {
 }
 </code></pre>
 
-<p>You won't get a compile error if you leave the trailing comma when you collapse the declaration to be on a single line.</p>
+<p>You won't get a compiler error if you leave the trailing comma when you collapse the declaration to be on a single line.</p>
 
 <h6 id="anamelog_fatal_exitalogfatalandlogpanicdomorethanlog"><a name="log_fatal_exit"></a>log.Fatal and log.Panic Do More Than Log</h6>
 
@@ -778,7 +779,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>Logging libraries often provide different log levels. Unlike those logging libraries the log package in Go does more then log if you call its Fatal and Panic functions. When your app call those functions Go will also terminate you app :-)</p>
+<p>Logging libraries often provide different log levels. Unlike those logging libraries the log package in Go does more then log if you call its <code>Fatal*()</code> and <code>Panic*()</code> functions. When your app calls those functions Go will also terminate you app :-)</p>
 
 <pre><code>package main
 
@@ -796,7 +797,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>Even though Go has a number of features to support concurrenty natively concurrency safe data collections are not one them :-) It's your responsibility to ensure the data collection updates are atomic. Goroutines and channels are the recommended way to implement those atomic operations, but you can also leverage the "sync" package if it makes sense for your application.</p>
+<p>Even though Go has a number of features to support concurrency natively concurrency safe data collections are not one them :-) It's your responsibility to ensure the data collection updates are atomic. Goroutines and channels are the recommended way to implement those atomic operations, but you can also leverage the "sync" package if it makes sense for your application.</p>
 
 <h6 id="anamestring_range_valsaiterationvaluesforstringsinrangeclauses"><a name="string_range_vals"></a>Iteration Values For Strings in "range" Clauses</h6>
 
@@ -806,7 +807,26 @@ func main() {
 
 <p>The index value (the first value returned by the "range" operation) is the index of the first byte for the current character (aka Unicode code point, "rune") returned in the second value. It's not the index for the current character like it's done in other languages.</p>
 
-<p>Don't use "for range" clauses if you use strings as read only byte slices with arbitrary data because you'll get a lot of 0xfffd runes (aka Unicode replacement characters) and not the actual data in those strings.</p>
+<p>The <code>for range</code> clauses with string variables will try to interpret the data as UTF8 text. For any byte sequences it doesn't understand it will return 0xfffd runes (aka Unicode replacement characters) instead of the actual data. If you have arbitrary (non-UTF8 text) data stored in your string variables make sure to convert them to byte slices to get all stored data as-is.</p>
+
+<pre><code>package main
+
+import "fmt"
+
+func main() {  
+    data := "A\xfe\x02\xff\x04"
+    for _,v := range data {
+        fmt.Printf("%#x ",v)
+    }
+    //prints: 0x41 0xfffd 0x2 0xfffd 0x4 (not ok)
+
+    fmt.Println()
+    for _,v := range []byte(data) {
+        fmt.Printf("%#x ",v)
+    }
+    //prints: 0x41 0xfe 0x2 0xff 0x4 (good)
+}
+</code></pre>
 
 <h6 id="anamemap_rangeaiteratingthroughamapusingaforrangeclause"><a name="map_range"></a>Iterating Through a Map Using a "for range" Clause</h6>
 
@@ -836,7 +856,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>The "case" blocks in "switch" statements break by default. This is different from other languages.</p>
+<p>The "case" blocks in "switch" statements break by default. This is different from other languages where the default behavior is to fall through to the next "case" block.</p>
 
 <pre><code>package main
 
@@ -883,7 +903,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>Many languages have increment and decrement operators. Unlike other languages Go doesn't support the prefix version of the operations. You also can't use the operators in expressions.</p>
+<p>Many languages have increment and decrement operators. Unlike other languages Go doesn't support the prefix version of the operations. You also can't use these two operators in expressions.</p>
 
 <p>Fails:  </p>
 
@@ -963,7 +983,7 @@ func main() {
 
 <p>Go still uses <code>^</code> as the XOR operator, which maybe confusing for some people.</p>
 
-<p>If you want you can represet an unary NOT operation (e.g, <code>NOT 0x02</code>) with a binary XOR operation (e.g., <code>0x02 XOR 0xff</code>). This could explain why <code>^</code> was chosen.</p>
+<p>If you want you can represet an unary NOT operation (e.g, <code>NOT 0x02</code>) with a binary XOR operation (e.g., <code>0x02 XOR 0xff</code>). This could explain why <code>^</code> is reused to represent unary NOT operations.</p>
 
 <p>Go also has a special 'AND NOT' bitwise operator (<code>&amp;^</code>), which adds to the NOT operator confusion. It looks like a special feature/hack to support <code>A AND (NOT B)</code> without requiring parentheses.</p>
 
@@ -993,7 +1013,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>The fields starting with lowercase letters will not be encoded (json, xml, gob, etc), so when you decode the structure you'll end up with zero values in those unexported fields.</p>
+<p>The struct fields starting with lowercase letters will not be (json, xml, gob, etc) encoded, so when you decode the structure you'll end up with zero values in those unexported fields.</p>
 
 <pre><code>package main
 
@@ -1027,7 +1047,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>The app will not wait for all your goroutines to complete. This is a common mistake for beginners in general. Everybody starts somewhere, so there's no shame in making rookie mistakes :-)   </p>
+<p>The app will not wait for all your goroutines to complete. This is a common mistake for beginners in general. Everybody starts somewhere, so there's no shame in making rookie mistakes :-)  </p>
 
 <h6 id="anameunbuf_ch_send_doneasendingtoanunbufferedchannelreturnsassoonasthetargetreceiverisready"><a name="unbuf_ch_send_done"></a>Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</h6>
 
@@ -1035,7 +1055,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>The sender will not be blocked until your message is processed by the receiver. Depending on the machine where you are running the code the receiver goroutine may or may not have enough time to process the message.</p>
+<p>The sender will not be blocked until your message is processed by the receiver. Depending on the machine where you are running the code the receiver goroutine may or may not have enough time to process the message before the sender continues its execution.</p>
 
 <pre><code>package main
 
@@ -1061,7 +1081,7 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>Method receivers are like regular function arguments. If it's declared to be a value then your function/method gets a copy of your receiver argument. This means making changes to the receiver will not affect the original value unless your receiver is a map or a slice and you are updating the items in the collection or the fields you are updating in the receiver are pointers. </p>
+<p>Method receivers are like regular function arguments. If it's declared to be a value then your function/method gets a copy of your receiver argument. This means making changes to the receiver will not affect the original value unless your receiver is a map or slice variable and you are updating the items in the collection or the fields you are updating in the receiver are pointers. </p>
 
 <pre><code>package main
 
@@ -1108,7 +1128,7 @@ func main() {
 <li>level: intermediate</li>
 </ul>
 
-<p>It's possible to compare structs using the equality operator ,<code>==</code>.</p>
+<p>You can use the equality operator, <code>==</code>, to compare struct variables if each structure field can be compared with the equality operator.</p>
 
 <pre><code>package main
 
@@ -1157,7 +1177,7 @@ func main() {
 
 <p>Go does provide a number of helper functions to compare variables that can't be compared using the comperison operators.</p>
 
-<p>The most generic solution is to use the 'DeepEqual' function in the reflect package.</p>
+<p>The most generic solution is to use the <code>DeepEqual()</code> function in the reflect package.</p>
 
 <pre><code>package main
 
@@ -1189,7 +1209,7 @@ func main() {
 }
 </code></pre>
 
-<p>Aside from being slow (which may or may not be a deal breaker for your application) 'DeepEqual' also has its own gotchas.</p>
+<p>Aside from being slow (which may or may not be a deal breaker for your application) <code>DeepEqual()</code> also has its own gotchas.</p>
 
 <pre><code>package main
 
@@ -1205,7 +1225,7 @@ func main() {
 }
 </code></pre>
 
-<p>'DeepEqual' doesn't consider an empty slice to be equal to a nil slice unlike a specialized byte slice equal helper, bytes.Equal, that considers them equal.</p>
+<p><code>DeepEqual()</code> doesn't consider an empty slice to be equal to a "nil" slice. This behavior is different from the behavior you get using the <code>bytes.Equal()</code> function. <code>bytes.Equal()</code> considers "nil" and empty slices to be equal.</p>
 
 <pre><code>package main
 
@@ -1221,7 +1241,7 @@ func main() {
 }
 </code></pre>
 
-<p>'DeepEqual' isn't always perfect comparing slices.</p>
+<p><code>DeepEqual()</code> isn't always perfect comparing slices.</p>
 
 <pre><code>package main
 
@@ -1254,7 +1274,7 @@ func main() {
 }
 </code></pre>
 
-<p>If your byte slices (or strings) contain text data you might be tempted to use <code>ToUpper()</code> or <code>ToLower()</code> from the 'bytes' and 'strings' packages when you need to compare values in a case insensitive manner (before using <code>==</code>,<code>bytes.Equal()</code>, or <code>bytes.Compare()</code>). It will work for English, but it will not work for many other languages. <code>strings.EqualFold()</code> and <code>bytes.EqualFold()</code> should be used instead.</p>
+<p>If your byte slices (or strings) contain text data you might be tempted to use <code>ToUpper()</code> or <code>ToLower()</code> from the 'bytes' and 'strings' packages when you need to compare values in a case insensitive manner (before using <code>==</code>,<code>bytes.Equal()</code>, or <code>bytes.Compare()</code>). It will work for English text, but it will not work for text in many other languages. <code>strings.EqualFold()</code> and <code>bytes.EqualFold()</code> should be used instead.</p>
 
 <p>If your byte slices contain 'secrets' (e.g., cryptographic hashes, tokens, etc) that need to be validated against user provided data don't use <code>reflect.DeepEqual()</code>, <code>bytes.Equal()</code>, or <code>bytes.Compare()</code> because those functions will make your application vulnerable to <a href="http://en.wikipedia.org/wiki/Timing_attack"><strong>timing attacks</strong></a>. To avoid leaking the timing information use the functions from the 'crypto/subtle' package (e.g., <code>subtle.ConstantTimeCompare()</code>).</p>
 
@@ -1316,13 +1336,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="anamerange_val_updateaupdatingandreferencingitemvaluesinslicearrayandmapforrangeclauses"><a name="range_val_update"></a>Updating and Referencing Item Values in Slice, Array, and Map "for range" Clauses</h6>
+<h6 id="anamerange_val_updateaupdatingandreferencingitemvaluesinslicearrayandmaprangeclauses"><a name="range_val_update"></a>Updating and Referencing Item Values in Slice, Array, and Map "range" Clauses</h6>
 
 <ul>
 <li>level: intermediate</li>
 </ul>
 
-<p>The item data value generated in the "range" clause is a copy of the actual item. It's not a reference to the original item. This means that updating the value will not change the original data item. It also means that taking the address of the value will not give you a pointer to the original data item.</p>
+<p>The data values generated in the "range" clause are copies of the actual collection elements. They are not references to the original items. This means that updating the values will not change the original data. It also means that taking the address of the values will not give you pointers to the original data.</p>
 
 <pre><code>package main
 
@@ -1338,7 +1358,7 @@ func main() {
 }
 </code></pre>
 
-<p>If you need to update the original collection record value use the index operator to access the original item.</p>
+<p>If you need to update the original collection record value use the index operator to access the data.</p>
 
 <pre><code>package main
 
@@ -1377,9 +1397,9 @@ func main() {
 <li>level: intermediate</li>
 </ul>
 
-<p>When you reslice a slice the new slice will reference the array of the original slice. If you forget about this behavior it can lead to unexpected memory usage if your application allocates large temporary slices reslicing them to refer to small sections of the original data. To avoid this trap make sure to copy the data from the temporary slice (instead of reslicing it).</p>
+<p>When you reslice a slice the new slice will reference the array of the original slice. If you forget about this behavior it can lead to unexpected memory usage if your application allocates large temporary slices reslicing them to refer to small sections of the original data. To avoid this trap make sure to copy the data you need from the temporary slice (instead of reslicing it).</p>
 
-<h6 id="anameslice_data_corruptionaslicedatacorruption"><a name="slice_data_corruption"></a>Slice Data Corruption</h6>
+<h6 id="anameslice_data_corruptionaslicedatacorruption"><a name="slice_data_corruption"></a>Slice Data "Corruption"</h6>
 
 <ul>
 <li>level: intermediate</li>
@@ -1441,15 +1461,17 @@ func main() {
 }
 </code></pre>
 
+<p>The extra parameter in the full slice expression controls the capacity for the new slice. Now appending to that slice will trigger a new buffer allocation instead of overwriting the data in the second slice.</p>
+
 <h6 id="anamestale_slicesastaleslices"><a name="stale_slices"></a>"Stale" Slices</h6>
 
 <ul>
 <li>level: intermediate</li>
 </ul>
 
-<p>Multiple slices can reference the same data. This can happen when you reslice a slice, for example. If your application relies on this behavior to function properly then you'll need to worry about "stale" slices. </p>
+<p>Multiple slices can reference the same data. This can happen when you create a new slice from an existing slice, for example. If your application relies on this behavior to function properly then you'll need to worry about "stale" slices.</p>
 
-<p>When slices grow it's possible for some of these slices to become "stale". Go tries to do as much as it can to help you avoid "stale" slices (refactor this senstence). When an old slice points to the old array and the new slice points to a new reallocated array after new elements were added to it.</p>
+<p>At some point adding data to one of the slices will result in a new array allocation when the original array can't hold any more new data. Now other slices will point to the old array (with old data).</p>
 
 <pre><code>import "fmt"
 
@@ -1527,7 +1549,7 @@ func main() {
 }
 </code></pre>
 
-<p>Interface type declarations also retain their method set.</p>
+<p>Interface type declarations also retain their method sets.</p>
 
 <p>Works:  </p>
 
@@ -1578,7 +1600,7 @@ func main() {
 <li>level: intermediate</li>
 </ul>
 
-<p>This is the most common gotcha in Go. The iteration variables in "for" statements are re-used in each iteration. This means that each closure (aka function literal) created in your "for" loop will reference the same variable (and they'll get that variable's value at the time those goroutines start executing).</p>
+<p>This is the most common gotcha in Go. The iteration variables in <code>for</code> statements are re-used in each iteration. This means that each closure (aka function literal) created in your <code>for</code> loop will reference the same variable (and they'll get that variable's value at the time those goroutines start executing).</p>
 
 <p>Incorrect:  </p>
 
@@ -1749,7 +1771,7 @@ func main() {
 <li>level: intermediate</li>
 </ul>
 
-<p>Arguments for a deferred function call are evaluated when the defer statement is evaluated (not when the function is actually executing).</p>
+<p>Arguments for a deferred function call are evaluated when the <code>defer</code> statement is evaluated (not when the function is actually executing).</p>
 
 <pre><code>package main
 
@@ -1953,11 +1975,11 @@ func main() {
 <li>level: advanced</li>
 </ul>
 
-<p>By default, Go uses only one execution context / OS thread (in the current version). This number can be increased by setting GOMAXPROCS.</p>
+<p>By default, Go uses only one execution context / OS thread (in the current version). This number can be increased by setting <code>GOMAXPROCS</code>.</p>
 
-<p>There's a common misconception that GOMAXPROCS represents the number of CPUs Go will use to run goroutes. The runtime.GOMAXPROCS function documentation adds more to the confusion though the GOMAXPROCS variable description (<a href="https://golang.org/pkg/runtime/">https://golang.org/pkg/runtime/</a>) does a better job talking about OS threads instead.</p>
+<p>There's a common misconception that <code>GOMAXPROCS</code> represents the number of CPUs Go will use to run goroutes. The <code>runtime.GOMAXPROCS()</code> function documentation adds more to the confusion. The <code>GOMAXPROCS</code> variable description (<a href="https://golang.org/pkg/runtime/">https://golang.org/pkg/runtime/</a>) does a better job talking about OS threads.</p>
 
-<p>You can set GOMAXPROCS to more then the number of your CPUs. The max value for GOMAXPROCS is 256.</p>
+<p>You can set <code>GOMAXPROCS</code> to more then the number of your CPUs. The max value for <code>GOMAXPROCS</code> is 256.</p>
 
 <pre><code>package main
 
