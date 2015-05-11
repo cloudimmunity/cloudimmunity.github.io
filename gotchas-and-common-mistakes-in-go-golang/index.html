@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Traps, Gotchas and Common Mistakes in Go (golang)</title>
+	<title>(Draft) Traps, Gotchas and Common Mistakes in Go (golang)</title>
 	<meta name="description" content="" />
 
 	<meta name="HandheldFriendly" content="True" />
@@ -21,15 +21,15 @@
     
     <meta property="og:site_name" content="Devs ♥ Security" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Traps, Gotchas and Common Mistakes in Go (golang)" />
+    <meta property="og:title" content="(Draft) Traps, Gotchas and Common Mistakes in Go (golang)" />
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-08T05:51:26.666Z" />
+    <meta property="article:modified_time" content="2015-05-11T16:13:06.842Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Traps, Gotchas and Common Mistakes in Go (golang)" />
+    <meta name="twitter:title" content="(Draft) Traps, Gotchas and Common Mistakes in Go (golang)" />
     <meta name="twitter:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta name="twitter:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     
@@ -45,10 +45,10 @@
         "url": "http://localhost:2368/author/kyle",
         "sameAs": "https://www.linkedin.com/in/kylequest"
     },
-    "headline": "Traps, Gotchas and Common Mistakes in Go (golang)",
+    "headline": "(Draft) Traps, Gotchas and Common Mistakes in Go (golang)",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-08T05:51:26.666Z",
+    "dateModified": "2015-05-11T16:13:06.842Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -115,6 +115,7 @@
 <li><a href="index.html#switch_fall">Fallthrough Behavior in "switch" Statements</a></li>
 <li><a href="index.html#inc_dec">Increments and Decrements</a></li>
 <li><a href="index.html#bit_not">Bitwise NOT Operator</a></li>
+<li><a href="index.html#op_precedence">Operator Precedence Differences</a></li>
 <li><a href="index.html#unexp_struct_field_enc">Unexported Structure Fields Are Not Encoded</a></li>
 <li><a href="index.html#gor_app_exit">App Exits With Active Goroutines</a></li>
 <li><a href="index.html#unbuf_ch_send_done">Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</a></li>
@@ -1007,6 +1008,36 @@ func main() {
 }
 </code></pre>
 
+<h6 id="anameop_precedenceaoperatorprecedencedifferences"><a name="op_precedence"></a>Operator Precedence Differences</h6>
+
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Aside from the "bit clear" operators (<code>&amp;^</code>) Go has a set of standard operators shared by many other languages. The operator precedence is not always the same though.</p>
+
+<pre><code>package main
+
+import "fmt"
+
+func main() {  
+    fmt.Printf("0x2 &amp; 0x2 + 0x4 -&gt; %#x\n",0x2 &amp; 0x2 + 0x4)
+    //prints: 0x2 &amp; 0x2 + 0x4 -&gt; 0x6
+    //Go:    (0x2 &amp; 0x2) + 0x4
+    //C++:    0x2 &amp; (0x2 + 0x4) -&gt; 0x2
+
+    fmt.Printf("0x2 + 0x2 &lt;&lt; 0x1 -&gt; %#x\n",0x2 + 0x2 &lt;&lt; 0x1)
+    //prints: 0x2 + 0x2 &lt;&lt; 0x1 -&gt; 0x6
+    //Go:     0x2 + (0x2 &lt;&lt; 0x1)
+    //C++:   (0x2 + 0x2) &lt;&lt; 0x1 -&gt; 0x8
+
+    fmt.Printf("0xf | 0x2 ^ 0x2 -&gt; %#x\n",0xf | 0x2 ^ 0x2)
+    //prints: 0xf | 0x2 ^ 0x2 -&gt; 0xd
+    //Go:    (0xf | 0x2) ^ 0x2
+    //C++:    0xf | (0x2 ^ 0x2) -&gt; 0xf
+}
+</code></pre>
+
 <h6 id="anameunexp_struct_field_encaunexportedstructurefieldsarenotencoded"><a name="unexp_struct_field_enc"></a>Unexported Structure Fields Are Not Encoded</h6>
 
 <ul>
@@ -1284,7 +1315,7 @@ func main() {
 <li>level: intermediate</li>
 </ul>
 
-<p>The 'recover' function can be used to catch/intercept a panic. Calling 'recover' will do the trick only when it's done in a deferred function.</p>
+<p>The <code>recover()</code> function can be used to catch/intercept a panic. Calling <code>recover()</code> will do the trick only when it's done in a deferred function.</p>
 
 <p>Incorrect:  </p>
 
@@ -1315,7 +1346,7 @@ func main() {
 }
 </code></pre>
 
-<p>The call to 'recover' works only if it's called directly in your deferred function.</p>
+<p>The call to <code>recover()</code> works only if it's called directly in your deferred function.</p>
 
 <p>Fails:  </p>
 
@@ -2012,7 +2043,7 @@ func main() {
                         <span class="hidden">Hacker News</span>
                     </a>
                     
-					<a class="fa fa-twitter" href="https://twitter.com/share?text=Traps, Gotchas and Common Mistakes in Go (golang)&url=http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" target="_blank">
+					<a class="fa fa-twitter" href="https://twitter.com/share?text=(Draft) Traps, Gotchas and Common Mistakes in Go (golang)&url=http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" target="_blank">
 						<span class="hidden">Twitter</span>
 					</a>
                     
