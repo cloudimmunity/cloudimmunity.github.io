@@ -25,7 +25,7 @@
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-12T07:00:10.956Z" />
+    <meta property="article:modified_time" content="2015-05-12T18:19:27.095Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
@@ -48,7 +48,7 @@
     "headline": "(Draft) Traps, Gotchas, and Common Mistakes in Go (golang)",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-12T07:00:10.956Z",
+    "dateModified": "2015-05-12T18:19:27.095Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -107,6 +107,7 @@
 <li><a href="index.html#string_byte_slice_conv">Conversions Between Strings and Byte Slices</a></li>
 <li><a href="index.html#string_idx">Strings and Index Operator</a></li>
 <li><a href="index.html#strings_na_utf">Strings Are Not Always UTF8 Text</a></li>
+<li><a href="index.html#string_length">String Length</a></li>
 <li><a href="index.html#mline_lit_comma">Missing Comma In Multi-Line Slice/Array/Map Literals</a></li>
 <li><a href="index.html#log_fatal_exit">log.Fatal and log.Panic Do More Than Log</a></li>
 <li><a href="index.html#coll_no_sync">Built-in Data Structure Operations Are Not Synchronized</a></li>
@@ -684,6 +685,8 @@ func main() {
 }
 </code></pre>
 
+<p>Note that this isn't really the right way to update characters in a text string because a given character could be stored in multiple bytes. If you do need to make updates to a text string convert it to a rune sclice first. Even with rune slices a single character might span multiple runes, which can happen if you have characters with grave accent, for example. This complicated and ambiguous nature of "characters" is the reason why Go strings are represented as byte sequences.</p>
+
 <h6 id="anamestring_byte_slice_convaconversionsbetweenstringsandbyteslices"><a name="string_byte_slice_conv"></a>Conversions Between Strings and Byte Slices</h6>
 
 <ul>
@@ -726,6 +729,80 @@ func main() {
 </ul>
 
 <p>String values are not required to be UTF8 text. They can contain arbitrary bytes. The only time strings are UTF8 is when string literals are used. Even then they can include other data using escape sequences.</p>
+
+<p>To know if you have a UTF8 text string use the <code>ValidString()</code> function from the "unicode/utf8" package.</p>
+
+<pre><code>package main
+
+import (  
+    "fmt"
+    "unicode/utf8"
+)
+
+func main() {  
+    data1 := "ABC"
+    fmt.Println(utf8.ValidString(data1)) //prints: true
+
+    data2 := "A\xfeC"
+    fmt.Println(utf8.ValidString(data2)) //prints: false
+}
+</code></pre>
+
+<h6 id="anamestring_lengthastringlength"><a name="string_length"></a>String Length</h6>
+
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Let's say you are python developer and you have the following piece of code:</p>
+
+<pre><code>data = u'♥'  
+print(len(data)) #prints: 1  
+</code></pre>
+
+<p>When you convert it to a similar Go code snippet you might be surprised.</p>
+
+<pre><code>package main
+
+import "fmt"
+
+func main() {  
+    data := "♥"
+    fmt.Println(len(data)) //prints: 3
+}
+</code></pre>
+
+<p>The built-in <code>len()</code> function returns the number of bytes instead of the number of characters like it's done for unicode strings in Python.</p>
+
+<p>To get the same results in Go use the <code>RuneCountInString()</code> function from the "unicode/utf8" package.</p>
+
+<pre><code>package main
+
+import (  
+    "fmt"
+    "unicode/utf8"
+)
+
+func main() {  
+    data := "♥"
+    fmt.Println(utf8.RuneCountInString(data)) //prints: 1
+</code></pre>
+
+<p>Technically the <code>RuneCountInString()</code> function doesn't return the number of characters because a single character may span multiple runes.</p>
+
+<pre><code>package main
+
+import (  
+    "fmt"
+    "unicode/utf8"
+)
+
+func main() {  
+    data := "é"
+    fmt.Println(len(data))                    //prints: 3
+    fmt.Println(utf8.RuneCountInString(data)) //prints: 2
+}
+</code></pre>
 
 <h6 id="anamemline_lit_commaamissingcommainmultilineslicearrayandmapliterals"><a name="mline_lit_comma"></a>Missing Comma In Multi-Line Slice, Array, and Map Literals</h6>
 
