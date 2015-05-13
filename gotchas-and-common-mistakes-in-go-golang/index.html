@@ -25,7 +25,7 @@
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-12T18:19:27.095Z" />
+    <meta property="article:modified_time" content="2015-05-13T16:10:29.214Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
@@ -48,7 +48,7 @@
     "headline": "(Draft) Traps, Gotchas, and Common Mistakes in Go (golang)",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-12T18:19:27.095Z",
+    "dateModified": "2015-05-13T16:10:29.214Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -720,7 +720,7 @@ func main() {
 }
 </code></pre>
 
-<p>If you need to access specific string characters use the <code>for range</code> clause. The official "unicode/utf8" package and the experimental utf8string package (golang.org/x/exp/utf8string) are also useful. The utf8string package includes a convenient <code>At()</code> method. Converting the string to a slice of runes is an option too.</p>
+<p>If you need to access specific string "characters" (unicode code points/runes) use the <code>for range</code> clause. The official "unicode/utf8" package and the experimental utf8string package (golang.org/x/exp/utf8string) are also useful. The utf8string package includes a convenient <code>At()</code> method. Converting the string to a slice of runes is an option too.</p>
 
 <h6 id="anamestrings_na_utfastringsarenotalwaysutf8text"><a name="strings_na_utf"></a>Strings Are Not Always UTF8 Text</h6>
 
@@ -883,9 +883,9 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>The index value (the first value returned by the "range" operation) is the index of the first byte for the current character (aka Unicode code point, "rune") returned in the second value. It's not the index for the current character like it's done in other languages.</p>
+<p>The index value (the first value returned by the "range" operation) is the index of the first byte for the current "character" (unicode code point/rune) returned in the second value. It's not the index for the current "character" like it's done in other languages. Note that an actual character might be represented by multiple runes. Make sure to check out the "norm" package (golang.org/x/text/unicode/norm) if you need to work with characters.</p>
 
-<p>The <code>for range</code> clauses with string variables will try to interpret the data as UTF8 text. For any byte sequences it doesn't understand it will return 0xfffd runes (aka Unicode replacement characters) instead of the actual data. If you have arbitrary (non-UTF8 text) data stored in your string variables, make sure to convert them to byte slices to get all stored data as is.</p>
+<p>The <code>for range</code> clauses with string variables will try to interpret the data as UTF8 text. For any byte sequences it doesn't understand it will return 0xfffd runes (aka unicode replacement characters) instead of the actual data. If you have arbitrary (non-UTF8 text) data stored in your string variables, make sure to convert them to byte slices to get all stored data as is.</p>
 
 <pre><code>package main
 
@@ -1155,7 +1155,134 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>The app will not wait for all your goroutines to complete. This is a common mistake for beginners in general. Everybody starts somewhere, so there's no shame in making rookie mistakes :-)  </p>
+<p>The app will not wait for all your goroutines to complete. This is a common mistake for beginners in general. Everybody starts somewhere, so there's no shame in making rookie mistakes :-)</p>
+
+<pre><code>package main
+
+import (  
+    "fmt"
+    "time"
+)
+
+func main() {  
+    workerCount := 2
+
+    for i := 0; i &lt; workerCount; i++ {
+        go doit(i)
+    }
+    time.Sleep(1 * time.Second)
+    fmt.Println("all done!")
+}
+
+func doit(workerId int) {  
+    fmt.Printf("[%v] is running\n",workerId)
+    time.Sleep(3 * time.Second)
+    fmt.Printf("[%v] is done\n",workerId)
+}
+</code></pre>
+
+<p>You'll see:  </p>
+
+<blockquote>
+  <p>[0] is running <br />
+    [1] is running <br />
+    all done!  </p>
+</blockquote>
+
+<p>One of the most common solutions is to use a "WaitGroup" variable. It will allow the main goroutine to wait until all worker goroutines are done. If your app has long running workers with message processing loops you'll also need a way to signal those goroutines that it's time to exit. You can send a "kill" message to each worker. Another option is to close a channel all workers are receiving from. It's a simple way to signal all goroutines at once.</p>
+
+<pre><code>package main
+
+import (  
+    "fmt"
+    "sync"
+)
+
+func main() {  
+    var wg sync.WaitGroup
+    done := make(chan struct{})
+    workerCount := 2
+
+    for i := 0; i &lt; workerCount; i++ {
+        wg.Add(1)
+        go doit(i,done,wg)
+    }
+
+    close(done)
+    wg.Wait()
+    fmt.Println("all done!")
+}
+
+func doit(workerId int,done &lt;-chan struct{},wg sync.WaitGroup) {  
+    fmt.Printf("[%v] is running\n",workerId)
+    defer wg.Done()
+    &lt;- done
+    fmt.Printf("[%v] is done\n",workerId)
+}
+</code></pre>
+
+<p>If you run this app you'll see:  </p>
+
+<blockquote>
+  <p>[0] is running <br />
+    [0] is done <br />
+    [1] is running <br />
+    [1] is done  </p>
+</blockquote>
+
+<p>Looks like the workers are done before the main goroutine exists. Great! However, you'll also see this:  </p>
+
+<blockquote>
+  <p>fatal error: all goroutines are asleep - deadlock!</p>
+</blockquote>
+
+<p>That's not so great :-) What's going on? Why is there a deadlock? The workers exited and they executed <code>wg.Done()</code>. The app should work.</p>
+
+<p>The deadlock happens because each worker gets a copy of the original "WaitGroup" variable. When workers execute <code>wg.Done()</code> it has no effect on the "WaitGroup" variable in the main goroutine.</p>
+
+<pre><code>package main
+
+import (  
+    "fmt"
+    "sync"
+)
+
+func main() {  
+    var wg sync.WaitGroup
+    done := make(chan struct{})
+    wq := make(chan interface{})
+    workerCount := 2
+
+    for i := 0; i &lt; workerCount; i++ {
+        wg.Add(1)
+        go doit(i,wq,done,&amp;wg)
+    }
+
+    for i := 0; i &lt; workerCount; i++ {
+        wq &lt;- i
+    }
+
+    close(done)
+    wg.Wait()
+    fmt.Println("all done!")
+}
+
+func doit(workerId int, wq &lt;-chan interface{},done &lt;-chan struct{},wg *sync.WaitGroup) {  
+    fmt.Printf("[%v] is running\n",workerId)
+    defer wg.Done()
+    for {
+        select {
+        case m := &lt;- wq:
+            fmt.Printf("[%v] m =&gt; %v\n",workerId,m)
+        case &lt;- done:
+            fmt.Printf("[%v] is done\n",workerId)
+            return
+        }
+    }
+}
+</code></pre>
+
+<p>Now it works as expected :-)</p>
 
 <h6 id="anameunbuf_ch_send_doneasendingtoanunbufferedchannelreturnsassoonasthetargetreceiverisready"><a name="unbuf_ch_send_done"></a>Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</h6>
 
