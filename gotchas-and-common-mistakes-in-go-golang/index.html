@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>(Draft) Traps, Gotchas, and Common Mistakes in Go (golang)</title>
+	<title>50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs</title>
 	<meta name="description" content="" />
 
 	<meta name="HandheldFriendly" content="True" />
@@ -21,15 +21,15 @@
     
     <meta property="og:site_name" content="Devs ♥ Security" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="(Draft) Traps, Gotchas, and Common Mistakes in Go (golang)" />
+    <meta property="og:title" content="50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs" />
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-15T00:23:47.646Z" />
+    <meta property="article:modified_time" content="2015-05-15T16:37:27.336Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="(Draft) Traps, Gotchas, and Common Mistakes in Go (golang)" />
+    <meta name="twitter:title" content="50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs" />
     <meta name="twitter:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta name="twitter:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     
@@ -45,10 +45,10 @@
         "url": "http://localhost:2368/author/kyle",
         "sameAs": "https://www.linkedin.com/in/kylequest"
     },
-    "headline": "(Draft) Traps, Gotchas, and Common Mistakes in Go (golang)",
+    "headline": "50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-15T00:23:47.646Z",
+    "dateModified": "2015-05-15T16:37:27.336Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -78,7 +78,7 @@
 			<header class="post-header">
 				<span class="post-meta"><a href="../author/kyle/index.html">Kyle Quest</a>  | <a href="../tag/golang/index.html">golang</a> </span>
 				<div class="clear"></div>
-				<h1 class="post-title">(Draft) Traps, Gotchas, and Common Mistakes in Go (golang)</h1>
+				<h1 class="post-title">50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs</h1>
 			</header>
 		
 			<section class="post-content">
@@ -99,7 +99,7 @@
 <li><a href="index.html#nil_slices_maps">Using "nil" Slices and Maps</a></li>
 <li><a href="index.html#map_cap">Map Capacity</a></li>
 <li><a href="index.html#nil_strings">Strings Can't Be "nil"</a></li>
-<li><a href="index.html#arrays_pass_by_val">Arrays Are Passed By Value</a></li>
+<li><a href="index.html#array_func_args">Array Function Arguments</a></li>
 <li><a href="index.html#unexpected_slice_arr_vals">Unexpected Values in Slice and Array "range" Clauses</a></li>
 <li><a href="index.html#one_dim_slice_arr">Slices and Arrays Are One-Dimensional</a></li>
 <li><a href="index.html#map_key_ne">Accessing Non-Existing Map Keys</a></li>
@@ -402,6 +402,8 @@ func main() {
 }
 </code></pre>
 
+<p>This is a very common trap even for experienced Go developers. It's easy to make and it could be hard to spot.</p>
+
 <h6 id="anamenil_initacantuseniltoinitializeavariablewithoutanexplicittype"><a name="nil_init"></a>Can't Use "nil" to Initialize a Variable Without an Explicit Type</h6>
 
 <ul>
@@ -538,11 +540,13 @@ func main() {
 }
 </code></pre>
 
-<h6 id="anamearrays_pass_by_valaarraysarepassedbyvalue"><a name="arrays_pass_by_val"></a>Arrays Are Passed By Value</h6>
+<h6 id="anamearray_func_argsaarrayfunctionarguments"><a name="array_func_args"></a>Array Function Arguments</h6>
 
 <ul>
 <li>level: beginner</li>
 </ul>
+
+<p>If you are a C or C++ developer arrays for you are pointers. When you pass arrays to functions the functions reference the same memory location, so they can update the original data. Arrays in Go are values, so when you pass arrays to functions the functions get a copy of the original array data. This can be a problem if you are trying to update the array data.</p>
 
 <pre><code>package main
 
@@ -557,6 +561,42 @@ func main() {
     }(x)
 
     fmt.Println(x) //prints [1 2 3] (not ok if you need [7 2 3])
+}
+</code></pre>
+
+<p>If you need to update the original array data use array pointer types.</p>
+
+<pre><code>package main
+
+import "fmt"
+
+func main() {  
+    x := [3]int{1,2,3}
+
+    func(arr *[3]int) {
+        (*arr)[0] = 7
+        fmt.Println(arr) //prints &amp;[7 2 3]
+    }(&amp;x)
+
+    fmt.Println(x) //prints [7 2 3]
+}
+</code></pre>
+
+<p>Another option is to use slices. Even though your function gets a copy of the slice variable it still references the original data.</p>
+
+<pre><code>package main
+
+import "fmt"
+
+func main() {  
+    x := []int{1,2,3}
+
+    func(arr []int) {
+        arr[0] = 7
+        fmt.Println(arr) //prints [7 2 3]
+    }(x)
+
+    fmt.Println(x) //prints [7 2 3]
 }
 </code></pre>
 
@@ -2527,7 +2567,7 @@ func main() {
                         <span class="hidden">Hacker News</span>
                     </a>
                     
-					<a class="fa fa-twitter" href="https://twitter.com/share?text=(Draft) Traps, Gotchas, and Common Mistakes in Go (golang)&url=http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" target="_blank">
+					<a class="fa fa-twitter" href="https://twitter.com/share?text=50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs&url=http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" target="_blank">
 						<span class="hidden">Twitter</span>
 					</a>
                     
