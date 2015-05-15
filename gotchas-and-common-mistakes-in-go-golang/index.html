@@ -25,7 +25,7 @@
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-15T16:37:27.336Z" />
+    <meta property="article:modified_time" content="2015-05-15T20:14:38.262Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
@@ -48,7 +48,7 @@
     "headline": "50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-15T16:37:27.336Z",
+    "dateModified": "2015-05-15T20:14:38.262Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -644,7 +644,54 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>It may seem like Go supports multi-dimensional arrays and slices, but it doesn't. Creating arrays of arrays or slices of slices is possible though. However, each inner array/slice has to be initialized separately.</p>
+<p>It may seem like Go supports multi-dimensional arrays and slices, but it doesn't. Creating arrays of arrays or slices of slices is possible though. For numerical computation apps that rely on dynamic multi-dimensional arrays it's far from ideal in terms of performance and complexity.</p>
+
+<p>You can build dynamic multi-dimensional arrays using raw one-dimensional arrays, slices of "independent" slices, and slices of "shared data" slices.</p>
+
+<p>If you are using raw one-dimensional arrays you are responsible for indexing, bounds checking, and memory reallocations when the arrays need to grow.</p>
+
+<p>Creating a dynamic multi-dimensional array using slices of "independent" slices is a two step process. First, you have to create the outer slice. Then, you have to allocate each inner slice. The inner slices are independent of each other. You can grow and shrink them without affecting other inner slices.</p>
+
+<pre><code>package main
+
+func main() {  
+    x := 2
+    y := 4
+
+    table := make([][]int,x)
+    for i:= range table {
+        table[i] = make([]int,y)
+    }
+}
+</code></pre>
+
+<p>Creating a dynamic multi-dimensional array using slices of "shared data" slices is a three step process. First, you have to create the data "container" slice that will hold raw data. Then, you create the outer slice. Finally, you initialize each inner slice by reslicing the raw data slice.</p>
+
+<pre><code>package main
+
+import "fmt"
+
+func main() {  
+    h, w := 2, 4
+
+    raw := make([]int,h*w)
+    for i := range raw {
+        raw[i] = i
+    }
+    fmt.Println(raw,&amp;raw[4])
+    //prints: [0 1 2 3 4 5 6 7] &lt;ptr_addr_x&gt;
+
+    table := make([][]int,h)
+    for i:= range table {
+        table[i] = raw[i*w:i*w + w]
+    }
+
+    fmt.Println(table,&amp;table[1][0])
+    //prints: [[0 1 2 3] [4 5 6 7]] &lt;ptr_addr_x&gt;
+}
+</code></pre>
+
+<p>There's a spec/proposal for multi-dimensional arrays and slices, but it looks like it's a low priority feature at this point in time.</p>
 
 <h6 id="anamemap_key_neaaccessingnonexistingmapkeys"><a name="map_key_ne"></a>Accessing Non-Existing Map Keys</h6>
 
