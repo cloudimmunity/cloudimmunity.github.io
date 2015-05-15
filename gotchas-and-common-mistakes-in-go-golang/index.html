@@ -25,7 +25,7 @@
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-15T00:00:51.430Z" />
+    <meta property="article:modified_time" content="2015-05-15T00:23:47.646Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
@@ -48,7 +48,7 @@
     "headline": "(Draft) Traps, Gotchas, and Common Mistakes in Go (golang)",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-15T00:00:51.430Z",
+    "dateModified": "2015-05-15T00:23:47.646Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -1636,7 +1636,43 @@ func main() {
 <li>level: intermediate</li>
 </ul>
 
-<p>When you reslice a slice, the new slice will reference the array of the original slice. If you forget about this behavior it can lead to unexpected memory usage if your application allocates large temporary slices creating new slices from them to refer to small sections of the original data. To avoid this trap make sure to copy the data you need from the temporary slice (instead of reslicing it).</p>
+<p>When you reslice a slice, the new slice will reference the array of the original slice. If you forget about this behavior it can lead to unexpected memory usage if your application allocates large temporary slices creating new slices from them to refer to small sections of the original data.</p>
+
+<pre><code>package main
+
+import "fmt"
+
+func get() []byte {  
+    raw := make([]byte,10000)
+    fmt.Println(len(raw),cap(raw),&amp;raw[0]) //prints: 10000 10000 &lt;byte_addr_x&gt;
+    return raw[:3]
+}
+
+func main() {  
+    data := get()
+    fmt.Println(len(data),cap(data),&amp;data[0]) //prints: 3 10000 &lt;byte_addr_x&gt;
+}
+</code></pre>
+
+<p>To avoid this trap make sure to copy the data you need from the temporary slice (instead of reslicing it).</p>
+
+<pre><code>package main
+
+import "fmt"
+
+func get() []byte {  
+    raw := make([]byte,10000)
+    fmt.Println(len(raw),cap(raw),&amp;raw[0]) //prints: 10000 10000 &lt;byte_addr_x&gt;
+    res := make([]byte,3)
+    copy(res,raw[:3])
+    return res
+}
+
+func main() {  
+    data := get()
+    fmt.Println(len(data),cap(data),&amp;data[0]) //prints: 3 3 &lt;byte_addr_y&gt;
+}
+</code></pre>
 
 <h6 id="anameslice_data_corruptionaslicedatacorruption"><a name="slice_data_corruption"></a>Slice Data "Corruption"</h6>
 
