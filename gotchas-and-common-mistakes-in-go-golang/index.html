@@ -25,7 +25,7 @@
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-16T15:44:31.512Z" />
+    <meta property="article:modified_time" content="2015-05-17T02:48:12.026Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
@@ -48,7 +48,7 @@
     "headline": "50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-16T15:44:31.512Z",
+    "dateModified": "2015-05-17T02:48:12.026Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -1453,7 +1453,39 @@ func main() {
 <li>level: beginner</li>
 </ul>
 
-<p>If you don't read the response body you still need to close it. You must do it for empty responses too. It's very easy to forget especially for new Go developers.</p>
+<p>When you make requests using the standard http library you get a http response variable. If you don't read the response body you still need to close it. You must do it for empty responses too. It's very easy to forget especially for new Go developers.</p>
+
+<p>Some new Go developers do try to close the response body, but they do it in the wrong place.</p>
+
+<pre><code>package main
+
+import (  
+    "fmt"
+    "net/http"
+    "io/ioutil"
+)
+
+func main() {  
+    resp, err := http.Get("https://api.ipify.org?format=json")
+    defer resp.Body.Close()//not ok
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    fmt.Println(string(body))
+}
+</code></pre>
+
+<p>This code works for successful requests, but if the http request fails the <code>resp</code> variable might be <code>nil</code>, which will cause a runtime panic.</p>
+
+<p>The most common why to close the response body is by using a <code>defer</code> call after the http response error check.</p>
 
 <pre><code>package main
 
@@ -1470,7 +1502,38 @@ func main() {
         return
     }
 
-    defer resp.Body.Close()//MUST do it :-)
+    defer resp.Body.Close()//ok, most of the time :-)
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    fmt.Println(string(body))
+}
+</code></pre>
+
+<p>Most of the time when your http request fails the <code>resp</code> variable will be <code>nil</code> and the <code>err</code> variable will be <code>non-nil</code>. However, when you get a redirection failure both variables will be <code>non-nil</code>. This means you can still end up with a leak.</p>
+
+<p>You can fix this leak by adding a call to close <code>non-nil</code> response bodies in the http response error handling block. Another option is to use one <code>defer</code> call to close response bodies for all failed and successful requests.</p>
+
+<pre><code>package main
+
+import (  
+    "fmt"
+    "net/http"
+    "io/ioutil"
+)
+
+func main() {  
+    resp, err := http.Get("https://api.ipify.org?format=json")
+    defer func() {if resp != nil {resp.Body.Close()}}()
+
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
     body, err := ioutil.ReadAll(resp.Body)
     if err != nil {
         fmt.Println(err)
