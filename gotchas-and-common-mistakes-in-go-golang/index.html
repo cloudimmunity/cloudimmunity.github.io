@@ -1553,9 +1553,9 @@ func main() {
 
 <p>Some HTTP servers don't close connections (based on the HTTP 1.1 spec). The standard http library also doesn't close connections when you make requests. This means your app may run out of sockets/file descriptors under certain conditions.</p>
 
-<p>You can ask the standard http library to close the connection after your request is done by setting the <code>Close</code> field in the request variable to <code>true</code>.</p>
+<p>You can ask the http library to close the connection after your request is done by setting the <code>Close</code> field in the request variable to <code>true</code>.</p>
 
-<p>Another option is to add a <code>Connection</code> request header and set it to <code>close</code>. The target HTTP server should respond with a <code>Connection: close</code> header too. When the http library see this response header it will also close the connection.</p>
+<p>Another option is to add a <code>Connection</code> request header and set it to <code>close</code>. The target HTTP server should respond with a <code>Connection: close</code> header too. When the http library sees this response header it will also close the connection.</p>
 
 <p><a name="intermediate_beginner"></a></p>
 
