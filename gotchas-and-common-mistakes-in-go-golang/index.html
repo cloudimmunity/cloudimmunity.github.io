@@ -25,7 +25,7 @@
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-17T16:31:15.368Z" />
+    <meta property="article:modified_time" content="2015-05-23T01:01:28.467Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
@@ -48,7 +48,7 @@
     "headline": "50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs",
     "url": "http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-17T16:31:15.368Z",
+    "dateModified": "2015-05-23T01:01:28.467Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -1456,7 +1456,7 @@ func main() {
 <li>level: intermediate</li>
 </ul>
 
-<p>When you make requests using the standard http library you get a http response variable. If you don't read the response body you still need to close it. You must do it for empty responses too. It's very easy to forget especially for new Go developers.</p>
+<p>When you make requests using the standard http library you get a http response variable. If you don't read the response body you still need to close it. Note that you must do it for empty responses too. It's very easy to forget especially for new Go developers.</p>
 
 <p>Some new Go developers do try to close the response body, but they do it in the wrong place.</p>
 
@@ -1530,7 +1530,9 @@ import (
 
 func main() {  
     resp, err := http.Get("https://api.ipify.org?format=json")
-    defer func() {if resp != nil {resp.Body.Close()}}()
+    if resp != nil {
+        defer resp.Body.Close()
+    }
 
     if err != nil {
         fmt.Println(err)
@@ -1545,6 +1547,18 @@ func main() {
 
     fmt.Println(string(body))
 }
+</code></pre>
+
+<p>The orignal implementation for <code>resp.Body.Close()</code> also reads and discards the remaining response body data. This ensured that the http connection could be reused for another request if the keepalive http connection behavior is enabled. The latest http client behavior is different. Now it's your responsibility to read and discard the remaining response data. If you don't do it the http connection might be closed instead of being reused. This little gotcha is supposed to be documented in Go 1.5.</p>
+
+<p>If reusing the http connection is important for your application you might need to add something like this at the end of your response processing logic:</p>
+
+<pre><code>_, err = io.Copy(ioutil.Discard, resp.Body)  
+</code></pre>
+
+<p>It might be necessary if you don't read the entire response body right away, which might happen if you are processing json http API response with code like this:</p>
+
+<pre><code>json.NewDecoder(resp.Body).Decode(&amp;data)  
 </code></pre>
 
 <h6 id="anameclose_http_connaclosinghttpconnections"><a name="close_http_conn"></a>Closing HTTP Connections</h6>
@@ -1579,12 +1593,50 @@ func main() {
     //req.Header.Add("Connection", "close")
 
     resp, err := http.DefaultClient.Do(req)
-    defer func() {if resp != nil {resp.Body.Close()}}()
+    if resp != nil {
+        defer resp.Body.Close()
+    }
 
     if err != nil {
         fmt.Println(err)
         return
     }
+
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    fmt.Println(len(string(body)))
+}
+</code></pre>
+
+<p>You can also disable http connection reuse globally. You'll need to create a custom http transport configuration for it.</p>
+
+<pre><code>package main
+
+import (  
+    "fmt"
+    "net/http"
+    "io/ioutil"
+)
+
+func main() {  
+    tr := &amp;http.Transport{DisableKeepAlives: true}
+    client := &amp;http.Client{Transport: tr}
+
+    resp, err := client.Get("http://golang.org")
+    if resp != nil {
+        defer resp.Body.Close()
+    }
+
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    fmt.Println(resp.StatusCode)
 
     body, err := ioutil.ReadAll(resp.Body)
     if err != nil {
