@@ -1700,7 +1700,7 @@ func main() {
 <pre><code>_, err = io.Copy(ioutil.Discard, resp.Body)  
 </code></pre>
 
-<p>It might be necessary if you don't read the entire response body right away, which might happen if you are processing json http API response with code like this:</p>
+<p>It will be necessary if you don't read the entire response body right away, which might happen if you are processing json API responses with code like this:</p>
 
 <pre><code>json.NewDecoder(resp.Body).Decode(&amp;data)  
 </code></pre>
