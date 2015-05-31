@@ -1,161 +1,78 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
-	<title>50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs</title>
-	<meta name="description" content="" />
-
-	<meta name="HandheldFriendly" content="True" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-	<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=cbce5da5aa" />
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700|Inconsolata:400" />
-    <!-- Extra for DC -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=cbce5da5aa" />
-    <!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end -->
-    <script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=cbce5da5aa"></script>
-
-	<link rel="canonical" href="index.html" />
-    
-    <meta property="og:site_name" content="Devs ♥ Security" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs" />
-    <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
-    <meta property="og:url" content="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" />
-    <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-31T15:23:48.448Z" />
-    <meta property="article:tag" content="golang" />
-    
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs" />
-    <meta name="twitter:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
-    <meta name="twitter:url" content="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" />
-    
-    <script type="application/ld+json">
-{
-    "@context": "http://schema.org",
-    "@type": "Article",
-    "publisher": "Devs ♥ Security",
-    "author": {
-        "@type": "Person",
-        "name": "Kyle Quest",
-        "image": "http://devs.cloudimmunity.com/content/images/2014/12/kcq_gh_pix.png",
-        "url": "http://devs.cloudimmunity.com/author/kyle",
-        "sameAs": "https://www.linkedin.com/in/kylequest"
-    },
-    "headline": "50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs",
-    "url": "http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/",
-    "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-31T15:23:48.448Z",
-    "keywords": "golang",
-    "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
-}
-    </script>
-
-    <meta name="generator" content="Ghost 0.5" />
-    <link rel="alternate" type="application/rss+xml" title="Devs ♥ Security" href="../rss/index.html" />
-</head>
-
-<body class="post-template tag-golang">
-	
-	<section id="wrapper">
-		<div id="ajax-container">
-			
-
-<header id="main-header">
-	<nav id="main-nav">
-		<a class="js-ajax-link js-show-index" id="home-link" href="../index.html"><i class="fa fa-angle-left"></i></a>
-			<a class="js-ajax-link js-show-index" id="blog-logo" href="../index.html"><img src="../content/images/2014/12/CI_LOGO_no_shadow_smaller-2.png" alt="Blog Logo" /></a>
-	</nav>
-</header>
-
-<main class="content" role="main">
-	<article class="post tag-golang">
-		<div class="inner">
-
-			<header class="post-header">
-				<span class="post-meta"><a href="http://devs.cloudimmunity.com/author/kyle/">Kyle Quest</a>  | <a href="../tag/golang/index.html">golang</a> </span>
-				<div class="clear"></div>
-				<h1 class="post-title">50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs</h1>
-			</header>
-		
-			<section class="post-content">
-				<p>Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are due to faulty assumptions and missing details.</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[golang - Devs ♥ Security]]></title><description><![CDATA[Code, Cloud, Security, and Everything in Between.]]></description><link>http://localhost:2368/</link><generator>Ghost 0.5</generator><lastBuildDate>Sun, 31 May 2015 18:48:24 GMT</lastBuildDate><atom:link href="http://localhost:2368/tag/golang/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs]]></title><description><![CDATA[<p>Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are due to faulty assumptions and missing details.</p>
 
 <p>A lot of these gotchas may seem obvious if you took the time to learn the language reading the official spec, wiki, mailing list discussions, many great posts and presentations by Rob Pike, and the source code. Not everybody starts the same way though and that's OK. If you are new to Go the information here will save you hours debugging your code.</p>
 
-<p><a href="index.html#total_beginner">Total Beginner</a>:</p>
+<p><a href="http://localhost:2368/#total_beginner">Total Beginner</a>:</p>
 
 <ul>
-<li><a href="index.html#opening_braces">Opening Brace Can't Be Placed on a Separate Line</a></li>
-<li><a href="index.html#unused_vars">Unused Variables</a></li>
-<li><a href="index.html#unused_imports">Unused Imports</a></li>
-<li><a href="index.html#short_vars">Short Variable Declarations Can Be Used Only Inside Functions</a></li>
-<li><a href="index.html#vars_redeclare">Redeclaring Variables Using Short Variable Declarations</a></li>
-<li><a href="index.html#vars_shadow">Accidental Variable Shadowing</a></li>
-<li><a href="index.html#nil_init">Can't Use "nil" to Initialize a Variable Without an Explicit Type</a></li>
-<li><a href="index.html#nil_slices_maps">Using "nil" Slices and Maps</a></li>
-<li><a href="index.html#map_cap">Map Capacity</a></li>
-<li><a href="index.html#nil_strings">Strings Can't Be "nil"</a></li>
-<li><a href="index.html#array_func_args">Array Function Arguments</a></li>
-<li><a href="index.html#unexpected_slice_arr_vals">Unexpected Values in Slice and Array "range" Clauses</a></li>
-<li><a href="index.html#one_dim_slice_arr">Slices and Arrays Are One-Dimensional</a></li>
-<li><a href="index.html#map_key_ne">Accessing Non-Existing Map Keys</a></li>
-<li><a href="index.html#imm_strings">Strings Are Immutable</a></li>
-<li><a href="index.html#string_byte_slice_conv">Conversions Between Strings and Byte Slices</a></li>
-<li><a href="index.html#string_idx">Strings and Index Operator</a></li>
-<li><a href="index.html#strings_na_utf">Strings Are Not Always UTF8 Text</a></li>
-<li><a href="index.html#string_length">String Length</a></li>
-<li><a href="index.html#mline_lit_comma">Missing Comma In Multi-Line Slice/Array/Map Literals</a></li>
-<li><a href="index.html#log_fatal_exit">log.Fatal and log.Panic Do More Than Log</a></li>
-<li><a href="index.html#coll_no_sync">Built-in Data Structure Operations Are Not Synchronized</a></li>
-<li><a href="index.html#string_range_vals">Iteration Values For Strings in "range" Clauses</a></li>
-<li><a href="index.html#map_range">Iterating Through a Map Using a "for range" Clause</a></li>
-<li><a href="index.html#switch_fall">Fallthrough Behavior in "switch" Statements</a></li>
-<li><a href="index.html#inc_dec">Increments and Decrements</a></li>
-<li><a href="index.html#bit_not">Bitwise NOT Operator</a></li>
-<li><a href="index.html#op_precedence">Operator Precedence Differences</a></li>
-<li><a href="index.html#unexp_struct_field_enc">Unexported Structure Fields Are Not Encoded</a></li>
-<li><a href="index.html#gor_app_exit">App Exits With Active Goroutines</a></li>
-<li><a href="index.html#unbuf_ch_send_done">Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</a></li>
-<li><a href="index.html#closed_ch_send">Sending to an Closed Channel Causes a Panic</a></li>
-<li><a href="index.html#using_nil_ch">Using "nil" Channels</a></li>
-<li><a href="index.html#method_val_receiver">Methods with Value Receivers Can't Change the Original Value</a></li>
+<li><a href="http://localhost:2368/#opening_braces">Opening Brace Can't Be Placed on a Separate Line</a></li>
+<li><a href="http://localhost:2368/#unused_vars">Unused Variables</a></li>
+<li><a href="http://localhost:2368/#unused_imports">Unused Imports</a></li>
+<li><a href="http://localhost:2368/#short_vars">Short Variable Declarations Can Be Used Only Inside Functions</a></li>
+<li><a href="http://localhost:2368/#vars_redeclare">Redeclaring Variables Using Short Variable Declarations</a></li>
+<li><a href="http://localhost:2368/#vars_shadow">Accidental Variable Shadowing</a></li>
+<li><a href="http://localhost:2368/#nil_init">Can't Use "nil" to Initialize a Variable Without an Explicit Type</a></li>
+<li><a href="http://localhost:2368/#nil_slices_maps">Using "nil" Slices and Maps</a></li>
+<li><a href="http://localhost:2368/#map_cap">Map Capacity</a></li>
+<li><a href="http://localhost:2368/#nil_strings">Strings Can't Be "nil"</a></li>
+<li><a href="http://localhost:2368/#array_func_args">Array Function Arguments</a></li>
+<li><a href="http://localhost:2368/#unexpected_slice_arr_vals">Unexpected Values in Slice and Array "range" Clauses</a></li>
+<li><a href="http://localhost:2368/#one_dim_slice_arr">Slices and Arrays Are One-Dimensional</a></li>
+<li><a href="http://localhost:2368/#map_key_ne">Accessing Non-Existing Map Keys</a></li>
+<li><a href="http://localhost:2368/#imm_strings">Strings Are Immutable</a></li>
+<li><a href="http://localhost:2368/#string_byte_slice_conv">Conversions Between Strings and Byte Slices</a></li>
+<li><a href="http://localhost:2368/#string_idx">Strings and Index Operator</a></li>
+<li><a href="http://localhost:2368/#strings_na_utf">Strings Are Not Always UTF8 Text</a></li>
+<li><a href="http://localhost:2368/#string_length">String Length</a></li>
+<li><a href="http://localhost:2368/#mline_lit_comma">Missing Comma In Multi-Line Slice/Array/Map Literals</a></li>
+<li><a href="http://localhost:2368/#log_fatal_exit">log.Fatal and log.Panic Do More Than Log</a></li>
+<li><a href="http://localhost:2368/#coll_no_sync">Built-in Data Structure Operations Are Not Synchronized</a></li>
+<li><a href="http://localhost:2368/#string_range_vals">Iteration Values For Strings in "range" Clauses</a></li>
+<li><a href="http://localhost:2368/#map_range">Iterating Through a Map Using a "for range" Clause</a></li>
+<li><a href="http://localhost:2368/#switch_fall">Fallthrough Behavior in "switch" Statements</a></li>
+<li><a href="http://localhost:2368/#inc_dec">Increments and Decrements</a></li>
+<li><a href="http://localhost:2368/#bit_not">Bitwise NOT Operator</a></li>
+<li><a href="http://localhost:2368/#op_precedence">Operator Precedence Differences</a></li>
+<li><a href="http://localhost:2368/#unexp_struct_field_enc">Unexported Structure Fields Are Not Encoded</a></li>
+<li><a href="http://localhost:2368/#gor_app_exit">App Exits With Active Goroutines</a></li>
+<li><a href="http://localhost:2368/#unbuf_ch_send_done">Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</a></li>
+<li><a href="http://localhost:2368/#closed_ch_send">Sending to an Closed Channel Causes a Panic</a></li>
+<li><a href="http://localhost:2368/#using_nil_ch">Using "nil" Channels</a></li>
+<li><a href="http://localhost:2368/#method_val_receiver">Methods with Value Receivers Can't Change the Original Value</a></li>
 </ul>
 
-<p><a href="index.html#intermediate_beginner">Intermediate Beginner</a>:</p>
+<p><a href="http://localhost:2368/#intermediate_beginner">Intermediate Beginner</a>:</p>
 
 <ul>
-<li><a href="index.html#close_http_resp_body">Closing HTTP Response Body</a></li>
-<li><a href="index.html#close_http_conn">Closing HTTP Connections</a></li>
-<li><a href="index.html#compare_struct_arr_slice_map">Comparing Structs, Arrays, Slices, and Maps</a></li>
-<li><a href="index.html#panic_recover">Recovering From a Panic</a></li>
-<li><a href="index.html#range_val_update">Updating and Referencing Item Values in Slice, Array, and Map "for range" Clauses</a></li>
-<li><a href="index.html#slice_hidden_data">"Hidden" Data in Slices</a></li>
-<li><a href="index.html#slice_data_corruption">Slice Data Corruption</a></li>
-<li><a href="index.html#stale_slices">"Stale" Slices</a></li>
-<li><a href="index.html#type_decl_methods">Type Declarations and Methods</a></li>
-<li><a href="index.html#deep_for_breakout">Breaking Out of "for switch" and "for select" Code Blocks</a></li>
-<li><a href="index.html#closure_for_it_vars">Iteration Variables and Closures in "for" Statements</a></li>
-<li><a href="index.html#deferred_calls">Deferred Function Call Argument Evaluation</a></li>
-<li><a href="index.html#deferred_call_exe">Deferred Function Call Execution</a></li>
-<li><a href="index.html#failed_type_assert">Failed Type Assertions</a></li>
-<li><a href="index.html#blocked_goroutines">Blocked Goroutines and Resource Leaks</a></li>
+<li><a href="http://localhost:2368/#close_http_resp_body">Closing HTTP Response Body</a></li>
+<li><a href="http://localhost:2368/#close_http_conn">Closing HTTP Connections</a></li>
+<li><a href="http://localhost:2368/#compare_struct_arr_slice_map">Comparing Structs, Arrays, Slices, and Maps</a></li>
+<li><a href="http://localhost:2368/#panic_recover">Recovering From a Panic</a></li>
+<li><a href="http://localhost:2368/#range_val_update">Updating and Referencing Item Values in Slice, Array, and Map "for range" Clauses</a></li>
+<li><a href="http://localhost:2368/#slice_hidden_data">"Hidden" Data in Slices</a></li>
+<li><a href="http://localhost:2368/#slice_data_corruption">Slice Data Corruption</a></li>
+<li><a href="http://localhost:2368/#stale_slices">"Stale" Slices</a></li>
+<li><a href="http://localhost:2368/#type_decl_methods">Type Declarations and Methods</a></li>
+<li><a href="http://localhost:2368/#deep_for_breakout">Breaking Out of "for switch" and "for select" Code Blocks</a></li>
+<li><a href="http://localhost:2368/#closure_for_it_vars">Iteration Variables and Closures in "for" Statements</a></li>
+<li><a href="http://localhost:2368/#deferred_calls">Deferred Function Call Argument Evaluation</a></li>
+<li><a href="http://localhost:2368/#deferred_call_exe">Deferred Function Call Execution</a></li>
+<li><a href="http://localhost:2368/#failed_type_assert">Failed Type Assertions</a></li>
+<li><a href="http://localhost:2368/#blocked_goroutines">Blocked Goroutines and Resource Leaks</a></li>
 </ul>
 
-<p><a href="index.html#advanced_beginner">Advanced Beginner</a>:</p>
+<p><a href="http://localhost:2368/#advanced_beginner">Advanced Beginner</a>:</p>
 
 <ul>
-<li><a href="index.html#ptr_receiver_val_inst">Using Pointer Receiver Methods On Value Instances</a></li>
-<li><a href="index.html#map_value_field_update">Updating Map Value Fields</a></li>
-<li><a href="index.html#nil_in_nil_in_vals">"nil" Interfaces and "nil" Interfaces Values</a></li>
-<li><a href="index.html#stack_heap_vars">Stack and Heap Variables</a></li>
-<li><a href="index.html#gomaxprocs">GOMAXPROCS, Concurrency, and Parallelism</a></li>
-<li><a href="index.html#rw_reorder">Read and Write Operation Reordering</a></li>
-<li><a href="index.html#psched">Preemptive Scheduling</a>
-<br/></li>
+<li><a href="http://localhost:2368/#ptr_receiver_val_inst">Using Pointer Receiver Methods On Value Instances</a></li>
+<li><a href="http://localhost:2368/#map_value_field_update">Updating Map Value Fields</a></li>
+<li><a href="http://localhost:2368/#nil_in_nil_in_vals">"nil" Interfaces and "nil" Interfaces Values</a></li>
+<li><a href="http://localhost:2368/#stack_heap_vars">Stack and Heap Variables</a></li>
+<li><a href="http://localhost:2368/#gomaxprocs">GOMAXPROCS, Concurrency, and Parallelism</a></li>
+<li><a href="http://localhost:2368/#rw_reorder">Read and Write Operation Reordering</a></li>
+<li><a href="http://localhost:2368/#psched">Preemptive Scheduling</a>
+<br></li>
 </ul>
 
 <p><a name="total_beginner"></a></p>
@@ -1285,8 +1202,8 @@ func doit(workerId int) {
 <p>You'll see:  </p>
 
 <blockquote>
-  <p>[0] is running <br />
-    [1] is running <br />
+  <p>[0] is running <br>
+    [1] is running <br>
     all done!  </p>
 </blockquote>
 
@@ -1325,9 +1242,9 @@ func doit(workerId int,done &lt;-chan struct{},wg sync.WaitGroup) {
 <p>If you run this app you'll see:  </p>
 
 <blockquote>
-  <p>[0] is running <br />
-    [0] is done <br />
-    [1] is running <br />
+  <p>[0] is running <br>
+    [0] is done <br>
+    [1] is running <br>
     [1] is done  </p>
 </blockquote>
 
@@ -2760,7 +2677,7 @@ func main() {
 <blockquote>
   <p><span style="color:#900; font-family: Menlo, Courier New, monospace; font-size: 11pt;">
   /tmp/sandbox017696142/main.go:21: cannot use data literal (type data) as type printer in assignment:
-      data does not implement printer (print method has pointer receiver)<br/>
+      data does not implement printer (print method has pointer receiver)<br>
   /tmp/sandbox017696142/main.go:25: cannot call pointer method on m["x"]
   /tmp/sandbox017696142/main.go:25: cannot take the address of m["x"]
   </span></p>
@@ -3031,19 +2948,19 @@ func main() {
 <p>If you run this code a few times you might see these <code>a</code> and <code>b</code> variable combinations:</p>
 
 <blockquote>
-  <p>1 <br />
+  <p>1 <br>
     2  </p>
   
-  <p>3 <br />
+  <p>3 <br>
     4  </p>
   
-  <p>0 <br />
+  <p>0 <br>
     2  </p>
   
-  <p>0 <br />
+  <p>0 <br>
     0  </p>
   
-  <p>1 <br />
+  <p>1 <br>
     4    </p>
 </blockquote>
 
@@ -3123,70 +3040,4 @@ func main() {
 }
 </code></pre>
 
-<p>If you made it here and you have comments or ideas feel free to add a note to <a href="https://www.reddit.com/r/golang/comments/360vlb/draft_traps_gotchas_and_common_mistakes_in_go/">this Reddit discussion</a>.</p>
-			</section>
-			
-			<footer class="post-footer">
-				<div class="post-meta">
-					<a href="../tag/golang/index.html">golang</a>
-				</div>
-				<div class="post-share">
-                    <a class="fa fa-reddit" href="http://www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false;" target="_blank">
-						<span class="hidden">Reddit</span>
-					</a>
-                    
-                    <a class="fa fa-hacker-news" href="javascript:window.location=%22http://news.ycombinator.com/submitlink?u=%22+encodeURIComponent(document.location)+%22&t=%22+encodeURIComponent(document.title)" target="_blank">
-                        <span class="hidden">Hacker News</span>
-                    </a>
-                    
-					<a class="fa fa-twitter" href="https://twitter.com/share?text=50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs&url=http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" target="_blank">
-						<span class="hidden">Twitter</span>
-					</a>
-                    
-                    <a class="fa fa-rss" href="../rss/index.html" target="_blank">
-						<span class="hidden">RSS</span>
-					</a>
-				</div>
-				<div class="clear"></div>
-			</footer>
-			
-			<aside class="post-author">
-					<figure class="post-author-avatar">
-						<img src="../content/images/2014/12/kcq_gh_pix.png" alt="Kyle Quest" />
-					</figure>
-				<div class="post-author-bio">
-					<h4><a class="js-author-index js-ajax-link" href="http://devs.cloudimmunity.com/author/kyle/">Kyle Quest</a></h4>
-						<p>Builder, breaker, and defender. Cloud, security, and Big Data.</p>
-						<span><i class="fa fa-link"></i> <a href="https://twitter.com/kcqon">Twitter</a></span>
-						<span><i class="fa fa-link"></i> <a href="https://www.linkedin.com/in/kylequest">LinkedIn</a></span>
-				</div>
-				<div class="clear"></div>
-			</aside>
-			
-		</div>
-	</article>
-</main>
-		</div>
-	</section>
-	
-	<footer id="site-footer">
-		<div class="inner">
-				<span class="blog-description">Code, Cloud, Security, and Everything in Between.</span>
-			<section class="poweredby">Create secure cloud apps with <a href="https://www.cloudimmunity.com/">Cloud Immunity</a>.</section>
-		</div>
-	</footer>
-
-	<script src="../public/jquery.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/nprogress.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/index.js?v=cbce5da5aa"></script>
-    <!-- Extra for DC -->
-    <script type="text/javascript" src="../assets/js/libs/d3.js?v=cbce5da5aa"></script>
-    <script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=cbce5da5aa"></script>
-    <script type="text/javascript" src="../assets/js/libs/dc.js?v=cbce5da5aa"></script>
-    
-
-</body>
-</html>
+<p>If you made it here and you have comments or ideas feel free to add a note to <a href="https://www.reddit.com/r/golang/comments/360vlb/draft_traps_gotchas_and_common_mistakes_in_go/">this Reddit discussion</a>.</p>]]></description><link>http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/</link><guid isPermaLink="false">e80c8648-431a-4964-a8f1-e022da0ab0cc</guid><category><![CDATA[golang]]></category><dc:creator><![CDATA[Kyle Quest]]></dc:creator><pubDate>Fri, 10 Apr 2015 15:42:39 GMT</pubDate></item></channel></rss>

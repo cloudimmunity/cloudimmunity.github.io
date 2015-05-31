@@ -1,161 +1,78 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
-	<title>50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs</title>
-	<meta name="description" content="" />
-
-	<meta name="HandheldFriendly" content="True" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-	<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=cbce5da5aa" />
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700|Inconsolata:400" />
-    <!-- Extra for DC -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=cbce5da5aa" />
-    <!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end -->
-    <script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=cbce5da5aa"></script>
-
-	<link rel="canonical" href="index.html" />
-    
-    <meta property="og:site_name" content="Devs ♥ Security" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs" />
-    <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
-    <meta property="og:url" content="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" />
-    <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-31T15:23:48.448Z" />
-    <meta property="article:tag" content="golang" />
-    
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs" />
-    <meta name="twitter:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
-    <meta name="twitter:url" content="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" />
-    
-    <script type="application/ld+json">
-{
-    "@context": "http://schema.org",
-    "@type": "Article",
-    "publisher": "Devs ♥ Security",
-    "author": {
-        "@type": "Person",
-        "name": "Kyle Quest",
-        "image": "http://devs.cloudimmunity.com/content/images/2014/12/kcq_gh_pix.png",
-        "url": "http://devs.cloudimmunity.com/author/kyle",
-        "sameAs": "https://www.linkedin.com/in/kylequest"
-    },
-    "headline": "50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs",
-    "url": "http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/",
-    "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-31T15:23:48.448Z",
-    "keywords": "golang",
-    "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
-}
-    </script>
-
-    <meta name="generator" content="Ghost 0.5" />
-    <link rel="alternate" type="application/rss+xml" title="Devs ♥ Security" href="../rss/index.html" />
-</head>
-
-<body class="post-template tag-golang">
-	
-	<section id="wrapper">
-		<div id="ajax-container">
-			
-
-<header id="main-header">
-	<nav id="main-nav">
-		<a class="js-ajax-link js-show-index" id="home-link" href="../index.html"><i class="fa fa-angle-left"></i></a>
-			<a class="js-ajax-link js-show-index" id="blog-logo" href="../index.html"><img src="../content/images/2014/12/CI_LOGO_no_shadow_smaller-2.png" alt="Blog Logo" /></a>
-	</nav>
-</header>
-
-<main class="content" role="main">
-	<article class="post tag-golang">
-		<div class="inner">
-
-			<header class="post-header">
-				<span class="post-meta"><a href="http://devs.cloudimmunity.com/author/kyle/">Kyle Quest</a>  | <a href="../tag/golang/index.html">golang</a> </span>
-				<div class="clear"></div>
-				<h1 class="post-title">50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs</h1>
-			</header>
-		
-			<section class="post-content">
-				<p>Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are due to faulty assumptions and missing details.</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Devs ♥ Security]]></title><description><![CDATA[Code, Cloud, Security, and Everything in Between.]]></description><link>http://localhost:2368/</link><generator>Ghost 0.5</generator><lastBuildDate>Sun, 31 May 2015 18:48:23 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[(Draft) Designing a Web API - How TAXII 1.x Made Every Mistake in the Book]]></title><description><![CDATA[<p>WIP...</p>]]></description><link>http://localhost:2368/designing-a-web-api-how-taxii-1-x-made-every-mistake-in-the-book/</link><guid isPermaLink="false">1152a521-7ec9-46a6-a246-1d176a6bba95</guid><dc:creator><![CDATA[Kyle Quest]]></dc:creator><pubDate>Sun, 31 May 2015 18:47:06 GMT</pubDate></item><item><title><![CDATA[(Draft) When Do-It-Yourself Integrity Verification Doesn't Work - Lessons Learned for New Web Developers]]></title><description><![CDATA[<p>WIP...</p>]]></description><link>http://localhost:2368/when-do-it-yourself-integrity-verification-doesnt-work-lessons-learned-for-new-web-developers/</link><guid isPermaLink="false">aaa6c403-86d9-4e14-a400-7adfc0989100</guid><dc:creator><![CDATA[Kyle Quest]]></dc:creator><pubDate>Sun, 31 May 2015 18:17:30 GMT</pubDate></item><item><title><![CDATA[(Draft) Friends Don't Let Friends Use JSON Web Tokens]]></title><description><![CDATA[<p>WIP...</p>]]></description><link>http://localhost:2368/friends-dont-let-friends-use-json-web-tokens/</link><guid isPermaLink="false">c206d30d-1d27-4fc6-b8cb-338c6311bafd</guid><dc:creator><![CDATA[Kyle Quest]]></dc:creator><pubDate>Sat, 30 May 2015 07:15:07 GMT</pubDate></item><item><title><![CDATA[50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs]]></title><description><![CDATA[<p>Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go's fault. Some of these mistakes are natural traps if you are coming from another language. Others are due to faulty assumptions and missing details.</p>
 
 <p>A lot of these gotchas may seem obvious if you took the time to learn the language reading the official spec, wiki, mailing list discussions, many great posts and presentations by Rob Pike, and the source code. Not everybody starts the same way though and that's OK. If you are new to Go the information here will save you hours debugging your code.</p>
 
-<p><a href="index.html#total_beginner">Total Beginner</a>:</p>
+<p><a href="http://localhost:2368/#total_beginner">Total Beginner</a>:</p>
 
 <ul>
-<li><a href="index.html#opening_braces">Opening Brace Can't Be Placed on a Separate Line</a></li>
-<li><a href="index.html#unused_vars">Unused Variables</a></li>
-<li><a href="index.html#unused_imports">Unused Imports</a></li>
-<li><a href="index.html#short_vars">Short Variable Declarations Can Be Used Only Inside Functions</a></li>
-<li><a href="index.html#vars_redeclare">Redeclaring Variables Using Short Variable Declarations</a></li>
-<li><a href="index.html#vars_shadow">Accidental Variable Shadowing</a></li>
-<li><a href="index.html#nil_init">Can't Use "nil" to Initialize a Variable Without an Explicit Type</a></li>
-<li><a href="index.html#nil_slices_maps">Using "nil" Slices and Maps</a></li>
-<li><a href="index.html#map_cap">Map Capacity</a></li>
-<li><a href="index.html#nil_strings">Strings Can't Be "nil"</a></li>
-<li><a href="index.html#array_func_args">Array Function Arguments</a></li>
-<li><a href="index.html#unexpected_slice_arr_vals">Unexpected Values in Slice and Array "range" Clauses</a></li>
-<li><a href="index.html#one_dim_slice_arr">Slices and Arrays Are One-Dimensional</a></li>
-<li><a href="index.html#map_key_ne">Accessing Non-Existing Map Keys</a></li>
-<li><a href="index.html#imm_strings">Strings Are Immutable</a></li>
-<li><a href="index.html#string_byte_slice_conv">Conversions Between Strings and Byte Slices</a></li>
-<li><a href="index.html#string_idx">Strings and Index Operator</a></li>
-<li><a href="index.html#strings_na_utf">Strings Are Not Always UTF8 Text</a></li>
-<li><a href="index.html#string_length">String Length</a></li>
-<li><a href="index.html#mline_lit_comma">Missing Comma In Multi-Line Slice/Array/Map Literals</a></li>
-<li><a href="index.html#log_fatal_exit">log.Fatal and log.Panic Do More Than Log</a></li>
-<li><a href="index.html#coll_no_sync">Built-in Data Structure Operations Are Not Synchronized</a></li>
-<li><a href="index.html#string_range_vals">Iteration Values For Strings in "range" Clauses</a></li>
-<li><a href="index.html#map_range">Iterating Through a Map Using a "for range" Clause</a></li>
-<li><a href="index.html#switch_fall">Fallthrough Behavior in "switch" Statements</a></li>
-<li><a href="index.html#inc_dec">Increments and Decrements</a></li>
-<li><a href="index.html#bit_not">Bitwise NOT Operator</a></li>
-<li><a href="index.html#op_precedence">Operator Precedence Differences</a></li>
-<li><a href="index.html#unexp_struct_field_enc">Unexported Structure Fields Are Not Encoded</a></li>
-<li><a href="index.html#gor_app_exit">App Exits With Active Goroutines</a></li>
-<li><a href="index.html#unbuf_ch_send_done">Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</a></li>
-<li><a href="index.html#closed_ch_send">Sending to an Closed Channel Causes a Panic</a></li>
-<li><a href="index.html#using_nil_ch">Using "nil" Channels</a></li>
-<li><a href="index.html#method_val_receiver">Methods with Value Receivers Can't Change the Original Value</a></li>
+<li><a href="http://localhost:2368/#opening_braces">Opening Brace Can't Be Placed on a Separate Line</a></li>
+<li><a href="http://localhost:2368/#unused_vars">Unused Variables</a></li>
+<li><a href="http://localhost:2368/#unused_imports">Unused Imports</a></li>
+<li><a href="http://localhost:2368/#short_vars">Short Variable Declarations Can Be Used Only Inside Functions</a></li>
+<li><a href="http://localhost:2368/#vars_redeclare">Redeclaring Variables Using Short Variable Declarations</a></li>
+<li><a href="http://localhost:2368/#vars_shadow">Accidental Variable Shadowing</a></li>
+<li><a href="http://localhost:2368/#nil_init">Can't Use "nil" to Initialize a Variable Without an Explicit Type</a></li>
+<li><a href="http://localhost:2368/#nil_slices_maps">Using "nil" Slices and Maps</a></li>
+<li><a href="http://localhost:2368/#map_cap">Map Capacity</a></li>
+<li><a href="http://localhost:2368/#nil_strings">Strings Can't Be "nil"</a></li>
+<li><a href="http://localhost:2368/#array_func_args">Array Function Arguments</a></li>
+<li><a href="http://localhost:2368/#unexpected_slice_arr_vals">Unexpected Values in Slice and Array "range" Clauses</a></li>
+<li><a href="http://localhost:2368/#one_dim_slice_arr">Slices and Arrays Are One-Dimensional</a></li>
+<li><a href="http://localhost:2368/#map_key_ne">Accessing Non-Existing Map Keys</a></li>
+<li><a href="http://localhost:2368/#imm_strings">Strings Are Immutable</a></li>
+<li><a href="http://localhost:2368/#string_byte_slice_conv">Conversions Between Strings and Byte Slices</a></li>
+<li><a href="http://localhost:2368/#string_idx">Strings and Index Operator</a></li>
+<li><a href="http://localhost:2368/#strings_na_utf">Strings Are Not Always UTF8 Text</a></li>
+<li><a href="http://localhost:2368/#string_length">String Length</a></li>
+<li><a href="http://localhost:2368/#mline_lit_comma">Missing Comma In Multi-Line Slice/Array/Map Literals</a></li>
+<li><a href="http://localhost:2368/#log_fatal_exit">log.Fatal and log.Panic Do More Than Log</a></li>
+<li><a href="http://localhost:2368/#coll_no_sync">Built-in Data Structure Operations Are Not Synchronized</a></li>
+<li><a href="http://localhost:2368/#string_range_vals">Iteration Values For Strings in "range" Clauses</a></li>
+<li><a href="http://localhost:2368/#map_range">Iterating Through a Map Using a "for range" Clause</a></li>
+<li><a href="http://localhost:2368/#switch_fall">Fallthrough Behavior in "switch" Statements</a></li>
+<li><a href="http://localhost:2368/#inc_dec">Increments and Decrements</a></li>
+<li><a href="http://localhost:2368/#bit_not">Bitwise NOT Operator</a></li>
+<li><a href="http://localhost:2368/#op_precedence">Operator Precedence Differences</a></li>
+<li><a href="http://localhost:2368/#unexp_struct_field_enc">Unexported Structure Fields Are Not Encoded</a></li>
+<li><a href="http://localhost:2368/#gor_app_exit">App Exits With Active Goroutines</a></li>
+<li><a href="http://localhost:2368/#unbuf_ch_send_done">Sending to an Unbuffered Channel Returns As Soon As the Target Receiver Is Ready</a></li>
+<li><a href="http://localhost:2368/#closed_ch_send">Sending to an Closed Channel Causes a Panic</a></li>
+<li><a href="http://localhost:2368/#using_nil_ch">Using "nil" Channels</a></li>
+<li><a href="http://localhost:2368/#method_val_receiver">Methods with Value Receivers Can't Change the Original Value</a></li>
 </ul>
 
-<p><a href="index.html#intermediate_beginner">Intermediate Beginner</a>:</p>
+<p><a href="http://localhost:2368/#intermediate_beginner">Intermediate Beginner</a>:</p>
 
 <ul>
-<li><a href="index.html#close_http_resp_body">Closing HTTP Response Body</a></li>
-<li><a href="index.html#close_http_conn">Closing HTTP Connections</a></li>
-<li><a href="index.html#compare_struct_arr_slice_map">Comparing Structs, Arrays, Slices, and Maps</a></li>
-<li><a href="index.html#panic_recover">Recovering From a Panic</a></li>
-<li><a href="index.html#range_val_update">Updating and Referencing Item Values in Slice, Array, and Map "for range" Clauses</a></li>
-<li><a href="index.html#slice_hidden_data">"Hidden" Data in Slices</a></li>
-<li><a href="index.html#slice_data_corruption">Slice Data Corruption</a></li>
-<li><a href="index.html#stale_slices">"Stale" Slices</a></li>
-<li><a href="index.html#type_decl_methods">Type Declarations and Methods</a></li>
-<li><a href="index.html#deep_for_breakout">Breaking Out of "for switch" and "for select" Code Blocks</a></li>
-<li><a href="index.html#closure_for_it_vars">Iteration Variables and Closures in "for" Statements</a></li>
-<li><a href="index.html#deferred_calls">Deferred Function Call Argument Evaluation</a></li>
-<li><a href="index.html#deferred_call_exe">Deferred Function Call Execution</a></li>
-<li><a href="index.html#failed_type_assert">Failed Type Assertions</a></li>
-<li><a href="index.html#blocked_goroutines">Blocked Goroutines and Resource Leaks</a></li>
+<li><a href="http://localhost:2368/#close_http_resp_body">Closing HTTP Response Body</a></li>
+<li><a href="http://localhost:2368/#close_http_conn">Closing HTTP Connections</a></li>
+<li><a href="http://localhost:2368/#compare_struct_arr_slice_map">Comparing Structs, Arrays, Slices, and Maps</a></li>
+<li><a href="http://localhost:2368/#panic_recover">Recovering From a Panic</a></li>
+<li><a href="http://localhost:2368/#range_val_update">Updating and Referencing Item Values in Slice, Array, and Map "for range" Clauses</a></li>
+<li><a href="http://localhost:2368/#slice_hidden_data">"Hidden" Data in Slices</a></li>
+<li><a href="http://localhost:2368/#slice_data_corruption">Slice Data Corruption</a></li>
+<li><a href="http://localhost:2368/#stale_slices">"Stale" Slices</a></li>
+<li><a href="http://localhost:2368/#type_decl_methods">Type Declarations and Methods</a></li>
+<li><a href="http://localhost:2368/#deep_for_breakout">Breaking Out of "for switch" and "for select" Code Blocks</a></li>
+<li><a href="http://localhost:2368/#closure_for_it_vars">Iteration Variables and Closures in "for" Statements</a></li>
+<li><a href="http://localhost:2368/#deferred_calls">Deferred Function Call Argument Evaluation</a></li>
+<li><a href="http://localhost:2368/#deferred_call_exe">Deferred Function Call Execution</a></li>
+<li><a href="http://localhost:2368/#failed_type_assert">Failed Type Assertions</a></li>
+<li><a href="http://localhost:2368/#blocked_goroutines">Blocked Goroutines and Resource Leaks</a></li>
 </ul>
 
-<p><a href="index.html#advanced_beginner">Advanced Beginner</a>:</p>
+<p><a href="http://localhost:2368/#advanced_beginner">Advanced Beginner</a>:</p>
 
 <ul>
-<li><a href="index.html#ptr_receiver_val_inst">Using Pointer Receiver Methods On Value Instances</a></li>
-<li><a href="index.html#map_value_field_update">Updating Map Value Fields</a></li>
-<li><a href="index.html#nil_in_nil_in_vals">"nil" Interfaces and "nil" Interfaces Values</a></li>
-<li><a href="index.html#stack_heap_vars">Stack and Heap Variables</a></li>
-<li><a href="index.html#gomaxprocs">GOMAXPROCS, Concurrency, and Parallelism</a></li>
-<li><a href="index.html#rw_reorder">Read and Write Operation Reordering</a></li>
-<li><a href="index.html#psched">Preemptive Scheduling</a>
-<br/></li>
+<li><a href="http://localhost:2368/#ptr_receiver_val_inst">Using Pointer Receiver Methods On Value Instances</a></li>
+<li><a href="http://localhost:2368/#map_value_field_update">Updating Map Value Fields</a></li>
+<li><a href="http://localhost:2368/#nil_in_nil_in_vals">"nil" Interfaces and "nil" Interfaces Values</a></li>
+<li><a href="http://localhost:2368/#stack_heap_vars">Stack and Heap Variables</a></li>
+<li><a href="http://localhost:2368/#gomaxprocs">GOMAXPROCS, Concurrency, and Parallelism</a></li>
+<li><a href="http://localhost:2368/#rw_reorder">Read and Write Operation Reordering</a></li>
+<li><a href="http://localhost:2368/#psched">Preemptive Scheduling</a>
+<br></li>
 </ul>
 
 <p><a name="total_beginner"></a></p>
@@ -1285,8 +1202,8 @@ func doit(workerId int) {
 <p>You'll see:  </p>
 
 <blockquote>
-  <p>[0] is running <br />
-    [1] is running <br />
+  <p>[0] is running <br>
+    [1] is running <br>
     all done!  </p>
 </blockquote>
 
@@ -1325,9 +1242,9 @@ func doit(workerId int,done &lt;-chan struct{},wg sync.WaitGroup) {
 <p>If you run this app you'll see:  </p>
 
 <blockquote>
-  <p>[0] is running <br />
-    [0] is done <br />
-    [1] is running <br />
+  <p>[0] is running <br>
+    [0] is done <br>
+    [1] is running <br>
     [1] is done  </p>
 </blockquote>
 
@@ -2760,7 +2677,7 @@ func main() {
 <blockquote>
   <p><span style="color:#900; font-family: Menlo, Courier New, monospace; font-size: 11pt;">
   /tmp/sandbox017696142/main.go:21: cannot use data literal (type data) as type printer in assignment:
-      data does not implement printer (print method has pointer receiver)<br/>
+      data does not implement printer (print method has pointer receiver)<br>
   /tmp/sandbox017696142/main.go:25: cannot call pointer method on m["x"]
   /tmp/sandbox017696142/main.go:25: cannot take the address of m["x"]
   </span></p>
@@ -3031,19 +2948,19 @@ func main() {
 <p>If you run this code a few times you might see these <code>a</code> and <code>b</code> variable combinations:</p>
 
 <blockquote>
-  <p>1 <br />
+  <p>1 <br>
     2  </p>
   
-  <p>3 <br />
+  <p>3 <br>
     4  </p>
   
-  <p>0 <br />
+  <p>0 <br>
     2  </p>
   
-  <p>0 <br />
+  <p>0 <br>
     0  </p>
   
-  <p>1 <br />
+  <p>1 <br>
     4    </p>
 </blockquote>
 
@@ -3123,70 +3040,149 @@ func main() {
 }
 </code></pre>
 
-<p>If you made it here and you have comments or ideas feel free to add a note to <a href="https://www.reddit.com/r/golang/comments/360vlb/draft_traps_gotchas_and_common_mistakes_in_go/">this Reddit discussion</a>.</p>
-			</section>
-			
-			<footer class="post-footer">
-				<div class="post-meta">
-					<a href="../tag/golang/index.html">golang</a>
-				</div>
-				<div class="post-share">
-                    <a class="fa fa-reddit" href="http://www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false;" target="_blank">
-						<span class="hidden">Reddit</span>
-					</a>
-                    
-                    <a class="fa fa-hacker-news" href="javascript:window.location=%22http://news.ycombinator.com/submitlink?u=%22+encodeURIComponent(document.location)+%22&t=%22+encodeURIComponent(document.title)" target="_blank">
-                        <span class="hidden">Hacker News</span>
-                    </a>
-                    
-					<a class="fa fa-twitter" href="https://twitter.com/share?text=50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs&url=http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" target="_blank">
-						<span class="hidden">Twitter</span>
-					</a>
-                    
-                    <a class="fa fa-rss" href="../rss/index.html" target="_blank">
-						<span class="hidden">RSS</span>
-					</a>
-				</div>
-				<div class="clear"></div>
-			</footer>
-			
-			<aside class="post-author">
-					<figure class="post-author-avatar">
-						<img src="../content/images/2014/12/kcq_gh_pix.png" alt="Kyle Quest" />
-					</figure>
-				<div class="post-author-bio">
-					<h4><a class="js-author-index js-ajax-link" href="http://devs.cloudimmunity.com/author/kyle/">Kyle Quest</a></h4>
-						<p>Builder, breaker, and defender. Cloud, security, and Big Data.</p>
-						<span><i class="fa fa-link"></i> <a href="https://twitter.com/kcqon">Twitter</a></span>
-						<span><i class="fa fa-link"></i> <a href="https://www.linkedin.com/in/kylequest">LinkedIn</a></span>
-				</div>
-				<div class="clear"></div>
-			</aside>
-			
-		</div>
-	</article>
-</main>
-		</div>
-	</section>
-	
-	<footer id="site-footer">
-		<div class="inner">
-				<span class="blog-description">Code, Cloud, Security, and Everything in Between.</span>
-			<section class="poweredby">Create secure cloud apps with <a href="https://www.cloudimmunity.com/">Cloud Immunity</a>.</section>
-		</div>
-	</footer>
+<p>If you made it here and you have comments or ideas feel free to add a note to <a href="https://www.reddit.com/r/golang/comments/360vlb/draft_traps_gotchas_and_common_mistakes_in_go/">this Reddit discussion</a>.</p>]]></description><link>http://localhost:2368/gotchas-and-common-mistakes-in-go-golang/</link><guid isPermaLink="false">e80c8648-431a-4964-a8f1-e022da0ab0cc</guid><category><![CDATA[golang]]></category><dc:creator><![CDATA[Kyle Quest]]></dc:creator><pubDate>Fri, 10 Apr 2015 15:42:39 GMT</pubDate></item><item><title><![CDATA[Hacking (Old) Hacker News: Fun with Weak Passwords and Arc]]></title><description><![CDATA[<p>When I was conducting my cloud password security research, I also looked at <a href="https://news.ycombinator.com/">Hacker News</a>. It's not a cloud application, but it does have pretty common password security qualities. It's also interesting because it's written in Arc (a Lisp dialect) and the code is available (for the old version from 2009).<br> <br>
+When you create a Hacker News account you can create passwords which are 4 characters long without any restrictions on the password complexity. This mean that you can have a password that looks like 0000 or 1111. Sure, not everybody will use passwords like that, but there's a good chance that quite a few users will have pretty simple passwords. Even technical people are still people; people choose the easiest possible passwords (when they can), making it easy to conduct online password attacks.<br> <br>
+What's interesting is that when you change your password, you are required to have at least 8 characters (still without any complexity requirements). The Arc source code shows that the length requirement used to be 4 characters. Time to look at the code to see what else might be there...</p>
 
-	<script src="../public/jquery.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/nprogress.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/index.js?v=cbce5da5aa"></script>
-    <!-- Extra for DC -->
-    <script type="text/javascript" src="../assets/js/libs/d3.js?v=cbce5da5aa"></script>
-    <script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=cbce5da5aa"></script>
-    <script type="text/javascript" src="../assets/js/libs/dc.js?v=cbce5da5aa"></script>
-    
+<p>Here's the login code from app.arc:</p>
 
-</body>
-</html>
+<pre><code>(def good-login (user pw ip)
+  (let record (list (seconds) ip user)
+    (if (and user pw (aand (shash pw) (is it (hpasswords* user))))
+        (do (unless (user-&gt;cookie* user) (cook-user user))
+            (enq-limit record good-logins*)
+            user)
+        (do (enq-limit record bad-logins*)
+            nil))))
+</code></pre>
+
+<p>The interesting part is <code>(aand (shash pw) (is it (hpasswords* user)))</code>, where the password parameter is hashed and then compared to the expected hash for the user. What makes it interesting is the <code>is</code> operator that determines if two values in Arc are equal. Let's find out what <code>is</code> really means...</p>
+
+<p><code>is</code> is defined in ac.scm as:</p>
+
+<pre><code>(xdef is (lambda args (pairwise ar-is2 args)))
+</code></pre>
+
+<p><code>ar-is2</code> is the function that implements the interesting parts we care about:</p>
+
+<pre><code>(define (ar-is2 a b)
+  (tnil (or (eqv? a b)
+            (and (string? a) (string? b) (string=? a b))
+            (and (ar-false? a) (ar-false? b)))))
+</code></pre>
+
+<p>The important part here is this bit of Scheme code <code>(string=? a b)</code> that checks if two strings are equal.</p>
+
+<p>Here's how MzScheme defines its string compare operator "string=?":</p>
+
+<pre><code>GEN_STRING_COMP(string_eq, "string=?", mz_char_strcmp, ==, 0, 1)
+...
+static int mz_char_strcmp(const char *who, const mzchar *str1, int l1, const mzchar *str2, int l2, 
+        int use_locale, int size_shortcut)
+{
+  int endres;
+
+  if (size_shortcut &amp;&amp; (l1 != l2))
+    return 1;
+  //... (cut unused locale compare)
+  if (l1 &gt; l2) {
+    l1 = l2;
+    endres = 1;
+  } else {
+    if (l2 &gt; l1)
+      endres = -1;
+    else
+      endres = 0;
+  }
+
+  while (l1--) {
+    unsigned int a, b;
+
+    a = *(str1++);
+    b = *(str2++);
+
+    a = a - b;
+    if (a)
+      return a;
+  }
+
+  return endres;
+}
+</code></pre>
+
+<p>This is a standard string compare implementation that returns as soon as the current characters don't match. This means that the password checking code is vulnerable to timing attacks (in theory). It's harder to exploit because the code doesn't compare raw/cleartext passwords. Instead, the code compares password hashes, so there's an extra step where you have to generate hash collisions. Depending on the hash algorithm generating hash collisions could be time-consuming.</p>
+
+<p>What are those hashes and what algorithm is used to generate them? The answer is in the <code>shash</code> function in app.arc:</p>
+
+<pre><code>(def shash (str)
+  (let fname (+ "/tmp/shash" (rand-string 10))
+    (w/outfile f fname (disp str f))
+    (let res (tostring (system (+ "openssl dgst -sha1 &lt;" fname)))
+      (do1 (cut res 0 (- (len res) 1))
+           (rmfile fname)))))
+</code></pre>
+
+<p><code>shash</code> creates a SHA1 hash (without a "salt") and that hash is used to verify the user identity. Compared to MD5 generating SHA1 hash collisions is much more difficult (and not very practical at this point in time).</p>
+
+<p>The publicly available code is from 2009 and the current password management and processing code has been improved since then (Paul Graham was nice enough to confirm it :-)). It sounds like the current unreleased version might be using a pure Scheme implementation of bcrypt. It would be great to see the new version, given that there aren't a lot of pure Scheme bcrypt implementations out there. In the meantime, you can explore your inner hacker and deploy the old code yourself.</p>
+
+<p>To run Arc 3.0:</p>
+
+<ul>
+<li>Install <a href="http://download.plt-scheme.org/v372.html">MzScheme v372</a>.</li>
+<li>Get <a href="http://ycombinator.com/arc/arc3.tar">Arc3</a>.</li>
+<li>Read the instructions in "how-to-run-news" :-)</li>
+</ul>
+
+<p>To run Arc 3.1:</p>
+
+<ul>
+<li>Install Racket.</li>
+<li>Get <a href="http://ycombinator.com/arc/arc3.1.tar">Arc3.1</a>.</li>
+</ul>
+
+<p><a href="https://news.ycombinator.com/">Hacker News</a> is not alone when it comes to having no password complexity requirements. Quite a few companies have the same password qualities (see <a href="http://localhost:2368/the-sad-state-of-password-security-in-the-cloud">"The Sad State of Password Security in the Cloud"</a> to learn more about it). Unlike Hacker News, where you don't gain much by compromising users (unless they reuse the password in other, more valuable internet sites or cloud apps), other companies do have valuable information that should be protected a little better.</p>]]></description><link>http://localhost:2368/hacking-old-hacker-news-fun-with-weak-passwords-and-arc/</link><guid isPermaLink="false">934c53b9-9db9-423a-98ac-5935e2d1fda8</guid><category><![CDATA[passwords]]></category><category><![CDATA[security]]></category><category><![CDATA[Arc]]></category><category><![CDATA[Lisp]]></category><dc:creator><![CDATA[Kyle Quest]]></dc:creator><pubDate>Sat, 27 Dec 2014 17:34:13 GMT</pubDate></item><item><title><![CDATA[The Sad State of Password Security in the Cloud]]></title><description><![CDATA[<p>People are the weakest link when it comes to security. The cloud computing revolution brings new life to this age-old vulnerability. Cloud application users are exposed to many new attack vectors, but the security model designed to protect them is out of date. On top of that fundamental weakness many cloud applications have significant design and implementation flaws because user authentication and identity management seems deceptively simple: you identify a user based on a unique ID and you confirm the identity based on a secret password.<br> <br>
+A lot has been written about passwords in general and about the weaknesses in many high profile Internet and cloud applications. The security compromises of Evernote, LinkedIn, Sony, Yahoo, Linode, eHarmony, Last.fm, Zappos, Nvidia, Gawker, Billabong, Android Forums, and Ubuntu Forums in the recent years bring new light to a very old problem: People choose weak passwords. They do it because it's easy and because they can. Discussions in the technical community tend to focus on the easy problems: using more appropriate hashing algorithms, using salts for password hashing, etc. Of course, keeping the password hashes safe and using slow hashing algorithms (with random salt values) is important. It would protect a lot of relatively strong passwords from being cracked by using offline brute-forcing attacks.  However, secure password storage and proper password hashing are only one part of the problem. Even if the apps are not compromised, their users are still in danger.</p>
+
+<p>It's all because they don't do a good job helping their users pick safe passwords. When users pick "password" or "123456", it doesn't matter how secure the password storage and password hashing are - because attackers will guess these passwords in no time. It's common practice for Internet and cloud application vendors to say that users shouldn't pick weak passwords. But telling people to pick secure and hard-to-guess passwords simply doesn't work, because in many cases people will pick the easiest password their cloud applications allow. The leaked passwords from the recently publicized compromises are great examples of that.</p>
+
+<p>I wanted to see what popular cloud services and applications do when it comes to making sure their users have secure passwords. I reviewed more than 200 cloud services in several different categories. The results were unexpected and surprising in some of those categories.</p>
+
+<div class="row-fluid">  
+<div id="cloud-service-categories">  
+<h4>Cloud Service Categories (<a href="javascript:dc.filterAll(); dc.renderAll();">Reset Stats</a>)</h4>  
+</div>  
+
+<p></p></div><p></p>
+
+<div class="row-fluid">  
+<div id="password-requirements">  
+<h4> Password Requirements</h4>  
+</div>  
+
+<p></p></div><p></p>
+
+<div class="row-fluid">  
+<h4>Cloud Service Password Requirements</h4>  
+<table class="table table-hover table-bordered table-condensed" id="cloud-service-category-table">  
+<thead>  
+<tr class="header">  
+<th>Category</th>  
+<th>Requirement</th>  
+<th>Services</th>  
+</tr>  
+</thead>  
+</table>  
+</div>
+
+<p>A lot of these cloud services target very technical users, so you'd expect these services to be strict with passwords. You'd also expect the security related services and those dealing with financial information to have the most secure passwords. But the password requirements below show that the majority of the cloud services allow very simple passwords with any characters. Also, most of those passwords are allowed to be very short. This means that attackers can easily crack many user passwords using simple online password guessing attacks without compromising the cloud applications and gaining access to password hashes.</p>
+
+<p>The research produced a number of interesting questions about the password security practices among the different cloud services. How is it that so many services allow single character passwords? Shouldn't services dealing with payments and billing information be really strict about their password requirements? Shouldn't the security, and especially the Identity Management and the authentication services, do better when it comes to password security?</p>
+
+<p>In most cases, passwords are the "elephant in the room," an issue that's commonly overlooked. Sometimes developers are afraid to impact the user experience in a negative way, but a lot of times only a bare minimum is done because security is at the bottom of the developers' to-do list and the user account implementation often ends up being based on the code samples found on the Internet.</p>
+
+<p>Unfortunately, the security community and the security/compliance standards don't help that much. Historically, short passwords with random characters have been considered to be the best practice when it comes to password security. This doesn’t work because people can't create and remember passwords like that. It gets worse when people are forced to change their passwords every three months (and in some cases every month). This means that people pick a really easy-to-guess password creation scheme. The standards and the password security best practices try to enforce the password randomness using primitive password restrictions; this ultimately fails because, in most cases, people pick simple words, changing them just enough to satisfy the restrictions. Attackers use these behaviors as a blueprint for password cracking and brute forcing, turning the application password policies against the victims.</p>
+
+<p>The world of cloud computing introduces many security challenges, but it also provides new opportunities to redefine security and achieve what hasn't been possible in the past. User security is fundamental to the overall cloud application security and it's long-overdue for innovation. Some people think that getting rid of passwords is the future. Unfortunately passwords are like roaches. It's really hard to get rid of them and there's a reason for that. Just because passwords alone aren't great at protecting users doesn't mean there's no place for them. There's a long road ahead and the first step is to make passwords safe and usable.</p>
+
+<script type="text/javascript" src="http://localhost:2368/assets/js/posts/pstats.js"></script>]]></description><link>http://localhost:2368/the-sad-state-of-password-security-in-the-cloud/</link><guid isPermaLink="false">16afc5ef-fb86-4b47-93de-02a6a671e858</guid><category><![CDATA[passwords]]></category><category><![CDATA[security]]></category><category><![CDATA[cloud]]></category><dc:creator><![CDATA[Kyle Quest]]></dc:creator><pubDate>Mon, 22 Dec 2014 04:32:47 GMT</pubDate></item></channel></rss>
