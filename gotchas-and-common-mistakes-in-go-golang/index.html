@@ -10,14 +10,14 @@
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=cbce5da5aa" />
+	<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=759bbd881d" />
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700|Inconsolata:400" />
     <!-- Extra for DC -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=cbce5da5aa" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=759bbd881d" />
     <!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end -->
-    <script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=cbce5da5aa"></script>
+    <script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=759bbd881d"></script>
 
-	<link rel="canonical" href="index.html" />
+	<link rel="canonical" href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" />
     
     <meta property="og:site_name" content="Devs ♥ Security" />
     <meta property="og:type" content="article" />
@@ -25,7 +25,7 @@
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-05-31T15:23:48.448Z" />
+    <meta property="article:modified_time" content="2015-06-07T23:33:53.457Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
@@ -48,14 +48,14 @@
     "headline": "50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs",
     "url": "http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-05-31T15:23:48.448Z",
+    "dateModified": "2015-06-07T23:33:53.457Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
     </script>
 
     <meta name="generator" content="Ghost 0.5" />
-    <link rel="alternate" type="application/rss+xml" title="Devs ♥ Security" href="../rss/index.html" />
+    <link rel="alternate" type="application/rss+xml" title="Devs ♥ Security" href="http://devs.cloudimmunity.com/rss/" />
 </head>
 
 <body class="post-template tag-golang">
@@ -66,8 +66,8 @@
 
 <header id="main-header">
 	<nav id="main-nav">
-		<a class="js-ajax-link js-show-index" id="home-link" href="../index.html"><i class="fa fa-angle-left"></i></a>
-			<a class="js-ajax-link js-show-index" id="blog-logo" href="../index.html"><img src="../content/images/2014/12/CI_LOGO_no_shadow_smaller-2.png" alt="Blog Logo" /></a>
+		<a class="js-ajax-link js-show-index" id="home-link" href="http://devs.cloudimmunity.com"><i class="fa fa-angle-left"></i></a>
+			<a class="js-ajax-link js-show-index" id="blog-logo" href="http://devs.cloudimmunity.com"><img src="../content/images/2014/12/CI_LOGO_no_shadow_smaller-2.png" alt="Blog Logo" /></a>
 	</nav>
 </header>
 
@@ -76,7 +76,7 @@
 		<div class="inner">
 
 			<header class="post-header">
-				<span class="post-meta"><a href="http://devs.cloudimmunity.com/author/kyle/">Kyle Quest</a>  | <a href="../tag/golang/index.html">golang</a> </span>
+				<span class="post-meta"><a href="../author/kyle/index.html">Kyle Quest</a>  | <a href="../tag/golang/index.html">golang</a> </span>
 				<div class="clear"></div>
 				<h1 class="post-title">50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs</h1>
 			</header>
@@ -413,6 +413,15 @@ func main() {
 </code></pre>
 
 <p>This is a very common trap even for experienced Go developers. It's easy to make and it could be hard to spot.</p>
+
+<p>You can use the <a href="http://godoc.org/golang.org/x/tools/cmd/vet"><code>vet</code></a> command to find some of these problems. By default, <code>vet</code> will not perform any shadowed variable checks. Make sure to use the <code>-shadow</code> flag:</p>
+
+<pre><code>go tool vet -shadow your_file.go  
+</code></pre>
+
+<p>Note that the <code>vet</code> command will not report all shadowed variables. Use <a href="https://github.com/barakmich/go-nyet"><code>go-nyet</code></a> for more aggressive shadowed variable detection.</p>
+
+<p><a href="https://github.com/barakmich/go-nyet">https://github.com/barakmich/go-nyet</a></p>
 
 <h6 id="anamenil_initacantuseniltoinitializeavariablewithoutanexplicittype"><a name="nil_init"></a>Can't Use "nil" to Initialize a Variable Without an Explicit Type</h6>
 
@@ -3155,7 +3164,7 @@ func main() {
 						<img src="../content/images/2014/12/kcq_gh_pix.png" alt="Kyle Quest" />
 					</figure>
 				<div class="post-author-bio">
-					<h4><a class="js-author-index js-ajax-link" href="http://devs.cloudimmunity.com/author/kyle/">Kyle Quest</a></h4>
+					<h4><a class="js-author-index js-ajax-link" href="../author/kyle/index.html">Kyle Quest</a></h4>
 						<p>Builder, breaker, and defender. Cloud, security, and Big Data.</p>
 						<span><i class="fa fa-link"></i> <a href="https://twitter.com/kcqon">Twitter</a></span>
 						<span><i class="fa fa-link"></i> <a href="https://www.linkedin.com/in/kylequest">LinkedIn</a></span>
@@ -3176,16 +3185,16 @@ func main() {
 		</div>
 	</footer>
 
-	<script src="../public/jquery.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/libs/nprogress.js?v=cbce5da5aa"></script>
-	<script type="text/javascript" src="../assets/js/index.js?v=cbce5da5aa"></script>
+	<script src="../public/jquery.js?v=759bbd881d"></script>
+	<script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=759bbd881d"></script>
+	<script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=759bbd881d"></script>
+	<script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=759bbd881d"></script>
+	<script type="text/javascript" src="../assets/js/libs/nprogress.js?v=759bbd881d"></script>
+	<script type="text/javascript" src="../assets/js/index.js?v=759bbd881d"></script>
     <!-- Extra for DC -->
-    <script type="text/javascript" src="../assets/js/libs/d3.js?v=cbce5da5aa"></script>
-    <script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=cbce5da5aa"></script>
-    <script type="text/javascript" src="../assets/js/libs/dc.js?v=cbce5da5aa"></script>
+    <script type="text/javascript" src="../assets/js/libs/d3.js?v=759bbd881d"></script>
+    <script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=759bbd881d"></script>
+    <script type="text/javascript" src="../assets/js/libs/dc.js?v=759bbd881d"></script>
     
 
 </body>
