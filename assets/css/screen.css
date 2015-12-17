@@ -371,24 +371,16 @@ img {
 	text-decoration: none;
 	font-size: 16px;
 	display: block;
-	/*color: #292e33;*/
-  color: rgba(0,0,0,0.05);
+    color: rgba(0,0,0,0.05);
 	margin: 26px;
-	/*border: 1px solid #292e33;*/
-  border: 1px solid rgba(0,0,0,0.05);
-  border-radius: 9em;
-  box-sizing: border-box;
-  /*background-color: red;*/
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 9em;
+    box-sizing: border-box;
 	height: 48px;
-  width: 48px;
-	/*line-height: 32px;*/
-	/*padding: 0 8px;*/
-  /*padding: 4px 4px;*/
-  padding-top: 14px;
-	
+    width: 48px;
+    padding-top: 6px;
 	-webkit-transition: none;
 	transition: none;
-
 	-webkit-animation: 1s ease 0s normal none 1 fadeIn;
 	animation: 1s ease 0s normal none 1 fadeIn;
 }
