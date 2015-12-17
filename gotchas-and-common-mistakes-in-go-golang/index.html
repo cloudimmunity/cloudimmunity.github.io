@@ -10,12 +10,12 @@
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=f305095dc5" />
+	<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=78560abaa4" />
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rambla:400,400italic,700|Inconsolata:400" />
     <!-- Extra for DC -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=f305095dc5" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/dc.css?v=78560abaa4" />
     <!-- A few basic utilities to support JS code in posts that relies on the global JS code loaded at the end -->
-    <script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=f305095dc5"></script>
+    <script type="text/javascript" src="../assets/js/libs/ht.utils.js?v=78560abaa4"></script>
 
 	<link rel="canonical" href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" />
     
@@ -25,7 +25,7 @@
     <meta property="og:description" content="Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...." />
     <meta property="og:url" content="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" />
     <meta property="article:published_time" content="2015-04-10T15:42:39.805Z" />
-    <meta property="article:modified_time" content="2015-07-09T04:55:18.488Z" />
+    <meta property="article:modified_time" content="2015-12-17T20:54:32.564Z" />
     <meta property="article:tag" content="golang" />
     
     <meta name="twitter:card" content="summary" />
@@ -48,7 +48,7 @@
     "headline": "50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs",
     "url": "http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/",
     "datePublished": "2015-04-10T15:42:39.805Z",
-    "dateModified": "2015-07-09T04:55:18.488Z",
+    "dateModified": "2015-12-17T20:54:32.564Z",
     "keywords": "golang",
     "description": "Go is a simple and fun language, but, like any other language, it has a few gotchas... Many of those gotchas are not entirely Go&#x27;s fault. Some of these mistakes are natural traps if you are coming from another language...."
 }
@@ -86,6 +86,8 @@
 
 <p>A lot of these gotchas may seem obvious if you took the time to learn the language reading the official spec, wiki, mailing list discussions, many great posts and presentations by Rob Pike, and the source code. Not everybody starts the same way though and that's OK. If you are new to Go the information here will save you hours debugging your code.</p>
 
+<p>This post covers Go 1.5 and below.</p>
+
 <p><a href="index.html#total_beginner">Total Beginner</a>:</p>
 
 <ul>
@@ -94,6 +96,7 @@
 <li><a href="index.html#unused_imports">Unused Imports</a></li>
 <li><a href="index.html#short_vars">Short Variable Declarations Can Be Used Only Inside Functions</a></li>
 <li><a href="index.html#vars_redeclare">Redeclaring Variables Using Short Variable Declarations</a></li>
+<li><a href="index.html#short_fields">Can't Use Short Variable Declarations to Set Field Values</a></li>
 <li><a href="index.html#vars_shadow">Accidental Variable Shadowing</a></li>
 <li><a href="index.html#nil_init">Can't Use "nil" to Initialize a Variable Without an Explicit Type</a></li>
 <li><a href="index.html#nil_slices_maps">Using "nil" Slices and Maps</a></li>
@@ -386,6 +389,78 @@ func main() {
     one, two := 1,2
 
     one,two = two,one
+}
+</code></pre>
+
+<h6 id="anameshort_fieldsacantuseshortvariabledeclarationstosetfieldvalues"><a name="short_fields"></a>Can't Use Short Variable Declarations to Set Field Values</h6>
+
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>Fails:  </p>
+
+<pre><code>package main
+
+import (  
+  "fmt"
+)
+
+type info struct {  
+  result int
+}
+
+func work() (int,error) {  
+    return 13,nil  
+  }
+
+func main() {  
+  var data info
+
+  data.result, err := work() //error
+  fmt.Printf("info: %+v\n",data)
+}
+</code></pre>
+
+<p>Compile Error:  </p>
+
+<blockquote>
+  <p><span style="color:#900; font-family: Menlo, Courier New, monospace; font-size: 11pt;">
+  prog.go:18: non-name data.result on left side of := <br />
+  </span></p>
+</blockquote>
+
+<p>Even though there's a ticket to address this gotcha it's unlikely to change because Rob Pike likes it "as is" :-)</p>
+
+<p>Use temporary variables or predeclare all your variables and use the standard assignment operator.</p>
+
+<p>Works:  </p>
+
+<pre><code>package main
+
+import (  
+  "fmt"
+)
+
+type info struct {  
+  result int
+}
+
+func work() (int,error) {  
+    return 13,nil  
+  }
+
+func main() {  
+  var data info
+
+  var err error
+  data.result, err = work() //ok
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  fmt.Printf("info: %+v\n",data) //prints: info: {result:13}
 }
 </code></pre>
 
@@ -3164,7 +3239,7 @@ func main() {
 <li>level: advanced</li>
 </ul>
 
-<p>By default, Go uses only one execution context / OS thread (in the current version). This number can be increased by setting <code>GOMAXPROCS</code>.</p>
+<p>Go 1.4 and below uses only one execution context / OS thread. This means that only one goroutine can execute at any given time. Starting with 1.5 Go sets the number of execution contexts to the number of logical CPU cores returned by <code>runtime.NumCPU()</code>. That number may or may not match the total number of logical CPU cores on your system depending on the CPU affinity settings of your process.  You can adjust this number by changing the <code>GOMAXPROCS</code> environment variable or by calling the <code>runtime.GOMAXPROCS()</code> function.</p>
 
 <p>There's a common misconception that <code>GOMAXPROCS</code> represents the number of CPUs Go will use to run goroutines. The <code>runtime.GOMAXPROCS()</code> function documentation adds more to the confusion. The <code>GOMAXPROCS</code> variable description (<a href="https://golang.org/pkg/runtime/">https://golang.org/pkg/runtime/</a>) does a better job talking about OS threads.</p>
 
@@ -3178,8 +3253,8 @@ import (
 )
 
 func main() {  
-    fmt.Println(runtime.GOMAXPROCS(-1)) //prints: 1
-    fmt.Println(runtime.NumCPU())       //prints: 1 (on play.golang.org)
+    fmt.Println(runtime.GOMAXPROCS(-1)) //prints: X (1 on play.golang.org)
+    fmt.Println(runtime.NumCPU())       //prints: X (1 on play.golang.org)
     runtime.GOMAXPROCS(20)
     fmt.Println(runtime.GOMAXPROCS(-1)) //prints: 20
     runtime.GOMAXPROCS(300)
@@ -3325,6 +3400,8 @@ func main() {
 </code></pre>
 
 <p>If you made it here and you have comments or ideas feel free to add a note to <a href="https://www.reddit.com/r/golang/comments/360vlb/draft_traps_gotchas_and_common_mistakes_in_go/">this Reddit discussion</a>.</p>
+
+<p>Thank you for your feedback and suggestions!</p>
 			</section>
 			
 			<footer class="post-footer">
@@ -3377,16 +3454,16 @@ func main() {
 		</div>
 	</footer>
 
-	<script src="../public/jquery.js?v=f305095dc5"></script>
-	<script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=f305095dc5"></script>
-	<script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=f305095dc5"></script>
-	<script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=f305095dc5"></script>
-	<script type="text/javascript" src="../assets/js/libs/nprogress.js?v=f305095dc5"></script>
-	<script type="text/javascript" src="../assets/js/index.js?v=f305095dc5"></script>
+	<script src="../public/jquery.js?v=78560abaa4"></script>
+	<script type="text/javascript" src="../assets/js/libs/jquery.fitvids.js?v=78560abaa4"></script>
+	<script type="text/javascript" src="../assets/js/libs/jquery.history.js?v=78560abaa4"></script>
+	<script type="text/javascript" src="../assets/js/libs/highlight.pack.js?v=78560abaa4"></script>
+	<script type="text/javascript" src="../assets/js/libs/nprogress.js?v=78560abaa4"></script>
+	<script type="text/javascript" src="../assets/js/index.js?v=78560abaa4"></script>
     <!-- Extra for DC -->
-    <script type="text/javascript" src="../assets/js/libs/d3.js?v=f305095dc5"></script>
-    <script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=f305095dc5"></script>
-    <script type="text/javascript" src="../assets/js/libs/dc.js?v=f305095dc5"></script>
+    <script type="text/javascript" src="../assets/js/libs/d3.js?v=78560abaa4"></script>
+    <script type="text/javascript" src="../assets/js/libs/crossfilter.js?v=78560abaa4"></script>
+    <script type="text/javascript" src="../assets/js/libs/dc.js?v=78560abaa4"></script>
     
 
 </body>
