@@ -866,7 +866,7 @@ func main() {
 }
 </code></pre>
 
-<p>Note that this isn't really the right way to update characters in a text string because a given character could be stored in multiple bytes. If you do need to make updates to a text string convert it to a rune sclice first. Even with rune slices a single character might span multiple runes, which can happen if you have characters with grave accent, for example. This complicated and ambiguous nature of "characters" is the reason why Go strings are represented as byte sequences.</p>
+<p>Note that this isn't really the right way to update characters in a text string because a given character could be stored in multiple bytes. If you do need to make updates to a text string convert it to a rune slice first. Even with rune slices a single character might span multiple runes, which can happen if you have characters with grave accent, for example. This complicated and ambiguous nature of "characters" is the reason why Go strings are represented as byte sequences.</p>
 
 <h6 id="anamestring_byte_slice_convaconversionsbetweenstringsandbyteslices"><a name="string_byte_slice_conv"></a>Conversions Between Strings and Byte Slices</h6>
 
@@ -1411,7 +1411,7 @@ func doit(workerId int,done &lt;-chan struct{},wg sync.WaitGroup) {
     [1] is done  </p>
 </blockquote>
 
-<p>Looks like the workers are done before the main goroutine exists. Great! However, you'll also see this:  </p>
+<p>Looks like the workers are done before the main goroutine exits. Great! However, you'll also see this:  </p>
 
 <blockquote>
   <p>fatal error: all goroutines are asleep - deadlock!</p>
