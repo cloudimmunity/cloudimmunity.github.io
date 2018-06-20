@@ -86,8 +86,6 @@
 
 <p>A lot of these gotchas may seem obvious if you took the time to learn the language reading the official spec, wiki, mailing list discussions, many great posts and presentations by Rob Pike, and the source code. Not everybody starts the same way though and that's OK. If you are new to Go the information here will save you hours debugging your code.</p>
 
-<p>This post covers Go 1.5 and below.</p>
-
 <p><a href="index.html#total_beginner">Total Beginner</a>:</p>
 
 <ul>
@@ -3243,7 +3241,7 @@ func main() {
 
 <p>There's a common misconception that <code>GOMAXPROCS</code> represents the number of CPUs Go will use to run goroutines. The <code>runtime.GOMAXPROCS()</code> function documentation adds more to the confusion. The <code>GOMAXPROCS</code> variable description (<a href="https://golang.org/pkg/runtime/">https://golang.org/pkg/runtime/</a>) does a better job talking about OS threads.</p>
 
-<p>You can set <code>GOMAXPROCS</code> to more than the number of your CPUs. The max value for <code>GOMAXPROCS</code> is 256.</p>
+<p>You can set <code>GOMAXPROCS</code> to more than the number of your CPUs. As of 1.10 there's no longer a limit for GOMAXPROCS. The max value for <code>GOMAXPROCS</code> used to be 256 and it was later increased to 1024 in 1.9.</p>
 
 <pre><code>package main
 
