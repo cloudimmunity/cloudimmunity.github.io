@@ -124,7 +124,6 @@
 <li><a href="index.html#closed_ch_send">Sending to an Closed Channel Causes a Panic</a></li>
 <li><a href="index.html#using_nil_ch">Using "nil" Channels</a></li>
 <li><a href="index.html#method_val_receiver">Methods with Value Receivers Can't Change the Original Value</a></li>
-<li><a href="index.html#json_encode_newline">JSON Encoder Adds a New Line Character</a></li>
 </ul>
 
 <p><a href="index.html#intermediate_beginner">Intermediate Beginner</a>:</p>
@@ -132,6 +131,8 @@
 <ul>
 <li><a href="index.html#close_http_resp_body">Closing HTTP Response Body</a></li>
 <li><a href="index.html#close_http_conn">Closing HTTP Connections</a></li>
+<li><a href="index.html#json_encode_newline">JSON Encoder Adds a Newline Character</a></li>
+<li><a href="index.html#json_escape_html">JSON Package Escapes Special HTML Characters in Keys and String Values</a></li>
 <li><a href="index.html#json_num">Unmarshalling JSON Numbers into Interface Values</a></li>
 <li><a href="index.html#compare_struct_arr_slice_map">Comparing Structs, Arrays, Slices, and Maps</a></li>
 <li><a href="index.html#panic_recover">Recovering From a Panic</a></li>
@@ -1671,44 +1672,6 @@ func main() {
 }
 </code></pre>
 
-<h6 id="anamejson_encode_newline_json_encoder_adds_a_new_line_character"><a name="json_encode_newline"></a>JSON Encoder Adds a New Line Character</h6>
-
-<ul>
-<li>level: beginner</li>
-</ul>
-
-<p>You are writing a test for your JSON encoding function when you discover that your tests fail because
-you are not getting the expected value. What happened? If you are using the JSON Encoder object then you'll get an extra newline character at the end of your encoded JSON object.</p>
-
-<pre><code>package main
-
-import (
-  "fmt"
-  "encoding/json"
-  "bytes"
-)
-
-func main() {
-  data := map[string]int{"key": 1}
-  
-  var buf bytes.Buffer
-  json.NewEncoder(&buf).Encode(data)
-
-  var raw []byte
-  raw,_ = json.Marshal(data)
-  
-  if buf.String() == string(raw) {
-    fmt.Println("same encoded data")
-  } else {
-    fmt.Printf("'%s' != '%s'\n",raw,buf.String())
-    //prints:
-    //'{"key":1}' != '{"key":1}\n'
-  }
-}
-</code></pre>
-
-<p>The JSON Encoder object is designed for streaming. Streaming with JSON usually means newline delimited JSON objects and this is why the Encode method adds a newline character. This is a documented behavior, but it's commonly overlooked or forgotten.</p>
-
 <p><a name="intermediate_beginner"></a></p>
 
 <h6 id="anameclose_http_resp_bodyaclosinghttpresponsebody"><a name="close_http_resp_body"></a>Closing HTTP Response Body</h6>
@@ -1910,6 +1873,83 @@ func main() {
 </code></pre>
 
 <p>If you send a lot of requests to the same HTTP server it's ok to keep the network connection open. However, if your app sends one or two requests to many different HTTP servers in a short period of time it's a good idea to close the network connections right after your app receives the responses. Increasing the open file limit might be a good idea too. The correct solution depends on your application though.</p>
+
+<h6 id="anamejson_encode_newline_json_encoder_adds_a_newline_character"><a name="json_encode_newline"></a>JSON Encoder Adds a Newline Character</h6>
+
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>You are writing a test for your JSON encoding function when you discover that your tests fail because
+you are not getting the expected value. What happened? If you are using the JSON Encoder object then you'll get an extra newline character at the end of your encoded JSON object.</p>
+
+<pre><code>package main
+
+import (
+  "fmt"
+  "encoding/json"
+  "bytes"
+)
+
+func main() {
+  data := map[string]int{"key": 1}
+  
+  var b bytes.Buffer
+  json.NewEncoder(&b).Encode(data)
+
+  raw,_ := json.Marshal(data)
+  
+  if b.String() == string(raw) {
+    fmt.Println("same encoded data")
+  } else {
+    fmt.Printf("'%s' != '%s'\n",raw,b.String())
+    //prints:
+    //'{"key":1}' != '{"key":1}\n'
+  }
+}
+</code></pre>
+
+<p>The JSON Encoder object is designed for streaming. Streaming with JSON usually means newline delimited JSON objects and this is why the Encode method adds a newline character. This is a documented behavior, but it's commonly overlooked or forgotten.</p>
+
+<h6 id="anamejson_escape_html_json_package_escapes_special_html_characters"><a name="json_encode_newline"></a>JSON Package Escapes Special HTML Characters in Keys and String Values</h6>
+
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p> This is a documented behavior, but you have to be careful reading all of the JSON package documentation to learn about it. The `SetEscapeHTML` method description talks about the default encoding behavior for the and, less than and greater than characters.</p>
+
+<p>This is a very unfortunate design decision by the Go team for a number of reasons. First, you can't disable this behavior for the `json.Marshal` calls. Second, this is a badly implemented security feature because it assumes that doing HTML encoding is sufficient to protect against XSS vulnerabilities in all web applications. There are a lot of different contexts where the data can be used and each context requires its own encoding method. And finally, it's bad because it assumes that the primary use case for JSON is a web page, which breaks the configuration libraries and the REST/HTTP APIs by default.</p>
+
+<pre><code>package main
+
+import (
+  "fmt"
+  "encoding/json"
+  "bytes"
+)
+
+func main() {
+  data := "x < y"
+  
+  raw,_ := json.Marshal(data)
+  fmt.Println(string(raw))
+  //prints: "x \u003c y" <- probably not what you expected
+  
+  var b1 bytes.Buffer
+  json.NewEncoder(&b1).Encode(data)
+  fmt.Println(b1.String())
+  //prints: "x \u003c y" <- probably not what you expected
+  
+  var b2 bytes.Buffer
+  enc := json.NewEncoder(&b2)
+  enc.SetEscapeHTML(false)
+  enc.Encode(data)
+  fmt.Println(b2.String())
+  //prints: "x < y" <- looks better
+}</pre>
+
+<p>A suggestion to the Go team... Make it an opt-in.</p>
 
 <h6 id="anamejson_numaunmarshallingjsonnumbersintointerfacevalues"><a name="json_num"></a>Unmarshalling JSON Numbers into Interface Values</h6>
 
