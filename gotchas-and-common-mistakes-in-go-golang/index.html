@@ -1919,7 +1919,7 @@ func main() {
 
 <p> This is a documented behavior, but you have to be careful reading all of the JSON package documentation to learn about it. The <code>SetEscapeHTML</code> method description talks about the default encoding behavior for the and, less than and greater than characters.</p>
 
-<p>This is a very unfortunate design decision by the Go team for a number of reasons. First, you can't disable this behavior for the `json.Marshal` calls. Second, this is a badly implemented security feature because it assumes that doing HTML encoding is sufficient to protect against XSS vulnerabilities in all web applications. There are a lot of different contexts where the data can be used and each context requires its own encoding method. And finally, it's bad because it assumes that the primary use case for JSON is a web page, which breaks the configuration libraries and the REST/HTTP APIs by default.</p>
+<p>This is a very unfortunate design decision by the Go team for a number of reasons. First, you can't disable this behavior for the <code>json.Marshal</code> calls. Second, this is a badly implemented security feature because it assumes that doing HTML encoding is sufficient to protect against XSS vulnerabilities in all web applications. There are a lot of different contexts where the data can be used and each context requires its own encoding method. And finally, it's bad because it assumes that the primary use case for JSON is a web page, which breaks the configuration libraries and the REST/HTTP APIs by default.</p>
 
 <pre><code>package main
 
@@ -1947,7 +1947,8 @@ func main() {
   enc.Encode(data)
   fmt.Println(b2.String())
   //prints: "x < y" <- looks better
-}</pre>
+}
+</code></pre>
 
 <p>A suggestion to the Go team... Make it an opt-in.</p>
 
