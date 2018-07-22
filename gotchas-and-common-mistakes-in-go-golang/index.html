@@ -124,6 +124,7 @@
 <li><a href="index.html#closed_ch_send">Sending to an Closed Channel Causes a Panic</a></li>
 <li><a href="index.html#using_nil_ch">Using "nil" Channels</a></li>
 <li><a href="index.html#method_val_receiver">Methods with Value Receivers Can't Change the Original Value</a></li>
+<li><a href="index.html#json_encode_newline">JSON Encoder Adds a New Line Character</a></li>
 </ul>
 
 <p><a href="index.html#intermediate_beginner">Intermediate Beginner</a>:</p>
@@ -1669,6 +1670,44 @@ func main() {
     //prints num=7 key=v.key items=map[vmethod:true]
 }
 </code></pre>
+
+<h6 id="anamejson_encode_newline_json_encoder_adds_a_new_line_character"><a name="json_encode_newline"></a>JSON Encoder Adds a New Line Character</h6>
+
+<ul>
+<li>level: beginner</li>
+</ul>
+
+<p>You are writing a test for your JSON encoding function when you discover that your tests fail because
+you are not getting the expected value. What happened? If you are using the JSON Encoder object then you'll get an extra newline character at the end of your encoded JSON object.</p>
+
+<pre><code>package main
+
+import (
+  "fmt"
+  "encoding/json"
+  "bytes"
+)
+
+func main() {
+  data := map[string]int{"key": 1}
+  
+  var buf bytes.Buffer
+  json.NewEncoder(&buf).Encode(data)
+
+  var raw []byte
+  raw,_ = json.Marshal(data)
+  
+  if buf.String() == string(raw) {
+    fmt.Println("same encoded data")
+  } else {
+    fmt.Printf("'%s' != '%s'\n",raw,buf.String())
+    //prints:
+    //'{"key":1}' != '{"key":1}\n'
+  }
+}
+</code></pre>
+
+<p>The JSON Encoder object is designed for streaming. Streaming with JSON usually means newline delimited JSON objects and this is why the Encode method adds a newline character. This is a documented behavior, but it's commonly overlooked or forgotten.</p>
 
 <p><a name="intermediate_beginner"></a></p>
 
