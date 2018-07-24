@@ -2230,6 +2230,8 @@ func main() {
 }
 </code></pre>
 
+<p>Something else to watch out for is the Unicode replacement character (U+FFFD). Go will use the replacement character instead of invalid UTF8, so the Unmarshal/Decode call will not fail, but the string value you get might not be what you expected.</p>
+
 <h6 id="anamecompare_struct_arr_slice_mapacomparingstructsarraysslicesandmaps"><a name="compare_struct_arr_slice_map"></a>Comparing Structs, Arrays, Slices, and Maps</h6>
 
 <ul>
