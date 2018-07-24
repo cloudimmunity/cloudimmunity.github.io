@@ -134,6 +134,7 @@
 <li><a href="index.html#json_encode_newline">JSON Encoder Adds a Newline Character</a></li>
 <li><a href="index.html#json_escape_html">JSON Package Escapes Special HTML Characters in Keys and String Values</a></li>
 <li><a href="index.html#json_num">Unmarshalling JSON Numbers into Interface Values</a></li>
+<li><a href="index.html#json_utf8_strings">JSON String Values Will Not Be Ok with Hex or Other non-UTF8 Escape Sequences</a></li>
 <li><a href="index.html#compare_struct_arr_slice_map">Comparing Structs, Arrays, Slices, and Maps</a></li>
 <li><a href="index.html#panic_recover">Recovering From a Panic</a></li>
 <li><a href="index.html#range_val_update">Updating and Referencing Item Values in Slice, Array, and Map "for range" Clauses</a></li>
@@ -2145,6 +2146,87 @@ func main() {
 
     fmt.Printf("[%v] result =&gt; %+v\n",idx,result)
   }
+}
+</code></pre>
+
+<h6 id="anamejson_utf8_strings_json_string_values_will_not_be_ok_with_hex"><a name="json_utf8_strings"></a>JSON String Values Will Not Be Ok with Hex or Other non-UTF8 Escape Sequences</h6>
+
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>Go expects string values to be UTF8 encoded. This means you can't have arbitrary hex escaped binary data in your JSON strings (and you also have to escape the backslash character). This is really a JSON gotcha Go inherited, but it happens often enough in Go apps that it makes sense to mention it anyways.</p>
+
+<pre><code>package main
+
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type config struct {
+  Data string `json:"data"`
+}
+
+func main() {
+  raw := []byte(`{"data":"\xc2"}`)
+  var decoded config
+
+  if err := json.Unmarshal(raw, &decoded); err != nil {
+        fmt.Println(err)
+    //prints: invalid character 'x' in string escape code
+    }
+  
+}
+</code></pre>
+
+<p>The Unmarshal/Decode calls will fail if Go sees a hex escape sequence. If you do need to have a backslash in you string make sure to escape it with another backlash. If you want to use hex encoded binary data you can escape the backslash and then do your own hex escaping with the decoded data in your JSON string.</p>
+
+<pre><code>package main
+
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type config struct {
+  Data string `json:"data"`
+}
+
+func main() {
+  raw := []byte(`{"data":"\\xc2"}`)
+  
+  var decoded config
+  
+  json.Unmarshal(raw, &decoded)
+  
+  fmt.Printf("%#v",decoded) //prints: main.config{Data:"\\xc2"}
+  //todo: do your own hex escape decoding for decoded.Data  
+}
+</code></pre>
+
+<p>Another option is to use the byte array/slice data type in your JSON object, but the binary data will have to be base64 encoded.</p>
+
+<pre><code>package main
+
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type config struct {
+  Data []byte `json:"data"`
+}
+
+func main() {
+  raw := []byte(`{"data":"wg=="}`)
+  var decoded config
+  
+  if err := json.Unmarshal(raw, &decoded); err != nil {
+          fmt.Println(err)
+      }
+  
+  fmt.Printf("%#v",decoded) //prints: main.config{Data:[]uint8{0xc2}}
 }
 </code></pre>
 
