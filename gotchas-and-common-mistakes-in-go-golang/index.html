@@ -2931,7 +2931,7 @@ func main() {
 <li>level: intermediate</li>
 </ul>
 
-<p>Arguments for a deferred function call are evaluated when the <code>defer</code> statement is evaluated (not when the function is actually executing).</p>
+<p>Arguments for a deferred function call are evaluated when the <code>defer</code> statement is evaluated (not when the function is actually executing). The same rules apply when you defer a method call. The structure value is also saved along with the explicit method parameters and the closed variables.</p>
 
 <pre><code>package main
 
@@ -2946,13 +2946,30 @@ func main() {
 }
 </code></pre>
 
+<p>If you have pointer parameters it is possible to change the values they point to because only the pointer is saved when the <code>defer</code> statement is evaluated.</p>
+
+<pre><code>package main
+
+import (
+  "fmt"
+)
+
+func main() {
+  i := 1
+  defer func (in *int) { fmt.Println("result =&gt;", *in) }(&i)
+  
+  i = 2
+  //prints: result =&gt; 2
+}
+</code></pre>
+
 <h6 id="anamedeferred_call_exeadeferredfunctioncallexecution"><a name="deferred_call_exe"></a>Deferred Function Call Execution</h6>
 
 <ul>
 <li>level: intermediate</li>
 </ul>
 
-<p>The deferred calls are executed at the end of the containing function and not at the end of the containing code block. It's an easy mistake to make for new Go developers confusing the deferred code execution rules with the variable scoping rules. It can become a problem if you have a long running function with a <code>for</code> loop that tries to <code>defer</code> resource cleanup calls in each iteration.</p>
+<p>The deferred calls are executed at the end of the containing function (and in reverse order) and not at the end of the containing code block. It's an easy mistake to make for new Go developers confusing the deferred code execution rules with the variable scoping rules. It can become a problem if you have a long running function with a <code>for</code> loop that tries to <code>defer</code> resource cleanup calls in each iteration.</p>
 
 <pre><code>package main
 
