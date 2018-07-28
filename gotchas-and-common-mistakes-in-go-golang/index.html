@@ -3679,7 +3679,7 @@ func main() {
 <pre><code>package main
 
 /*
-#include <stdlib.h>
+#include &lt;stdlib.h&gt;
 */
 import (
   "C"
@@ -3700,7 +3700,7 @@ func main() {
 <pre><code>package main
 
 /*
-#include <stdlib.h>
+#include &lt;stdlib.h&gt;
 */
 import (
   "C"
@@ -3732,7 +3732,7 @@ func main() {
 <pre><code>package main
 
 /*
-#include <stdlib.h>
+#include &lt;stdlib.h&gt;
 */
 
 import "C"
@@ -3768,8 +3768,8 @@ func main() {
 <pre><code>package main
 
 /*
-#include <stdio.h>
-#include <stdlib.h>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
 */
 import "C"
 
@@ -3792,13 +3792,13 @@ func main() {
   </span></p>
 </blockquote>
 
-<p>You have to wrap your C variadic functions in functions with a known number of parameters.</p>
+<p>You have to wrap your variadic C functions in functions with a known number of parameters.</p>
 
 <pre><code>package main
 
 /*
-#include <stdio.h>
-#include <stdlib.h>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
 
 void out(char* in) {
   printf("%s\n", in);
