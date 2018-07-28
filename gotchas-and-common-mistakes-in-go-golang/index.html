@@ -160,6 +160,7 @@
 <li><a href="index.html#deferred_call_exe">Deferred Function Call Execution</a></li>
 <li><a href="index.html#failed_type_assert">Failed Type Assertions</a></li>
 <li><a href="index.html#blocked_goroutines">Blocked Goroutines and Resource Leaks</a></li>
+<li><a href="index.html#zero_size_var">Same Address for Different Zero-sized Variables</a></li>
 </ul>
 
 <p><a href="index.html#advanced_beginner">Advanced Beginner</a>:</p>
@@ -3183,6 +3184,35 @@ func main() {
 </code></pre>
 
 <p>Why did the presentation contain these bugs? Rob Pike simply didn't want to comlicate the slides. It makes sense, but it can be a problem for new Go developers who would use the code as is without thinking that it might have problems.</p>
+
+<h6 id="anamezero_size_var_same_address_for_different_zero_sized_vars"><a name="zero_size_var"></a>Same Address for Different Zero-sized Variables</h6>
+
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>If you have two different variables shouldn't they have different addresses? Well, it's not the case with Go :-) If you have zero-sized variables they might share the exact same address in memory.</p>
+
+<pre><code>package main
+
+import (
+  "fmt"
+)
+
+type data struct {
+}
+
+func main() {
+  a := &data{}
+  b := &data{}
+  
+  if a == b {
+    fmt.Printf("same address - a=%p b=%p\n",a,b)
+    //prints: same address - a=0x1953e4 b=0x1953e4
+  }
+}
+</code></pre>
+
 
 <p><a name="advanced_beginner"></a></p>
 
