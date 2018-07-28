@@ -176,10 +176,12 @@
 <li><a href="index.html#psched">Preemptive Scheduling</a></li>
 </ul>
 
-<p><a href="index.html#cgo">Cgo</a>:</p>
+<p><a href="index.html#cgo">Cgo (aka Brave Beginner)</a>:</p>
 
 <ul>
 <li><a href="index.html#cgo_multiline_import_c">Import C and Multiline Import Blocks</a></li>
+<li><a href="index.html#cgo_noblanks">No blank lines Between Import C and Cgo Comments</a></li>
+<li><a href="index.html#cgo_no_var_args">Can't Call C Functions with Variable Arguments</a></li>
 </ul>
 
 <br/>
@@ -3718,6 +3720,102 @@ func main() {
   ./main.go:13:2: could not determine kind of name for C.free
   </span></p>
 </blockquote>
+
+<h6 id="anamecgo_noblanks_no_blank_lines_between_import_comments"><a name="cgo_noblanks"></a>No blank lines Between Import C and Cgo Comments</h6>
+
+<ul>
+<li>level: Cgo</li>
+</ul>
+
+<p>One of the first gotchas with Cgo is the location of the cgo comments above the <code>import "C"</code> statement.</p>
+
+<pre><code>package main
+
+/*
+#include <stdlib.h>
+*/
+
+import "C"
+
+import (
+  "unsafe"
+)
+
+func main() {
+  cs := C.CString("my go string")
+  C.free(unsafe.Pointer(cs))
+}
+</code></pre>
+
+<p>Compile Error:  </p>
+
+<blockquote>
+  <p><span style="color:#900; font-family: Menlo, Courier New, monospace; font-size: 11pt;">
+  ./main.go:15:2: could not determine kind of name for C.free
+  </span></p>
+</blockquote>
+
+<p>Make sure you don't have any blank lines above <code>import "C"</code> statement.</p>
+
+<h6 id="anamecgo_no_var_args_cant_call_cfunc_with_var_args"><a name="cgo_no_var_args"></a>Can't Call C Functions with Variable Arguments</h6>
+
+<ul>
+<li>level: Cgo</li>
+</ul>
+
+<p>You can't call C functions with variable arguments directly.</p>
+
+<pre><code>package main
+
+/*
+#include <stdio.h>
+#include <stdlib.h>
+*/
+import "C"
+
+import (
+  "unsafe"
+)
+
+func main() {
+  cstr := C.CString("go")
+  C.printf("%s\n",cstr) //not ok
+  C.free(unsafe.Pointer(cstr))
+}
+</code></pre>
+
+<p>Compile Error:  </p>
+
+<blockquote>
+  <p><span style="color:#900; font-family: Menlo, Courier New, monospace; font-size: 11pt;">
+  ./main.go:15:2: unexpected type: ...
+  </span></p>
+</blockquote>
+
+<p>You have to wrap your C variadic functions in functions with a known number of parameters.</p>
+
+<pre><code>package main
+
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+void out(char* in) {
+  printf("%s\n", in);
+}
+*/
+import "C"
+
+import (
+  "unsafe"
+)
+
+func main() {
+  cstr := C.CString("go")
+  C.out(cstr) //ok
+  C.free(unsafe.Pointer(cstr))
+}
+</code></pre>
 
 
 
