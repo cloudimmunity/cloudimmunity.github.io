@@ -173,10 +173,17 @@
 <li><a href="index.html#stack_heap_vars">Stack and Heap Variables</a></li>
 <li><a href="index.html#gomaxprocs">GOMAXPROCS, Concurrency, and Parallelism</a></li>
 <li><a href="index.html#rw_reorder">Read and Write Operation Reordering</a></li>
-<li><a href="index.html#psched">Preemptive Scheduling</a>
-<br/></li>
+<li><a href="index.html#psched">Preemptive Scheduling</a></li>
 </ul>
 
+<p><a href="index.html#cgo">Cgo</a>:</p>
+
+<ul>
+<li><a href="index.html#cgo_multiline_import_c">Import C and Multiline Import Blocks</a></li>
+</ul>
+
+<br/>
+<br/>
 <h4>Traps, Gotchas, and Common Mistakes</h4>
 
 <p><a name="total_beginner"></a></p>
@@ -3658,6 +3665,65 @@ func main() {
 </code></pre>
 
 <p>Note that the code above contains a race condition. It was done intentionally to show the sheduling gotcha.</p>
+
+<h6 id="anamecgo_multiline_import_c_importc_and_multiline"><a name="cgo_multiline_import_c"></a>Import C and Multiline Import Blocks</h6>
+
+<ul>
+<li>level: Cgo</li>
+</ul>
+
+<p>You need to import the "C" package to use Cgo. You can do that with a single line <code>import</code> or you can do it with an <code>import</code> block.</p>
+
+<pre><code>package main
+
+/*
+#include <stdlib.h>
+*/
+import (
+  "C"
+)
+
+import (
+  "unsafe"
+)
+
+func main() {
+  cs := C.CString("my go string")
+  C.free(unsafe.Pointer(cs))
+}
+</code></pre>
+
+<p>If you are using the <code>import</code> block format you can't import other packages in the same block.</p>
+
+<pre><code>package main
+
+/*
+#include <stdlib.h>
+*/
+import (
+  "C"
+  "unsafe"
+)
+
+func main() {
+  cs := C.CString("my go string")
+  C.free(unsafe.Pointer(cs))
+}
+</code></pre>
+
+<p>Compile Error:  </p>
+
+<blockquote>
+  <p><span style="color:#900; font-family: Menlo, Courier New, monospace; font-size: 11pt;">
+  ./main.go:13:2: could not determine kind of name for C.free
+  </span></p>
+</blockquote>
+
+
+
+<br/>
+<br/>
+<h4>Comments and Discussions</h4>
 
 <p>Old <a href="https://www.reddit.com/r/golang/comments/360vlb/draft_traps_gotchas_and_common_mistakes_in_go/">Reddit</a> discussion.</p>
 
