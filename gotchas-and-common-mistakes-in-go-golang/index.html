@@ -161,6 +161,7 @@
 <li><a href="index.html#failed_type_assert">Failed Type Assertions</a></li>
 <li><a href="index.html#blocked_goroutines">Blocked Goroutines and Resource Leaks</a></li>
 <li><a href="index.html#zero_size_var">Same Address for Different Zero-sized Variables</a></li>
+<li><a href="index.html#iota_zero">The First Use of iota Doesn't Always Start with Zero</a></li>
 </ul>
 
 <p><a href="index.html#advanced_beginner">Advanced Beginner</a>:</p>
@@ -3212,6 +3213,40 @@ func main() {
   }
 }
 </code></pre>
+
+<h6 id="anameiota_zero_first_use_of_iota"><a name="iota_zero"></a>The First Use of iota Doesn't Always Start with Zero</h6>
+
+<ul>
+<li>level: intermediate</li>
+</ul>
+
+<p>It may seem like the <code>iota</code> identifyer is like an increment operator. You start a new constant declaration and the first time you use <code>iota</code> you get zero, the second time you use it you get one and so on. It's not always the case though.</p>
+
+<pre><code>package main
+
+import (
+  "fmt"
+)
+
+const (
+  azero = iota
+  aone  = iota
+)
+
+const (
+  info  = "processing"
+  bzero = iota
+  bone  = iota
+)
+
+func main() {
+  fmt.Println(azero,aone) //prints: 0 1
+  fmt.Println(bzero,bone) //prints: 1 2
+}
+</code></pre>
+
+<p>The <code>iota</code> is really an index operator for the current line in the constant declaration block, so if the first use of <code>iota</code> is not the first line in the constant declaration block the initial value will not be zero.</p>
+
 
 
 <p><a name="advanced_beginner"></a></p>
